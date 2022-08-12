@@ -13,6 +13,6 @@ $ npm run build
 
 # Backend
 
-Bakend repository: https://github.com/Seala11/react-rslang-be
+Backend repository: https://github.com/Seala11/react-rslang-be
 
 Backend application: https://rslang-team54-learnwords.herokuapp.com/doc/
