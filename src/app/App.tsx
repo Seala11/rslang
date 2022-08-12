@@ -1,9 +1,16 @@
-import React from 'react'
+import React from 'react';
+import getWordsAPI from 'src/requests/getWordsAPI';
+import Button from 'src/components/button/Button';
 
-const App = () => {
+const App: React.FC = () => {
+  getWordsAPI(1, 1);
+
   return (
-    <div>App</div>
-  )
-}
+    <>
+      <Button text="Example" disabled={true}></Button>
+      <div className="App">App</div>
+    </>
+  );
+};
 
-export default App
+export default App;
