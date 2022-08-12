@@ -1,0 +1,30 @@
+@use 'src/sass/abstracts/variables' as *;
+
+@mixin sans($ff: 'sans-serif', $fs: 1.6rem, $fw: 400, $lh: 1.2, $color: $main-text) {
+    font-family: $ff;
+    font-size: $fs;
+    font-weight: $fw;
+    line-height: $lh;
+    color: $color;
+}
+
+// media
+@mixin media-laptop {
+    @media (max-width: $content-width) { @content; }
+}
+
+@mixin media-tablet-large {
+    @media (max-width: $tablet-large-width) { @content; }
+}
+
+@mixin media-tablet {
+    @media (max-width: $tablet-width) { @content; }
+}
+
+@mixin media-mobile {
+    @media (max-width: $mobile-big-width) { @content; }
+}
+
+@mixin media-mobilesmall {
+    @media (max-width: $mobile-small-width) { @content; }
+}

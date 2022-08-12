@@ -1,0 +1,13 @@
+@use 'src/sass/abstracts/variables' as *;
+@use 'src/sass/abstracts/mixins' as *;
+
+html {
+  scroll-behavior: smooth;
+  font-size: 10px;
+}
+
+body {
+  @include sans;
+  font-size: 1.6rem;
+  background-color: $main-bg;
+}
