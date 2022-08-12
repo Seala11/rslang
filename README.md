@@ -1,12 +1,12 @@
 # Setup and Running
 
-1. Runs the app in the development mode
+1. Run the app in the development mode
 
 ```bash
 $ npm start
 ```
 
-2. Builds the app for production to the `build` folder.
+2. Build the app for production to the `build` folder.
 ```bash
 $ npm run build
 ```
