@@ -1,6 +1,6 @@
 export interface IButtonProps {
-    text?: string;
-    className?: string;
-    handler?: () => void;
-    disabled?: boolean;
-  }
+  children: React.ReactElement[] | React.ReactElement | string;
+  className?: string;
+  handler?: () => void;
+  disabled?: boolean;
+}

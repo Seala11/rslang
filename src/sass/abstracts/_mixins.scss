@@ -1,6 +1,6 @@
 @use 'src/sass/abstracts/variables' as *;
 
-@mixin sans($ff: 'sans-serif', $fs: 1.6rem, $fw: 400, $lh: 1.2, $color: $main-text) {
+@mixin sans($ff: 'sans-serif', $fs: 1.6rem, $fw: 400, $lh: 1.2, $color: $secundary-light) {
     font-family: $ff;
     font-size: $fs;
     font-weight: $fw;

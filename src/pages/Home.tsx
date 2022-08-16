@@ -8,7 +8,7 @@ import {
   selectCurrentPageWords,
   selectCustomWord,
 } from 'src/store/wordsSlice';
-import Button from 'src/components/button/Button';
+import Button from 'src/components/button';
 
 const Home: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -17,7 +17,7 @@ const Home: React.FC = () => {
 
   return (
     <>
-      <Button text='Example' disabled={true}></Button>
+      <Button disabled={true}>{'Example'}</Button>
       <div className='App'>App</div>
       <button type='button' onClick={() => dispatch(addCustomWord('hello'))}>
         Add Custom Word
