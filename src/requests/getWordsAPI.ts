@@ -1,4 +1,4 @@
-import { UrlPath } from "src/requests/interfaceAPI";
+import { UrlPath } from 'src/requests/interfaceAPI';
 
 const getWordsAPI = async (group: number, page: number) => {
   const rawResponse = await fetch(`${UrlPath.base}/${UrlPath.words}?group=${group}&page=${page}`, {
@@ -10,6 +10,8 @@ const getWordsAPI = async (group: number, page: number) => {
   const content = await rawResponse.json();
 
   console.log(content);
+
+  return content;
 };
 
 export default getWordsAPI;
