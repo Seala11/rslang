@@ -4,7 +4,7 @@ export interface IUser {
 }
 
 export enum UrlPath {
-  base = 'https://react-learnwords-example.herokuapp.com',
+  base = ' https://rslang-team54-learnwords.herokuapp.com',
   words = 'words',
   users = 'users',
 }
