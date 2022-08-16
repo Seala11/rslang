@@ -1,16 +1,16 @@
 import React from 'react';
-import styles from 'src/components/button/style.module.scss';
+import styles from 'src/components/button/Button.module.scss';
 import { IButtonProps } from 'src/components/button/IButtonProps';
 
-const Button: React.FC<IButtonProps> = ({ text = '', className = '', handler, disabled }) => {
+const Button: React.FC<IButtonProps> = ({ children, className = '', handler, disabled }) => {
   return (
     <button
       disabled={disabled}
-      className={`${styles.button} ${className} ${disabled ? styles.disabled : ''}`}
+      className={`${styles.button} ${className} ${disabled ? styles.button_disabled : ''}`}
       type="button"
       onClick={handler}
     >
-      {text}
+      {children}
     </button>
   );
 };

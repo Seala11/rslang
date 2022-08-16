@@ -7,7 +7,7 @@ html {
 }
 
 body {
-  @include sans;
+  @include roboto;
   font-size: 1.6rem;
-  background-color: $main-bg;
+  background-color: $stroke;
 }
