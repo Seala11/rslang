@@ -1,6 +1,6 @@
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
-import { Home, Words } from 'src/pages';
+import { Home, Words,Statistics, Games } from 'src/pages';
 import WordsByGroup from 'src/pages/WordsByGroup';
 import getWordsAPI from 'src/requests/getWordsAPI';
 import Header from 'src/components/Header';
@@ -32,6 +32,8 @@ const App: React.FC = () => {
         <Route path='/words' element={<Words />}>
           <Route path=':group' element={<WordsByGroup />} />
         </Route>
+        <Route path='/games' element={<Games />} />
+        <Route path='/statistics' element={<Statistics />} />
       </Routes>
     </>
   );
