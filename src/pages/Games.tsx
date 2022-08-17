@@ -1,8 +1,5 @@
 import React from 'react';
 
-const Games = () => (
-    <>
-    </>
-  );
+const Games = () => <div />;
 
 export default Games;

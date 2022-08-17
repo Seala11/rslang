@@ -1,0 +1,34 @@
+@use 'src/sass/abstracts/variables' as *;
+@use 'src/sass/abstracts/mixins' as *;
+
+.footer {
+  background-color: $neutral-dark;
+  @include roboto($ff: $ff-roboto-regular, $fs: 2rem, $lh: 1.5);
+  &__wrapper {
+    display: flex;
+    justify-content: space-between;
+    padding: 5rem 8rem;
+  }
+  &__gitList {
+    display: flex;
+    gap: 2.5rem;
+  }
+  &__schoolLink {
+    display: flex;
+    gap: 6.5rem;
+    color: $secundary-dark;
+  }
+  &__gitLink {
+    color: $secundary-light;
+    transition: all 0.2s;
+    &:hover {
+      color: $secundary-dark;
+    }
+  }
+  &__rsLink {
+    transition: all 0.2s;
+    &:hover {
+      color: $secundary-light;
+    }
+  }
+}
