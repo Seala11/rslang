@@ -1,4 +1,5 @@
-export { default as Home } from './Home';
-export { default as Words } from './Words';
-export { default as Games } from './Games';
-export { default as Statistics } from './Statistics';
+export { default as Home } from './home/Home';
+export { default as Textbook } from './textbook/Textbook';
+export { default as Games } from './games/Games';
+export { default as Statistics } from './statistics/Statistics';
+export { default as Login } from './login/Login';
