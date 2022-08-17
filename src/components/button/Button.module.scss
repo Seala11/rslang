@@ -1,7 +1,6 @@
 @use 'src/sass/abstracts/variables' as *;
 @use 'src/sass/abstracts/mixins' as *;
 
-
 .button {
   @include roboto;
   cursor: pointer;
