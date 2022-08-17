@@ -26,7 +26,8 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "format": "prettier --check src/",
-    "lint": "eslint --ext .ts,.tsx,.js,.jsx src/"
+    "lint": "eslint --ext .ts,.tsx,.js,.jsx src/",
+    "format-fix": "prettier --write src/"
   },
   "browserslist": {
     "production": [

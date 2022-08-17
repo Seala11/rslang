@@ -1,8 +1,5 @@
 import React from 'react';
 
-const Statistic = () => (
-    <>
-    </>
-  );
+const Statistic = () => <></>;
 
 export default Statistic;

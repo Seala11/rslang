@@ -1,6 +1,6 @@
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
-import { Home, Words,Statistics, Games } from 'src/pages';
+import { Home, Words, Statistics, Games } from 'src/pages';
 import WordsByGroup from 'src/pages/WordsByGroup';
 import getWordsAPI from 'src/requests/getWordsAPI';
 import Header from 'src/components/Header';
@@ -9,24 +9,9 @@ import Footer from 'src/components/Footer';
 const App: React.FC = () => {
   getWordsAPI(1, 1);
 
-  // const activeStyle = {
-  //   outline: 'solid red 1px',
-  //   color: 'red',
-  // };
-
   return (
-    <>
-      {/* <header>
-        <NavLink to='/' style={({ isActive }) => (isActive ? activeStyle : {})}>
-          Home
-        </NavLink>
-        <NavLink to='/words' style={({ isActive }) => (isActive ? activeStyle : {})}>
-          Words
-        </NavLink>
-      </header> */}
+    <div className='page'>
       <Header />
-
-      <hr />
 
       <Routes>
         <Route path='/' element={<Home />} />
@@ -36,8 +21,9 @@ const App: React.FC = () => {
         <Route path='/games' element={<Games />} />
         <Route path='/statistics' element={<Statistics />} />
       </Routes>
+
       <Footer />
-    </>
+    </div>
   );
 };
 
