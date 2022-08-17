@@ -17,7 +17,7 @@ const Home: React.FC = () => {
 
   return (
     <>
-      <Button disabled={true}>{'Example'}</Button>
+      <Button disabled>Example</Button>
       <div className='App'>App</div>
       <button type='button' onClick={() => dispatch(addCustomWord('hello'))}>
         Add Custom Word
@@ -30,8 +30,8 @@ const Home: React.FC = () => {
       </button>
       <div>{customWord}</div>
       <div>
-        {currentPageWords.map((word, i) => (
-          <div key={i}>
+        {currentPageWords.map((word) => (
+          <div key={word.word}>
             <div>{word.word}</div>
             <div>{word.wordTranslate}</div>
             <img src={`${UrlPath.base}/${word.image}`} alt={word.word} />
