@@ -1,17 +1,17 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
-import type { AppDispatch, RootState } from './';
 import getWordsAPI from 'src/requests/getWordsAPI';
-
-interface IWordsState {
-  currentPage: IWord[];
-  customWord: string;
-}
+import type { AppDispatch, RootState } from '.';
 
 interface IWord {
   word: string;
   wordTranslate: string;
   image: string;
+}
+
+interface IWordsState {
+  currentPage: IWord[];
+  customWord: string;
 }
 
 const initialState: IWordsState = {
