@@ -4,6 +4,7 @@ import { Home, Words,Statistics, Games } from 'src/pages';
 import WordsByGroup from 'src/pages/WordsByGroup';
 import getWordsAPI from 'src/requests/getWordsAPI';
 import Header from 'src/components/Header';
+import Footer from 'src/components/Footer';
 
 const App: React.FC = () => {
   getWordsAPI(1, 1);
@@ -35,6 +36,7 @@ const App: React.FC = () => {
         <Route path='/games' element={<Games />} />
         <Route path='/statistics' element={<Statistics />} />
       </Routes>
+      <Footer />
     </>
   );
 };

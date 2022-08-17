@@ -1,0 +1,6 @@
+@use 'src/sass/abstracts/variables' as *;
+@use 'src/sass/abstracts/mixins' as *;
+
+.footer {
+  background-color: $neutral-dark;
+}
