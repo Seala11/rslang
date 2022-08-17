@@ -1,6 +1,8 @@
 import React from 'react';
 import { UrlPath } from 'src/requests/interfaceAPI';
 import { useAppDispatch, useAppSelector } from 'src/store/hooks';
+import Words from 'src/pages/textbook/Words';
+import styles from 'src/pages/textbook/Textbook.module.scss';
 import {
   addCustomWord,
   clearAll,
@@ -8,17 +10,16 @@ import {
   selectCurrentPageWords,
   selectCustomWord,
 } from 'src/store/wordsSlice';
-import Button from 'src/components/button';
 
-const Home: React.FC = () => {
+const Textbook: React.FC = () => {
   const dispatch = useAppDispatch();
   const customWord = useAppSelector(selectCustomWord);
   const currentPageWords = useAppSelector(selectCurrentPageWords);
 
   return (
     <>
-      <Button disabled>Example</Button>
-      <div className='App'>App</div>
+      <h1 className={`${styles.title}`}>Учебник</h1>
+      <Words />
       <button type='button' onClick={() => dispatch(addCustomWord('hello'))}>
         Add Custom Word
       </button>
@@ -42,4 +43,4 @@ const Home: React.FC = () => {
   );
 };
 
-export default Home;
+export default Textbook;

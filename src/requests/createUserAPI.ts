@@ -11,7 +11,7 @@ const createUserAPI = async (user: IUser) => {
   });
   const content = await rawResponse.json();
 
-  console.log(content);
+  return content;
 };
 
 export default createUserAPI;

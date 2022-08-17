@@ -9,8 +9,6 @@ const getWordsAPI = async (group: number, page: number) => {
   });
   const content = await rawResponse.json();
 
-  console.log(content);
-
   return content;
 };
 

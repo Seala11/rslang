@@ -19,7 +19,7 @@ const Header: React.FC = () => (
           <li className={styles.nav__item}>
             <NavLink
               className={({ isActive }) => (isActive ? styles.nav__link_active : styles.nav__link)}
-              to='/words'
+              to='/textbook'
             >
               Учебник
             </NavLink>
@@ -40,10 +40,14 @@ const Header: React.FC = () => (
               Статистика
             </NavLink>
           </li>
+          <li className={styles.nav__item}>
+            <NavLink to='/login'>
+              <button className={styles.nav__logBtn} type='button'>
+                Войти
+              </button>
+            </NavLink>
+          </li>
         </ul>
-        <button className={styles.nav__logBtn} type='button'>
-          Войти
-        </button>
       </nav>
     </div>
   </header>
