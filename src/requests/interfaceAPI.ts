@@ -1,9 +1,11 @@
+// User
 export interface IUser {
   name: string;
   email: string;
   password: string;
 }
 
+// Wors
 export interface IWord {
   id: string;
   group: number;
@@ -21,3 +23,16 @@ export interface IWord {
   textExampleTranslate: string;
 }
 
+// Sign In
+export interface IUserSignIn {
+  email: string;
+  password: string;
+}
+
+export interface ISignInResponse {
+  message: string;
+  token: string;
+  refreshToken: string;
+  userId: string;
+  name: string;
+}

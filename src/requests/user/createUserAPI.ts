@@ -1,7 +1,7 @@
 import { IUser } from 'src/requests/interfaceAPI';
 import { UrlPath } from 'src/requests/constantsAPI';
 
-const createUserAPI = async (user: IUser) => {
+const createUserAPI = async (userData: IUser) => {
   try {
     const rawResponse = await fetch(`${UrlPath.base}/${UrlPath.users}`, {
       method: 'POST',
@@ -9,7 +9,7 @@ const createUserAPI = async (user: IUser) => {
         Accept: 'application/json',
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(user),
+      body: JSON.stringify(userData),
     });
 
     const content: IUser = await rawResponse.json();
