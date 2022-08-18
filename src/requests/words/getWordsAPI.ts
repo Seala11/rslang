@@ -1,9 +1,14 @@
 import { UrlPath, Headers, Methods } from 'src/requests/constantsAPI';
 
-const getWordsAPI = async (group: number, page: number) => {
+const getWordsAPI = async (group: string, page: string) => {
   try {
+    const query = {
+      group,
+      page,
+    };
+    const parameters = new URLSearchParams(query);
     const rawResponse = await fetch(
-      `${UrlPath.BASE}/${UrlPath.WORDS}?group=${group}&page=${page}`,
+      `${UrlPath.BASE}/${UrlPath.WORDS}?${parameters.toString()}`,
       {
         method: `${Methods.GET}`,
         headers: {

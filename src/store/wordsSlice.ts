@@ -41,7 +41,7 @@ const wordsSlice = createSlice({
 export const { clearAll, addCustomWord, addCurrentPageWords } = wordsSlice.actions;
 
 export const fetchCurrentPageWords =
-  (group: number, page: number) => async (dispatch: AppDispatch) => {
+  (group: string, page: string) => async (dispatch: AppDispatch) => {
     const words = await getWordsAPI(group, page);
 
     dispatch(addCurrentPageWords(words));

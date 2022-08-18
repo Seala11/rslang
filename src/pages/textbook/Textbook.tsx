@@ -26,7 +26,7 @@ const Textbook: React.FC = () => {
       <button type='button' onClick={() => dispatch(clearAll())}>
         Clear All Words
       </button>
-      <button type='button' onClick={() => dispatch(fetchCurrentPageWords(2, 3))}>
+      <button type='button' onClick={() => dispatch(fetchCurrentPageWords('2', '3'))}>
         Async Get Words
       </button>
       <div>{customWord}</div>

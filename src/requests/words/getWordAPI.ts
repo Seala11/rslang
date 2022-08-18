@@ -1,9 +1,9 @@
 import { IWord } from 'src/requests/interfaceAPI';
 import { UrlPath, Headers, Methods } from 'src/requests/constantsAPI';
 
-const getWordAPI = async (id: number) => {
+const getWordAPI = async (wordId: number) => {
   try {
-    const rawResponse = await fetch(`${UrlPath.BASE}/${UrlPath.WORDS}/${id}`, {
+    const rawResponse = await fetch(`${UrlPath.BASE}/${UrlPath.WORDS}/${wordId}`, {
       method: `${Methods.GET}`,
       headers: {
         'Content-Type': `${Headers.TYPE}`,
