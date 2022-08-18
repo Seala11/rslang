@@ -1,5 +1,5 @@
 import React from 'react';
-import { UrlPath } from 'src/requests/interfaceAPI';
+import { UrlPath } from 'src/requests/constantsAPI';
 import { useAppSelector } from 'src/store/hooks';
 import { selectCurrentPageWords } from 'src/store/wordsSlice';
 

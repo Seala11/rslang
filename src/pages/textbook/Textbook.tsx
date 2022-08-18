@@ -1,5 +1,5 @@
 import React from 'react';
-import { UrlPath } from 'src/requests/interfaceAPI';
+import { UrlPath } from 'src/requests/constantsAPI';
 import { useAppDispatch, useAppSelector } from 'src/store/hooks';
 import Words from 'src/pages/textbook/Words';
 import styles from 'src/pages/textbook/Textbook.module.scss';

@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
-import getWordsAPI from 'src/requests/getWordsAPI';
+import getWordsAPI from 'src/requests/words/getWordsAPI';
 import type { AppDispatch, RootState } from '.';
 
 interface IWord {

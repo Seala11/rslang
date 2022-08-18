@@ -1,10 +1,23 @@
 export interface IUser {
+  name: string;
   email: string;
   password: string;
 }
 
-export enum UrlPath {
-  base = ' https://rslang-team54-learnwords.herokuapp.com',
-  words = 'words',
-  users = 'users',
+export interface IWord {
+  id: string;
+  group: number;
+  page: number;
+  word: string;
+  image: string;
+  audio: string;
+  audioMeaning: string;
+  audioExample: string;
+  textMeaning: string;
+  textExample: string;
+  transcription: string;
+  wordTranslate: string;
+  textMeaningTranslate: string;
+  textExampleTranslate: string;
 }
+
