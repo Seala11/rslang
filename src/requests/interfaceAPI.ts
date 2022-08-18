@@ -5,6 +5,21 @@ export interface IUser {
   password: string;
 }
 
+export interface ICreateUserResponse {
+  data?: IUser,
+  error?: IErrors,
+}
+
+interface IErrors {
+  status: string;
+  errors: TErrors[];
+}
+
+type TErrors = {
+  path: string[];
+  message: string;
+};
+
 // Words
 export interface IWord {
   id: string;
@@ -41,3 +56,4 @@ export interface ISignInResponse {
   userId: string;
   name: string;
 }
+
