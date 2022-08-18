@@ -1,18 +1,18 @@
 export enum UrlPath {
-  base = ' https://rslang-team54-learnwords.herokuapp.com',
-  words = 'words',
-  users = 'users',
-  signin = 'signin',
-  tokens = 'tokens',
+  BASE = ' https://rslang-team54-learnwords.herokuapp.com',
+  WORDS = 'words',
+  USERS = 'users',
+  SIGNIN = 'signin',
+  TOKENS = 'tokens',
 }
 
 export enum Headers {
-  content = 'application/json',
+  TYPE = 'application/json',
 }
 
 export enum Methods {
-  get = 'GET',
-  post = 'POST',
-  delete = 'DELETE',
-  pit = 'PUT',
+  GET = 'GET',
+  POST = 'POST',
+  DELETE = 'DELETE',
+  PUT = 'PUT',
 }

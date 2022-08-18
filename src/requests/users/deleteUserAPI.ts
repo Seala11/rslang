@@ -1,13 +1,13 @@
 import { IUser } from 'src/requests/interfaceAPI';
-import { UrlPath } from 'src/requests/constantsAPI';
+import { Methods, UrlPath, Headers } from 'src/requests/constantsAPI';
 
 const deleteUserAPI = async (id: string) => {
   try {
-    const rawResponse = await fetch(`${UrlPath.base}/${UrlPath.users}/${id}`, {
-      method: 'DELETE',
+    const rawResponse = await fetch(`${UrlPath.BASE}/${UrlPath.USERS}/${id}`, {
+      method: `${Methods.DELETE}`,
       headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
+        Accept: `${Headers.TYPE}`,
+        'Content-Type': `${Headers.TYPE}`,
       },
     });
 

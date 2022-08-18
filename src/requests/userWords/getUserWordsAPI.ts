@@ -1,13 +1,13 @@
 import { IUserWord } from 'src/requests/interfaceAPI';
-import { UrlPath } from 'src/requests/constantsAPI';
+import { Methods, UrlPath, Headers } from 'src/requests/constantsAPI';
 
 const getUserWordsAPI = async (id: string) => {
   try {
-    const rawResponse = await fetch(`${UrlPath.base}/${UrlPath.users}/${id}/${UrlPath}`, {
-      method: 'GET',
+    const rawResponse = await fetch(`${UrlPath.BASE}/${UrlPath.USERS}/${id}/${UrlPath.WORDS}`, {
+      method: `${Methods.GET}`,
       headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
+        Accept: `${Headers.TYPE}`,
+        'Content-Type': `${Headers.TYPE}`,
       },
     });
 

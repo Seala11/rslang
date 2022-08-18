@@ -1,13 +1,13 @@
 import { IUser, IUserSignIn } from 'src/requests/interfaceAPI';
-import { UrlPath } from 'src/requests/constantsAPI';
+import { Methods, UrlPath, Headers } from 'src/requests/constantsAPI';
 
 const updateUserAPI = async (userData: IUserSignIn, id: string) => {
   try {
-    const rawResponse = await fetch(`${UrlPath.base}/${UrlPath.users}/${id}`, {
-      method: 'PUT',
+    const rawResponse = await fetch(`${UrlPath.BASE}/${UrlPath.USERS}/${id}`, {
+      method: `${Methods.PUT}`,
       headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
+        Accept: `${Headers.TYPE}`,
+        'Content-Type': `${Headers.TYPE}`,
       },
       body: JSON.stringify(userData),
     });

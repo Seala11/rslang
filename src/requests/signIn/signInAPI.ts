@@ -1,13 +1,13 @@
 import { IUserSignIn, ISignInResponse } from 'src/requests/interfaceAPI';
-import { UrlPath } from 'src/requests/constantsAPI';
+import { Headers, Methods, UrlPath } from 'src/requests/constantsAPI';
 
 const signInAPI = async (userData: IUserSignIn) => {
   try {
-    const rawResponse = await fetch(`${UrlPath.base}/${UrlPath.signin}`, {
-      method: 'POST',
+    const rawResponse = await fetch(`${UrlPath.BASE}/${UrlPath.SIGNIN}`, {
+      method: `${Methods.POST}`,
       headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
+        Accept: `${Headers.TYPE}`,
+        'Content-Type': `${Headers.TYPE}`,
       },
       body: JSON.stringify(userData),
     });

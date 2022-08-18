@@ -35,7 +35,7 @@ const Textbook: React.FC = () => {
           <div key={word.word}>
             <div>{word.word}</div>
             <div>{word.wordTranslate}</div>
-            <img src={`${UrlPath.base}/${word.image}`} alt={word.word} />
+            <img src={`${UrlPath.BASE}/${word.image}`} alt={word.word} />
           </div>
         ))}
       </div>

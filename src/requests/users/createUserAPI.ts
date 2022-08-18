@@ -1,16 +1,17 @@
 import { IUser } from 'src/requests/interfaceAPI';
-import { UrlPath } from 'src/requests/constantsAPI';
+import { Methods, UrlPath, Headers } from 'src/requests/constantsAPI';
 
 const createUserAPI = async (userData: IUser) => {
   try {
-    const rawResponse = await fetch(`${UrlPath.base}/${UrlPath.users}`, {
-      method: 'POST',
+    const rawResponse = await fetch(`${UrlPath.BASE}/${UrlPath.USERS}`, {
+      method: `${Methods.POST}`,
       headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
+        Accept: `${Headers.TYPE}`,
+        'Content-Type': `${Headers.TYPE}`,
       },
       body: JSON.stringify(userData),
     });
+    // if (rawResponse.status === 422) return something 
 
     const content: IUser = await rawResponse.json();
 
