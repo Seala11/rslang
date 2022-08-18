@@ -1,0 +1,60 @@
+@use 'src/sass/abstracts/variables' as *;
+@use 'src/sass/abstracts/mixins' as *;
+
+.section {
+
+  &__menu {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 12rem 7rem 20rem 7rem;
+    gap: 11.5rem;
+  }
+}
+
+.menu {
+  &__wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    width: 100%;
+    gap:5rem;
+    row-gap: 9rem;
+    max-width: 144rem;
+  }
+
+  &__title {
+    @include roboto($ff: $ff-roboto-regular, $fs: 5rem, $fw: 700, $lh: 1.2, $color: $primary);
+    text-align: center;
+  }
+
+  &__card {
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+    align-items: center;
+    background-color: $light;
+    width: 37.8rem;
+    height: 47.5rem;
+    border-radius: 5rem;
+    padding: 2rem 4rem;
+    border: solid $stroke 0.04rem;
+    box-shadow: 0 2.5rem 5rem rgba(22, 25, 79, 0.05);
+    transition: all .2s;
+    cursor: pointer;
+    &:hover {
+      transform: scale(1.1);
+    }
+  } 
+}
+
+.card {
+  &__title {
+    @include roboto($ff: $ff-roboto-regular, $fs: 4rem, $lh: 1.5, $color: $black);
+    text-align: center;
+  }
+  &__descr {
+    @include roboto($ff: $ff-roboto-regular, $fs: 2rem, $lh: 1.5, $color: $secundary-light);
+    text-align: center;
+  }
+}
