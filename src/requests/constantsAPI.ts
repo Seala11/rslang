@@ -6,7 +6,7 @@ export enum UrlPath {
   TOKENS = 'tokens',
   AGGREGATED = 'aggregatedWords',
   STATISTICS = 'statistics',
-  SETTINGS = 'settings'
+  SETTINGS = 'settings',
 }
 
 export enum Headers {

@@ -49,7 +49,7 @@ export interface IStatistics {
   optional: object;
 }
 
-// Settings 
+// Settings
 export interface ISettings {
   wordsPerDay: number;
   optional: object;

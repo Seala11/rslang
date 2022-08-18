@@ -7,15 +7,12 @@ const getWordsAPI = async (group: string, page: string) => {
       page,
     };
     const parameters = new URLSearchParams(query);
-    const response = await fetch(
-      `${UrlPath.BASE}/${UrlPath.WORDS}?${parameters.toString()}`,
-      {
-        method: `${Methods.GET}`,
-        headers: {
-          'Content-Type': `${Headers.TYPE}`,
-        },
-      }
-    );
+    const response = await fetch(`${UrlPath.BASE}/${UrlPath.WORDS}?${parameters.toString()}`, {
+      method: `${Methods.GET}`,
+      headers: {
+        'Content-Type': `${Headers.TYPE}`,
+      },
+    });
     const words = await response.json();
 
     return words;

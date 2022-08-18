@@ -4,15 +4,12 @@ import { UrlPath, Headers, Methods, ErrorMessage } from 'src/requests/constantsA
 
 const getSettingsAPI = async (userId: string) => {
   try {
-    const response = await fetch(
-      `${UrlPath.BASE}/${UrlPath.USERS}/${userId}/${UrlPath.SETTINGS}`,
-      {
-        method: `${Methods.GET}`,
-        headers: {
-          Accept: `${Headers.TYPE}`,
-        },
-      }
-    );
+    const response = await fetch(`${UrlPath.BASE}/${UrlPath.USERS}/${userId}/${UrlPath.SETTINGS}`, {
+      method: `${Methods.GET}`,
+      headers: {
+        Accept: `${Headers.TYPE}`,
+      },
+    });
 
     switch (response.status) {
       case 401:
