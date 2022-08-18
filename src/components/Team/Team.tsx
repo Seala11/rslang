@@ -11,27 +11,21 @@ const Team: React.FC = () => (
         <div className={styles.member__img}>
           <img src={`${developers[0].srcImg}`} alt={`${developers[0].altImg}`} />
         </div>
-        <p className={styles.member__descr}>
-        {developers[0].tasks}
-        </p>
+        <p className={styles.member__descr}>{developers[0].tasks}</p>
       </div>
       <div className={styles.member}>
         <h3 className={styles.member__name}>{developers[1].name}</h3>
         <div className={styles.member__img}>
           <img src={`${developers[1].srcImg}`} alt={`${developers[1].altImg}`} />
         </div>
-        <p className={styles.member__descr}>
-        {developers[1].tasks}
-        </p>
+        <p className={styles.member__descr}>{developers[1].tasks}</p>
       </div>
       <div className={styles.member}>
         <h3 className={styles.member__name}>{developers[2].name}</h3>
         <div className={styles.member__img}>
           <img src={`${developers[2].srcImg}`} alt={`${developers[2].altImg}`} />
         </div>
-        <p className={styles.member__descr}>
-        {developers[2].tasks}
-        </p>
+        <p className={styles.member__descr}>{developers[2].tasks}</p>
       </div>
     </div>
   </section>

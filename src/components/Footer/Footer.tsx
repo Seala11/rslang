@@ -13,12 +13,12 @@ const Footer: React.FC = () => (
         </li>
         <li className={styles.footer__gitItem}>
           <a className={styles.footer__gitLink} href={`${developers[1].githubLink}`}>
-          {developers[1].githubName}
+            {developers[1].githubName}
           </a>
         </li>
         <li className={styles.footer__gitItem}>
           <a className={styles.footer__gitLink} href={`${developers[2].githubLink}`}>
-          {developers[2].githubName}
+            {developers[2].githubName}
           </a>
         </li>
       </ul>
