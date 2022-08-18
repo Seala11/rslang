@@ -1,7 +1,37 @@
 @use 'src/sass/abstracts/variables' as *;
 @use 'src/sass/abstracts/mixins' as *;
 
-.title {
-  @include roboto($fs: 4rem, $ff: $ff-roboto-bold, $fw: 700);
-  color: $primary;
+.main {
+  flex: 1 1 auto;
 }
+
+.section {
+  &__hero {
+    display: flex;
+    padding: 2.5rem 13rem 6.7rem 15rem;
+    justify-content: center;
+    gap: 17rem;
+    background-color: $secundary-dark;
+  }
+}
+
+.hero {
+  &__info {
+    display: flex;
+    flex-direction: column;
+    margin-top: 9.5rem;
+    gap: 3rem;
+    max-width: 39.5rem;
+  }
+
+  &__title {
+    @include roboto($ff: $ff-roboto-regular, $fs: 6rem, $fw: 600, $lh: 1.4, $color: $light)
+  }
+
+  &__text {
+    @include roboto($ff: $ff-roboto-regular, $fs: 2rem, $fw: 400, $lh: 1.2, $color: $light);
+    letter-spacing: 0.04rem;
+  }
+}
+
+
