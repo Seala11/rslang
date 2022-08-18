@@ -5,7 +5,8 @@ export enum UrlPath {
   SIGNIN = 'signin',
   TOKENS = 'tokens',
   AGGREGATED = 'aggregatedWords',
-  STATISTICS = 'statistics'
+  STATISTICS = 'statistics',
+  SETTINGS = 'settings'
 }
 
 export enum Headers {
@@ -17,4 +18,10 @@ export enum Methods {
   POST = 'POST',
   DELETE = 'DELETE',
   PUT = 'PUT',
+}
+
+export enum ErrorMessage {
+  BAD_REQUEST = ': Bad request',
+  SETTING_NOT_FOUND = ': Settings not found',
+  MISSING_TOKEN = ': Access token is missing or invalid',
 }

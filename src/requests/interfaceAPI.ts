@@ -49,6 +49,12 @@ export interface IStatistics {
   optional: object;
 }
 
+// Settings 
+export interface ISettings {
+  wordsPerDay: number;
+  optional: object;
+}
+
 // Sign In
 export interface IUserSignIn {
   email: string;
