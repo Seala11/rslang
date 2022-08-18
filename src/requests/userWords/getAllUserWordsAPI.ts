@@ -3,7 +3,7 @@ import { Methods, UrlPath, Headers } from 'src/requests/constantsAPI';
 
 const getAllUserWordsAPI = async (userId: string) => {
   try {
-    const rawResponse = await fetch(`${UrlPath.BASE}/${UrlPath.USERS}/${userId}/${UrlPath.WORDS}`, {
+    const response = await fetch(`${UrlPath.BASE}/${UrlPath.USERS}/${userId}/${UrlPath.WORDS}`, {
       method: `${Methods.GET}`,
       headers: {
         Accept: `${Headers.TYPE}`,
@@ -11,9 +11,9 @@ const getAllUserWordsAPI = async (userId: string) => {
       },
     });
 
-    const content: IUserWord[] = await rawResponse.json();
+    const words: IUserWord[] = await response.json();
 
-    return content;
+    return words;
   } catch (error) {
     throw new Error();
   }

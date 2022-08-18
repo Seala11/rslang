@@ -3,17 +3,16 @@ import { Methods, UrlPath, Headers } from 'src/requests/constantsAPI';
 
 const getUserAPI = async (id: string) => {
   try {
-    const rawResponse = await fetch(`${UrlPath.BASE}/${UrlPath.USERS}/${id}/${UrlPath.TOKENS}`, {
+    const response = await fetch(`${UrlPath.BASE}/${UrlPath.USERS}/${id}/${UrlPath.TOKENS}`, {
       method: `${Methods.GET}`,
       headers: {
         Accept: `${Headers.TYPE}`,
-        'Content-Type': `${Headers.TYPE}`,
       },
     });
 
-    const content: ISignInResponse = await rawResponse.json();
+    const userSignInData: ISignInResponse = await response.json();
 
-    return content;
+    return userSignInData;
   } catch (error) {
     throw new Error();
   }

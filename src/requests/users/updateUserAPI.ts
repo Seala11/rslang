@@ -3,7 +3,7 @@ import { Methods, UrlPath, Headers } from 'src/requests/constantsAPI';
 
 const updateUserAPI = async (userData: IUserSignIn, id: string) => {
   try {
-    const rawResponse = await fetch(`${UrlPath.BASE}/${UrlPath.USERS}/${id}`, {
+    const response = await fetch(`${UrlPath.BASE}/${UrlPath.USERS}/${id}`, {
       method: `${Methods.PUT}`,
       headers: {
         Accept: `${Headers.TYPE}`,
@@ -12,9 +12,9 @@ const updateUserAPI = async (userData: IUserSignIn, id: string) => {
       body: JSON.stringify(userData),
     });
 
-    const content: IUser = await rawResponse.json();
+    const userUpdatedData: IUser = await response.json();
 
-    return content;
+    return userUpdatedData;
   } catch (error) {
     throw new Error();
   }

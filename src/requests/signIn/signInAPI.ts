@@ -3,7 +3,7 @@ import { Headers, Methods, UrlPath } from 'src/requests/constantsAPI';
 
 const signInAPI = async (userData: IUserSignIn) => {
   try {
-    const rawResponse = await fetch(`${UrlPath.BASE}/${UrlPath.SIGNIN}`, {
+    const response = await fetch(`${UrlPath.BASE}/${UrlPath.SIGNIN}`, {
       method: `${Methods.POST}`,
       headers: {
         Accept: `${Headers.TYPE}`,
@@ -12,9 +12,9 @@ const signInAPI = async (userData: IUserSignIn) => {
       body: JSON.stringify(userData),
     });
 
-    const content: ISignInResponse = await rawResponse.json();
+    const userSignInData: ISignInResponse = await response.json();
 
-    return content;
+    return userSignInData;
   } catch (error) {
     // errors 403 - wrong email or password
     throw new Error();

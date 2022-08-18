@@ -4,7 +4,7 @@ import { UrlPath, Headers, Methods, ErrorMessage } from 'src/requests/constantsA
 
 const getSettingsAPI = async (userId: string) => {
   try {
-    const rawResponse = await fetch(
+    const response = await fetch(
       `${UrlPath.BASE}/${UrlPath.USERS}/${userId}/${UrlPath.SETTINGS}`,
       {
         method: `${Methods.GET}`,
@@ -14,23 +14,23 @@ const getSettingsAPI = async (userId: string) => {
       }
     );
 
-    switch (rawResponse.status) {
+    switch (response.status) {
       case 401:
       case 404: {
-        const res = await rawResponse.text();
+        const res = await response.text();
         console.error(
           `${res}${
-            rawResponse.status === 401 ? ErrorMessage.MISSING_TOKEN : ErrorMessage.SETTING_NOT_FOUND
+            response.status === 401 ? ErrorMessage.MISSING_TOKEN : ErrorMessage.SETTING_NOT_FOUND
           }`
         );
         return undefined;
       }
       case 200: {
-        const content: ISettings = await rawResponse.json();
-        return content;
+        const settingsData: ISettings = await response.json();
+        return settingsData;
       }
       default:
-        return await rawResponse.json();
+        return await response.json();
     }
   } catch (error) {
     throw new Error();

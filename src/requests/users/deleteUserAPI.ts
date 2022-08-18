@@ -1,19 +1,18 @@
 import { IUser } from 'src/requests/interfaceAPI';
 import { Methods, UrlPath, Headers } from 'src/requests/constantsAPI';
 
-const deleteUserAPI = async (id: string) => {
+const deleteUserAPI = async (userId: string) => {
   try {
-    const rawResponse = await fetch(`${UrlPath.BASE}/${UrlPath.USERS}/${id}`, {
+    const response = await fetch(`${UrlPath.BASE}/${UrlPath.USERS}/${userId}`, {
       method: `${Methods.DELETE}`,
       headers: {
         Accept: `${Headers.TYPE}`,
-        'Content-Type': `${Headers.TYPE}`,
       },
     });
 
-    const content: IUser = await rawResponse.json();
+    const userData: IUser = await response.json();
 
-    return content;
+    return userData;
   } catch (error) {
     throw new Error();
   }

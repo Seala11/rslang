@@ -4,7 +4,7 @@ import { Methods, UrlPath, Headers } from 'src/requests/constantsAPI';
 
 const getStatisticsAPI = async (userId: string) => {
   try {
-    const rawResponse = await fetch(
+    const response = await fetch(
       `${UrlPath.BASE}/${UrlPath.USERS}/${userId}/${UrlPath.STATISTICS}`,
       {
         method: `${Methods.GET}`,
@@ -14,21 +14,21 @@ const getStatisticsAPI = async (userId: string) => {
       }
     );
 
-    switch (rawResponse.status) {
+    switch (response.status) {
       case 401:
       case 404: {
         // Access token is missing or invalid
         // Statistics not found
-        const res = await rawResponse.text();
+        const res = await response.text();
         console.error(res);
         return res;
       }
       case 200: {
-        const content: IStatistics = await rawResponse.json();
-        return content;
+        const userStatistics: IStatistics = await response.json();
+        return userStatistics;
       }
       default:
-        return await rawResponse.json();
+        return await response.json();
     }
   } catch (error) {
     throw new Error();

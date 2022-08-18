@@ -4,7 +4,7 @@ import { UrlPath, Headers, Methods, ErrorMessage } from 'src/requests/constantsA
 
 const updateSettingsAPI = async (userId: string, settingsData: ISettings) => {
   try {
-    const rawResponse = await fetch(
+    const response = await fetch(
       `${UrlPath.BASE}/${UrlPath.USERS}/${userId}/${UrlPath.SETTINGS}`,
       {
         method: `${Methods.PUT}`,
@@ -16,23 +16,23 @@ const updateSettingsAPI = async (userId: string, settingsData: ISettings) => {
       }
     );
 
-    switch (rawResponse.status) {
+    switch (response.status) {
       case 400:
       case 401: {
-        const res = await rawResponse.text();
+        const res = await response.text();
         console.error(
             `${res}${
-              rawResponse.status === 400 ? ErrorMessage.BAD_REQUEST : ErrorMessage.MISSING_TOKEN
+              response.status === 400 ? ErrorMessage.BAD_REQUEST : ErrorMessage.MISSING_TOKEN
             }`
           );
         return undefined;
       }
       case 200: {
-        const content: ISettings = await rawResponse.json();
-        return content;
+        const updatedSettings: ISettings = await response.json();
+        return updatedSettings;
       }
       default:
-        return await rawResponse.json();
+        return await response.json();
     }
   } catch (error) {
     throw new Error();

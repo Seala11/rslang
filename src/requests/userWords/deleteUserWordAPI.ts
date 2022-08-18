@@ -2,7 +2,7 @@ import { Methods, UrlPath, Headers } from 'src/requests/constantsAPI';
 
 const deleteUserWordAPI = async (userId: string, wordId: string) => {
   try {
-    const rawResponse = await fetch(`${UrlPath.BASE}/${UrlPath.USERS}/${userId}/${UrlPath.WORDS}/${wordId}`, {
+    const response = await fetch(`${UrlPath.BASE}/${UrlPath.USERS}/${userId}/${UrlPath.WORDS}/${wordId}`, {
       method: `${Methods.DELETE}`,
       headers: {
         Accept: `${Headers.TYPE}`,
@@ -10,9 +10,9 @@ const deleteUserWordAPI = async (userId: string, wordId: string) => {
       },
     });
 
-    const response = await rawResponse.text();
+    const data = await response.text();
 
-    return response;
+    return data;
   } catch (error) {
     throw new Error();
   }

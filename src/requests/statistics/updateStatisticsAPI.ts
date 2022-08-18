@@ -4,7 +4,7 @@ import { Methods, UrlPath, Headers } from 'src/requests/constantsAPI';
 
 const updateStatisticsAPI = async (userId: string, statisticsData: IStatistics) => {
   try {
-    const rawResponse = await fetch(
+    const response = await fetch(
       `${UrlPath.BASE}/${UrlPath.USERS}/${userId}/${UrlPath.STATISTICS}`,
       {
         method: `${Methods.PUT}`,
@@ -16,21 +16,21 @@ const updateStatisticsAPI = async (userId: string, statisticsData: IStatistics) 
       }
     );
 
-    switch (rawResponse.status) {
+    switch (response.status) {
       case 400:
       case 401: {
         // Bad request
         // Access token is missing or invalid
-        const res = await rawResponse.text();
+        const res = await response.text();
         console.error(res);
         return res;
       }
       case 200: {
-        const content: IStatistics = await rawResponse.json();
-        return content;
+        const userStatistics: IStatistics = await response.json();
+        return userStatistics;
       }
       default:
-        return await rawResponse.json();
+        return await response.json();
     }
   } catch (error) {
     throw new Error();

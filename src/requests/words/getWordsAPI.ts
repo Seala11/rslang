@@ -7,7 +7,7 @@ const getWordsAPI = async (group: string, page: string) => {
       page,
     };
     const parameters = new URLSearchParams(query);
-    const rawResponse = await fetch(
+    const response = await fetch(
       `${UrlPath.BASE}/${UrlPath.WORDS}?${parameters.toString()}`,
       {
         method: `${Methods.GET}`,
@@ -16,9 +16,9 @@ const getWordsAPI = async (group: string, page: string) => {
         },
       }
     );
-    const content = await rawResponse.json();
+    const words = await response.json();
 
-    return content;
+    return words;
   } catch (error) {
     throw new Error();
   }

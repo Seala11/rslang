@@ -3,7 +3,7 @@ import { Methods, UrlPath, Headers } from 'src/requests/constantsAPI';
 
 const getUserWordAPI = async (userId: string, wordId: string, wordData: IUserWord) => {
   try {
-    const rawResponse = await fetch(`${UrlPath.BASE}/${UrlPath.USERS}/${userId}/${UrlPath.WORDS}/${wordId}`, {
+    const response = await fetch(`${UrlPath.BASE}/${UrlPath.USERS}/${userId}/${UrlPath.WORDS}/${wordId}`, {
       method: `${Methods.PUT}`,
       headers: {
         Accept: `${Headers.TYPE}`,
@@ -12,9 +12,9 @@ const getUserWordAPI = async (userId: string, wordId: string, wordData: IUserWor
       body: JSON.stringify(wordData),
     });
 
-    const content: IUserWord = await rawResponse.json();
+    const updatedWord: IUserWord = await response.json();
 
-    return content;
+    return updatedWord;
   } catch (error) {
     throw new Error();
   }

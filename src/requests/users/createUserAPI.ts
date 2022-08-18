@@ -4,7 +4,7 @@ import { Methods, UrlPath, Headers } from 'src/requests/constantsAPI';
 
 const createUserAPI = async (userData: IUser) => {
   try {
-    const rawResponse = await fetch(`${UrlPath.BASE}/${UrlPath.USERS}`, {
+    const response = await fetch(`${UrlPath.BASE}/${UrlPath.USERS}`, {
       method: `${Methods.POST}`,
       headers: {
         Accept: `${Headers.TYPE}`,
@@ -13,10 +13,10 @@ const createUserAPI = async (userData: IUser) => {
       body: JSON.stringify(userData),
     });
 
-    switch (rawResponse.status) {
+    switch (response.status) {
       case 417: {
         // user already exist
-        const res = await rawResponse.text();
+        const res = await response.text();
         console.error(res);
         return {};
       }
@@ -24,7 +24,7 @@ const createUserAPI = async (userData: IUser) => {
         // wrong email or password
         // message: '"email" must be a valid email'
         // message: '"password" length must be at least 8 characters long'
-        const data: ICreateUserResponse = await rawResponse.json();
+        const data: ICreateUserResponse = await response.json();
         const errorsResponse = data.error;
         const errors = errorsResponse?.errors;
         errors?.map((err) => console.error(err.message));
@@ -32,11 +32,11 @@ const createUserAPI = async (userData: IUser) => {
         return errorsResponse;
       }
       case 200: {
-        const data: ICreateUserResponse = await rawResponse.json();
+        const data: ICreateUserResponse = await response.json();
         return data.data;
       }
       default:
-        return await rawResponse.json();
+        return await response.json();
     }
   } catch (err: unknown) {
     const error = err as Error;
