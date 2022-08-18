@@ -3,7 +3,7 @@ import { UrlPath } from 'src/requests/constantsAPI';
 
 const getUserAPI = async (id: string) => {
   try {
-    const rawResponse = await fetch(`${UrlPath.base}/${UrlPath.users}/${id}/tokens`, {
+    const rawResponse = await fetch(`${UrlPath.base}/${UrlPath.users}/${id}/${UrlPath.tokens}`, {
       method: 'GET',
       headers: {
         Accept: 'application/json',

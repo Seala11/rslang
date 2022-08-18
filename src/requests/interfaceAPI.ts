@@ -5,7 +5,7 @@ export interface IUser {
   password: string;
 }
 
-// Wors
+// Words
 export interface IWord {
   id: string;
   group: number;
@@ -21,6 +21,11 @@ export interface IWord {
   wordTranslate: string;
   textMeaningTranslate: string;
   textExampleTranslate: string;
+}
+
+export interface IUserWord {
+  difficulty: string;
+  optional: object;
 }
 
 // Sign In
