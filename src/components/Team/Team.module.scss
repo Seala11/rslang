@@ -2,7 +2,6 @@
 @use 'src/sass/abstracts/mixins' as *;
 
 .section {
-
   &__team {
     display: flex;
     flex-direction: column;
@@ -19,7 +18,7 @@
     flex-wrap: wrap;
     justify-content: space-around;
     width: 100%;
-    gap:5rem;
+    gap: 5rem;
     row-gap: 9rem;
     max-width: 144rem;
   }
@@ -32,20 +31,20 @@
 
 .member {
   display: flex;
-    flex-direction: column;
-    gap: 3rem;
-    align-items: center;
-    background-color: $light;
-    width: 37.8rem;
-    border-radius: 5rem;
-    padding: 2rem 4rem;
-    border: solid $stroke 0.04rem;
-    box-shadow: 0 2.5rem 5rem rgba(22, 25, 79, 0.05);
-    transition: all .2s;
-    cursor: pointer;
-    &:hover {
-      transform: scale(1.1);
-    }
+  flex-direction: column;
+  gap: 3rem;
+  align-items: center;
+  background-color: $light;
+  width: 37.8rem;
+  border-radius: 5rem;
+  padding: 2rem 4rem;
+  border: solid $stroke 0.04rem;
+  box-shadow: 0 2.5rem 5rem rgba(22, 25, 79, 0.05);
+  transition: all 0.2s;
+  cursor: pointer;
+  &:hover {
+    transform: scale(1.1);
+  }
   &__name {
     @include roboto($ff: $ff-roboto-regular, $fs: 4rem, $lh: 1.5, $color: $black);
     text-align: center;
