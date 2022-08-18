@@ -4,7 +4,8 @@ export enum UrlPath {
   USERS = 'users',
   SIGNIN = 'signin',
   TOKENS = 'tokens',
-  AGGREGATED = 'aggregatedWords'
+  AGGREGATED = 'aggregatedWords',
+  STATISTICS = 'statistics'
 }
 
 export enum Headers {

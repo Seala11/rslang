@@ -6,8 +6,8 @@ export interface IUser {
 }
 
 export interface ICreateUserResponse {
-  data?: IUser,
-  error?: IErrors,
+  data?: IUser;
+  error?: IErrors;
 }
 
 interface IErrors {
@@ -43,6 +43,12 @@ export interface IUserWord {
   optional: object;
 }
 
+// Statistics
+export interface IStatistics {
+  learnedWords: number;
+  optional: object;
+}
+
 // Sign In
 export interface IUserSignIn {
   email: string;
@@ -56,4 +62,3 @@ export interface ISignInResponse {
   userId: string;
   name: string;
 }
-
