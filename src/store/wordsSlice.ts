@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
-import getWordsAPI from 'src/requests/getWordsAPI';
+import getWordsAPI from 'src/requests/words/getWordsAPI';
 import type { AppDispatch, RootState } from '.';
 
 interface IWord {
@@ -41,7 +41,7 @@ const wordsSlice = createSlice({
 export const { clearAll, addCustomWord, addCurrentPageWords } = wordsSlice.actions;
 
 export const fetchCurrentPageWords =
-  (group: number, page: number) => async (dispatch: AppDispatch) => {
+  (group: string, page: string) => async (dispatch: AppDispatch) => {
     const words = await getWordsAPI(group, page);
 
     dispatch(addCurrentPageWords(words));

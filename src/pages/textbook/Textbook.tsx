@@ -1,5 +1,5 @@
 import React from 'react';
-import { UrlPath } from 'src/requests/interfaceAPI';
+import { UrlPath } from 'src/requests/constantsAPI';
 import { useAppDispatch, useAppSelector } from 'src/store/hooks';
 import Words from 'src/pages/textbook/Words';
 import styles from 'src/pages/textbook/Textbook.module.scss';
@@ -26,7 +26,7 @@ const Textbook: React.FC = () => {
       <button type='button' onClick={() => dispatch(clearAll())}>
         Clear All Words
       </button>
-      <button type='button' onClick={() => dispatch(fetchCurrentPageWords(2, 3))}>
+      <button type='button' onClick={() => dispatch(fetchCurrentPageWords('2', '3'))}>
         Async Get Words
       </button>
       <div>{customWord}</div>
@@ -35,7 +35,7 @@ const Textbook: React.FC = () => {
           <div key={word.word}>
             <div>{word.word}</div>
             <div>{word.wordTranslate}</div>
-            <img src={`${UrlPath.base}/${word.image}`} alt={word.word} />
+            <img src={`${UrlPath.BASE}/${word.image}`} alt={word.word} />
           </div>
         ))}
       </div>

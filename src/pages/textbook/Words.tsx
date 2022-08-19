@@ -15,7 +15,7 @@ const Words = () => {
 
     navigate(group);
 
-    dispatch(fetchCurrentPageWords(+group, 1));
+    dispatch(fetchCurrentPageWords(group, '1'));
   };
 
   return (
