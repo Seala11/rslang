@@ -1,6 +1,6 @@
-/* eslint-disable no-console */
 import { ISettings } from 'src/requests/interfaceAPI';
-import { UrlPath, Headers, Methods, ErrorMessage } from 'src/requests/constantsAPI';
+import { UrlPath, Headers, Methods, ErrorMessage, ResponseStatus } from 'src/requests/constantsAPI';
+import createError from 'src/requests/createError';
 
 const getSettingsAPI = async (userId: string) => {
   try {
@@ -12,25 +12,30 @@ const getSettingsAPI = async (userId: string) => {
     });
 
     switch (response.status) {
-      case 401:
-      case 404: {
-        const res = await response.text();
-        console.error(
-          `${res}${
-            response.status === 401 ? ErrorMessage.MISSING_TOKEN : ErrorMessage.SETTING_NOT_FOUND
-          }`
-        );
-        return undefined;
+      case ResponseStatus.MISSING_TOKEN: {
+        throw createError(new Error(ErrorMessage.MISSING_TOKEN), `${ResponseStatus.MISSING_TOKEN}`);
       }
-      case 200: {
+      case ResponseStatus.NOT_FOUND: {
+        throw createError(new Error(ErrorMessage.SETTING_NOT_FOUND), `${ResponseStatus.NOT_FOUND}`);
+      }
+      case ResponseStatus.OK: {
         const settingsData: ISettings = await response.json();
         return settingsData;
       }
       default:
         return await response.json();
     }
-  } catch (error) {
-    throw new Error();
+  } catch (err) {
+    const error = err as Error;
+    if (
+      error.name === `${ResponseStatus.MISSING_TOKEN}` ||
+      error.name === `${ResponseStatus.NOT_FOUND}`
+    ) {
+      /* eslint-disable no-console */
+      console.error(error);
+      return undefined;
+    }
+    throw error;
   }
 };
 

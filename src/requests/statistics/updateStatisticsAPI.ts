@@ -1,6 +1,6 @@
-/* eslint-disable no-console */
 import { IStatistics } from 'src/requests/interfaceAPI';
-import { Methods, UrlPath, Headers } from 'src/requests/constantsAPI';
+import { Methods, UrlPath, Headers, ResponseStatus, ErrorMessage } from 'src/requests/constantsAPI';
+import createError from 'src/requests/createError';
 
 const updateStatisticsAPI = async (userId: string, statisticsData: IStatistics) => {
   try {
@@ -17,23 +17,30 @@ const updateStatisticsAPI = async (userId: string, statisticsData: IStatistics) 
     );
 
     switch (response.status) {
-      case 400:
-      case 401: {
-        // Bad request
-        // Access token is missing or invalid
-        const res = await response.text();
-        console.error(res);
-        return res;
+      case ResponseStatus.BAD_REQUEST: {
+        throw createError(new Error(ErrorMessage.BAD_REQUEST), `${ResponseStatus.BAD_REQUEST}`);
       }
-      case 200: {
+      case ResponseStatus.MISSING_TOKEN: {
+        throw createError(new Error(ErrorMessage.MISSING_TOKEN), `${ResponseStatus.MISSING_TOKEN}`);
+      }
+      case ResponseStatus.OK: {
         const userStatistics: IStatistics = await response.json();
         return userStatistics;
       }
       default:
         return await response.json();
     }
-  } catch (error) {
-    throw new Error();
+  } catch (err) {
+    const error = err as Error;
+    if (
+      error.name === `${ResponseStatus.BAD_REQUEST}` ||
+      error.name === `${ResponseStatus.MISSING_TOKEN}`
+    ) {
+      /* eslint-disable no-console */
+      console.error(error);
+      return undefined;
+    }
+    throw error;
   }
 };
 

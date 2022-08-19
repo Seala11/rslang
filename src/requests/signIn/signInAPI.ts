@@ -1,5 +1,6 @@
 import { IUserSignIn, ISignInResponse } from 'src/requests/interfaceAPI';
-import { Headers, Methods, UrlPath } from 'src/requests/constantsAPI';
+import { Headers, Methods, UrlPath, ResponseStatus, ErrorMessage } from 'src/requests/constantsAPI';
+import createError from 'src/requests/createError';
 
 const signInAPI = async (userData: IUserSignIn) => {
   try {
@@ -12,12 +13,25 @@ const signInAPI = async (userData: IUserSignIn) => {
       body: JSON.stringify(userData),
     });
 
-    const userSignInData: ISignInResponse = await response.json();
-
-    return userSignInData;
-  } catch (error) {
-    // errors 403 - wrong email or password
-    throw new Error();
+    switch (response.status) {
+      case ResponseStatus.FORBIDDEN: {
+        throw createError(new Error(ErrorMessage.LOGIN_FAILED), `${ResponseStatus.FORBIDDEN}`);
+      }
+      case ResponseStatus.OK: {
+        const userSignInData: ISignInResponse = await response.json();
+        return userSignInData;
+      }
+      default:
+        return await response.json();
+    }
+  } catch (err) {
+    const error = err as Error;
+    if (error.name === `${ResponseStatus.FORBIDDEN}`) {
+      /* eslint-disable no-console */
+      console.error(error);
+      return undefined;
+    }
+    throw error;
   }
 };
 

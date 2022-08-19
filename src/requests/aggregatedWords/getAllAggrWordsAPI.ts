@@ -1,6 +1,6 @@
-/* eslint-disable no-console */
 import { IWord } from 'src/requests/interfaceAPI';
-import { UrlPath, Headers, Methods } from 'src/requests/constantsAPI';
+import { UrlPath, Headers, Methods, ResponseStatus, ErrorMessage } from 'src/requests/constantsAPI';
+import createError from 'src/requests/createError';
 
 const getAllAggrWordsAPI = async (
   userId: string,
@@ -28,21 +28,24 @@ const getAllAggrWordsAPI = async (
     );
 
     switch (response.status) {
-      case 401: {
-        // Access token is missing or invalid
-        const res = await response.text();
-        console.error(res);
-        return res;
+      case ResponseStatus.MISSING_TOKEN: {
+        throw createError(new Error(ErrorMessage.MISSING_TOKEN), `${ResponseStatus.MISSING_TOKEN}`);
       }
-      case 200: {
+      case ResponseStatus.OK: {
         const words: IWord[] = await response.json();
         return words;
       }
       default:
         return await response.json();
     }
-  } catch (error) {
-    throw new Error();
+  } catch (err) {
+    const error = err as Error;
+    if (error.name === `${ResponseStatus.MISSING_TOKEN}`) {
+      /* eslint-disable no-console */
+      console.error(error);
+      return undefined;
+    }
+    throw error;
   }
 };
 

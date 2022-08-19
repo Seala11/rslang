@@ -1,6 +1,6 @@
-/* eslint-disable no-console */
 import { ISettings } from 'src/requests/interfaceAPI';
-import { UrlPath, Headers, Methods, ErrorMessage } from 'src/requests/constantsAPI';
+import { UrlPath, Headers, Methods, ErrorMessage, ResponseStatus } from 'src/requests/constantsAPI';
+import createError from 'src/requests/createError';
 
 const updateSettingsAPI = async (userId: string, settingsData: ISettings) => {
   try {
@@ -14,23 +14,30 @@ const updateSettingsAPI = async (userId: string, settingsData: ISettings) => {
     });
 
     switch (response.status) {
-      case 400:
-      case 401: {
-        const res = await response.text();
-        console.error(
-          `${res}${response.status === 400 ? ErrorMessage.BAD_REQUEST : ErrorMessage.MISSING_TOKEN}`
-        );
-        return undefined;
+      case ResponseStatus.BAD_REQUEST: {
+        throw createError(new Error(ErrorMessage.BAD_REQUEST), `${ResponseStatus.BAD_REQUEST}`);
       }
-      case 200: {
+      case ResponseStatus.MISSING_TOKEN: {
+        throw createError(new Error(ErrorMessage.MISSING_TOKEN), `${ResponseStatus.MISSING_TOKEN}`);
+      }
+      case ResponseStatus.OK: {
         const updatedSettings: ISettings = await response.json();
         return updatedSettings;
       }
       default:
         return await response.json();
     }
-  } catch (error) {
-    throw new Error();
+  } catch (err) {
+    const error = err as Error;
+    if (
+      error.name === `${ResponseStatus.MISSING_TOKEN}` ||
+      error.name === `${ResponseStatus.NOT_FOUND}`
+    ) {
+      /* eslint-disable no-console */
+      console.error(error);
+      return undefined;
+    }
+    throw error;
   }
 };
 

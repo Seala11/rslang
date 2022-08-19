@@ -1,6 +1,6 @@
-/* eslint-disable no-console */
 import { IStatistics } from 'src/requests/interfaceAPI';
-import { Methods, UrlPath, Headers } from 'src/requests/constantsAPI';
+import { Methods, UrlPath, Headers, ResponseStatus, ErrorMessage } from 'src/requests/constantsAPI';
+import createError from 'src/requests/createError';
 
 const getStatisticsAPI = async (userId: string) => {
   try {
@@ -15,23 +15,33 @@ const getStatisticsAPI = async (userId: string) => {
     );
 
     switch (response.status) {
-      case 401:
-      case 404: {
-        // Access token is missing or invalid
-        // Statistics not found
-        const res = await response.text();
-        console.error(res);
-        return res;
+      case ResponseStatus.MISSING_TOKEN: {
+        throw createError(new Error(ErrorMessage.MISSING_TOKEN), `${ResponseStatus.MISSING_TOKEN}`);
       }
-      case 200: {
+      case ResponseStatus.NOT_FOUND: {
+        throw createError(
+          new Error(ErrorMessage.STATISTICS_NOT_FOUND),
+          `${ResponseStatus.NOT_FOUND}`
+        );
+      }
+      case ResponseStatus.OK: {
         const userStatistics: IStatistics = await response.json();
         return userStatistics;
       }
       default:
         return await response.json();
     }
-  } catch (error) {
-    throw new Error();
+  } catch (err) {
+    const error = err as Error;
+    if (
+      error.name === `${ResponseStatus.NOT_FOUND}` ||
+      error.name === `${ResponseStatus.MISSING_TOKEN}`
+    ) {
+      /* eslint-disable no-console */
+      console.error(error);
+      return undefined;
+    }
+    throw error;
   }
 };
 
