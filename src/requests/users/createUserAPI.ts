@@ -2,6 +2,12 @@
 import { ICreateUserResponse, IUser } from 'src/requests/interfaceAPI';
 import { Methods, UrlPath, Headers } from 'src/requests/constantsAPI';
 
+const errorHandler = (err: Error, errName: string) => {
+  const error = err;
+  error.name = errName;
+  return error;
+};
+
 const createUserAPI = async (userData: IUser) => {
   try {
     const response = await fetch(`${UrlPath.BASE}/${UrlPath.USERS}`, {
@@ -15,20 +21,14 @@ const createUserAPI = async (userData: IUser) => {
 
     switch (response.status) {
       case 417: {
-        // user already exist
         const res = await response.text();
-        console.error(res);
-        return {};
+        throw errorHandler(new Error(res), '417');
       }
       case 422: {
-        // wrong email or password
-        // message: '"email" must be a valid email'
-        // message: '"password" length must be at least 8 characters long'
         const data: ICreateUserResponse = await response.json();
         const errorsResponse = data.error;
         const errors = errorsResponse?.errors;
-        errors?.map((err) => console.error(err.message));
-        // console.log('422', errors, errors?.errors, errors?.status);
+        errors?.map((err) => console.error('422:', err.message));
         return errorsResponse;
       }
       case 200: {
@@ -38,9 +38,13 @@ const createUserAPI = async (userData: IUser) => {
       default:
         return await response.json();
     }
-  } catch (err: unknown) {
+  } catch (err) {
     const error = err as Error;
-    throw new Error(error.message);
+    if (error.name === '417') {
+      console.error(error);
+      return {};
+    }
+    throw error;
   }
 };
 
