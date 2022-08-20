@@ -47,14 +47,3 @@
     }
   }
 }
-
-.card {
-  &__title {
-    @include roboto($ff: $ff-roboto-regular, $fs: 4rem, $lh: 1.5, $color: $black);
-    text-align: center;
-  }
-  &__descr {
-    @include roboto($ff: $ff-roboto-regular, $fs: 2rem, $lh: 1.5, $color: $secundary-light);
-    text-align: center;
-  }
-}

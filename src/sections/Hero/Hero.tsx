@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from 'src/components/Hero/Hero.module.scss';
+import styles from 'src/sections/Hero/Hero.module.scss';
 
 const Hero: React.FC = () => (
   <section className={styles.section__hero}>

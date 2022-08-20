@@ -1,0 +1,30 @@
+@use 'src/sass/abstracts/variables' as *;
+@use 'src/sass/abstracts/mixins' as *;
+
+.section {
+  &__team {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0 7rem;
+    gap: 11.5rem;
+    margin-bottom: 24rem;
+  }
+}
+
+.team {
+  &__wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    width: 100%;
+    gap: 5rem;
+    row-gap: 9rem;
+    max-width: 144rem;
+  }
+
+  &__title {
+    @include roboto($ff: $ff-roboto-regular, $fs: 5rem, $fw: 700, $lh: 1.2, $color: $primary);
+    text-align: center;
+  }
+}
