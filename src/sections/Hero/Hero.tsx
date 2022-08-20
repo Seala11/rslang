@@ -1,5 +1,6 @@
 import React from 'react';
 import styles from 'src/sections/Hero/Hero.module.scss';
+import Image from 'src/components/Image';
 
 const Hero: React.FC = () => (
   <section className={styles.section__hero}>
@@ -11,7 +12,7 @@ const Hero: React.FC = () => (
       </p>
     </div>
     <div>
-      <img src='assets/images/hero.png' alt='Hero' />
+    <Image {...{altImg: 'Hero', srcImg: 'assets/images/hero.png'}}/>
     </div>
   </section>
 );
