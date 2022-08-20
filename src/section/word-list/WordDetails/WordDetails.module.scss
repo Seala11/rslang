@@ -1,0 +1,90 @@
+@use 'src/sass/abstracts/variables' as *;
+@use 'src/sass/abstracts/mixins' as *;
+
+.details {
+  width: 370px;
+  border-radius: 15px;
+  color: #404040;
+  background-color: #fff;
+  border-top-left-radius: 100px;
+  font-size: 2rem;
+}
+
+.img {
+  height: 200px;
+  border-top-right-radius: 15px;
+  border-top-left-radius: 100px;
+  border-bottom-right-radius: 100px;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.content {
+  padding: 30px;
+}
+
+.word {
+  display: block;
+  margin-bottom: 10px;
+  font-size: 3.5rem;
+}
+
+.wordTranslate {
+  display: block;
+  margin-bottom: 10px;
+}
+
+.audioWrapper {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.transcription {
+  margin-right: 15px;
+}
+
+.audio {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+
+  svg {
+    width: 24px;
+    fill: var(--group-color);
+  }
+}
+
+.btn {
+  background-color: transparent;
+
+  &:disabled {
+    svg {
+      fill: #bababa;
+    }
+  }
+}
+
+.description {
+  margin-bottom: 25px;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.caption {
+  margin-bottom: 15px;
+  font-size: 1.8rem;
+}
+
+.text {
+  margin-bottom: 10px;
+  font-size: 1.8rem;
+}
+
+.textTranslate {
+  font-size: 1.8rem;
+}
