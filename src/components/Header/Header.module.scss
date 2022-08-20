@@ -9,17 +9,16 @@
     padding: 6rem 8rem;
     justify-content: space-between;
   }
-  &__logo {
-    width: 6rem;
-    height: 6.5rem;
-  }
-  &__nav {
-    display: flex;
-    gap: 5rem;
-  }
+}
+
+.logo {
+  width: 6rem;
+  height: 6.5rem;
 }
 
 .nav {
+  display: flex;
+  gap: 5rem;
   &__list {
     display: flex;
     align-items: center;
@@ -35,20 +34,21 @@
       color: $accent;
     }
   }
-  &__logBtn {
-    @include roboto($ff: $ff-roboto-regular, $fs: 2rem, $lh: 1.5);
-    width: 19.3rem;
-    height: 5.6rem;
-    border-radius: 1.5rem;
-    background-color: $accent;
-    color: $light;
-    transition: all 0.2s;
-    position: relative;
-    &:hover {
-      color: $stroke;
-    }
-    &:active {
-      top: 0.2rem;
-    }
+}
+
+.logBtn {
+  @include roboto($ff: $ff-roboto-regular, $fs: 2rem, $lh: 1.5);
+  width: 19.3rem;
+  height: 5.6rem;
+  border-radius: 1.5rem;
+  background-color: $accent;
+  color: $light;
+  transition: all 0.2s;
+  position: relative;
+  &:hover {
+    color: $stroke;
+  }
+  &:active {
+    top: 0.2rem;
   }
 }

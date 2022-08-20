@@ -12,7 +12,7 @@ const MENU_LIST = [
     path: '/games',
     srcImg: 'assets/images/games.png',
     altImg: 'Games',
-    text: 'Мини-игры "Аудиовызов" и "Спринт"'
+    text: 'Мини-игры "Аудиовызов" и "Спринт"',
   },
   {
     title: 'Статистика',
@@ -21,6 +21,6 @@ const MENU_LIST = [
     altImg: 'Statistics',
     text: `На странице статистики отображается краткосрочная статистика по мини-играм и по словам
     за каждый день изучения`,
-  }
-]
+  },
+];
 export default MENU_LIST;

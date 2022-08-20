@@ -1,19 +1,19 @@
 const NAV_LIST = [
   {
     name: 'Главная',
-    path: '/'
+    path: '/',
   },
   {
     name: 'Учебник',
-    path: '/textbook'
+    path: '/textbook',
   },
   {
     name: 'Игры',
-    path: '/games'
+    path: '/games',
   },
   {
     name: 'Статистика',
-    path: '/statistics'
-  }
-]
+    path: '/statistics',
+  },
+];
 export default NAV_LIST;

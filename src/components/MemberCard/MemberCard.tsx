@@ -7,7 +7,7 @@ const MemberCard: React.FC<IMemberCardProps> = ({ name, tasks, altImg, srcImg })
   <div className={styles.member}>
     <h3 className={styles.member__name}>{name}</h3>
     <div className={styles.member__img}>
-    <Image {...{altImg, srcImg}}/>
+      <Image {...{ altImg, srcImg }} />
     </div>
     <p className={styles.member__descr}>{tasks}</p>
   </div>

@@ -1,18 +1,13 @@
 @use 'src/sass/abstracts/variables' as *;
 @use 'src/sass/abstracts/mixins' as *;
 
-.section {
-  &__hero {
-    display: flex;
-    padding: 2.5rem 13rem 6.7rem 15rem;
-    justify-content: center;
-    gap: 17rem;
-    background-color: $secundary-dark;
-    margin-bottom: 12rem;
-  }
-}
-
 .hero {
+  display: flex;
+  padding: 2.5rem 13rem 6.7rem 15rem;
+  justify-content: center;
+  gap: 17rem;
+  background-color: $secundary-dark;
+  margin-bottom: 12rem;
   &__info {
     display: flex;
     flex-direction: column;

@@ -9,26 +9,28 @@
     justify-content: space-between;
     padding: 5rem 8rem;
   }
-  &__gitList {
-    display: flex;
-    gap: 2.5rem;
-  }
-  &__schoolLink {
-    display: flex;
-    gap: 6.5rem;
-    color: $secundary-dark;
-  }
-  &__gitLink {
+}
+
+.schoolLink {
+  display: flex;
+  gap: 6.5rem;
+  color: $secundary-dark;
+}
+.rsLink {
+  transition: all 0.2s;
+  &:hover {
     color: $secundary-light;
-    transition: all 0.2s;
-    &:hover {
-      color: $secundary-dark;
-    }
   }
-  &__rsLink {
-    transition: all 0.2s;
-    &:hover {
-      color: $secundary-light;
-    }
+}
+.gitList {
+  display: flex;
+  gap: 2.5rem;
+}
+
+.gitLink {
+  color: $secundary-light;
+  transition: all 0.2s;
+  &:hover {
+    color: $secundary-dark;
   }
 }

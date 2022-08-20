@@ -3,7 +3,7 @@ import styles from 'src/sections/Hero/Hero.module.scss';
 import Image from 'src/components/Image';
 
 const Hero: React.FC = () => (
-  <section className={styles.section__hero}>
+  <section className={styles.hero}>
     <div className={styles.hero__info}>
       <h1 className={styles.hero__title}>Английский онлайн</h1>
       <p className={styles.hero__text}>
@@ -12,7 +12,7 @@ const Hero: React.FC = () => (
       </p>
     </div>
     <div>
-    <Image {...{altImg: 'Hero', srcImg: 'assets/images/hero.png'}}/>
+      <Image {...{ altImg: 'Hero', srcImg: 'assets/images/hero.png' }} />
     </div>
   </section>
 );
