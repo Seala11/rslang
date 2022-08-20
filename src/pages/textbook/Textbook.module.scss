@@ -2,6 +2,92 @@
 @use 'src/sass/abstracts/mixins' as *;
 
 .title {
-  @include roboto($fs: 4rem, $ff: $ff-roboto-bold, $fw: 700);
-  color: $primary;
+  @include roboto($fs: 4rem, $ff: $ff-roboto-bold, $fw: 700, $color: $primary);
+  margin-bottom: 30px;
+  transition: color 0.5s;
+}
+
+.titleColor {
+  color: var(--group-color);
+}
+
+.container {
+  position: relative;
+  width: 100%;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 15px;
+
+  &::before {
+    content: '';
+    position: absolute;
+    z-index: -1;
+    top: 22%;
+    left: 14%;
+    width: 700px;
+    height: 700px;
+    background-color: var(--group-color);
+    transition: background-color 1s, border-radius 1s;
+  }
+}
+
+.group_1 {
+  --group-color: #2fe735;
+  --group-color-light: #b1ffb4;
+
+  &::before {
+    border-radius: 50px;
+    border-top-right-radius: 50%;
+    border-bottom-left-radius: 100%;
+  }
+}
+.group_2 {
+  --group-color: #e7632f;
+  --group-color-light: #ffc9b3;
+
+  &::before {
+    border-radius: 10px;
+    border-top-right-radius: 100%;
+    border-bottom-left-radius: 50%;
+  }
+}
+.group_3 {
+  --group-color: #2f91e7;
+  --group-color-light: #c4e3ff;
+
+  &::before {
+    border-radius: 30px;
+    border-top-left-radius: 100%;
+    border-bottom-right-radius: 50%;
+  }
+}
+.group_4 {
+  --group-color: #2f5ae7;
+  --group-color-light: #c7d4ff;
+
+  &::before {
+    border-radius: 70px;
+    border-top-left-radius: 50%;
+    border-bottom-right-radius: 100%;
+  }
+}
+.group_5 {
+  --group-color: #e72f97;
+  --group-color-light: #ffd8ee;
+
+  &::before {
+    border-radius: 20px;
+    border-top-right-radius: 80%;
+    border-bottom-left-radius: 40%;
+  }
+}
+.group_6 {
+  --group-color: #cee72f;
+  --group-color-light: #f9ffd0;
+
+  &::before {
+    border-radius: 40px;
+    border-bottom-right-radius: 50%;
+    border-top-left-radius: 70%;
+  }
 }

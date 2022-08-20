@@ -1,45 +1,77 @@
-import React from 'react';
-import { UrlPath } from 'src/requests/interfaceAPI';
+import React, { useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from 'src/store/hooks';
-import Words from 'src/pages/textbook/Words';
-import styles from 'src/pages/textbook/Textbook.module.scss';
-import {
-  addCustomWord,
-  clearAll,
-  fetchCurrentPageWords,
-  selectCurrentPageWords,
-  selectCustomWord,
-} from 'src/store/wordsSlice';
+import { fetchCurrentPageWords, selectCurrentPageWords } from 'src/store/wordsSlice';
+import { useSearchParams } from 'react-router-dom';
+import { IWord } from 'src/store/types';
+import { Navigate } from 'src/helpers/constants';
+import WordList from 'src/section/word-list';
+import GroupList from 'src/section/group-list';
+import styles from './Textbook.module.scss';
 
-const Textbook: React.FC = () => {
+const Textbook = () => {
   const dispatch = useAppDispatch();
-  const customWord = useAppSelector(selectCustomWord);
   const currentPageWords = useAppSelector(selectCurrentPageWords);
 
+  const [searchParams, setSearchParams] = useSearchParams();
+  const groupParam = searchParams.get('group') ?? '1';
+  const group = +groupParam;
+  const unitParam = searchParams.get('unit') ?? '1';
+  const unit = +unitParam;
+
+  const [wordDetails, setWordDetails] = useState<IWord | null>(null);
+
+  useEffect(() => {
+    setWordDetails(currentPageWords[0]);
+  }, [currentPageWords]);
+
+  useEffect(() => {
+    dispatch(fetchCurrentPageWords(group - 1, unit - 1));
+  }, [dispatch, group, unit]);
+
+  const handleGroupClick = (groupNumber: number) => {
+    setSearchParams({ group: `${groupNumber}`, unit: `${unit}` });
+  };
+
+  const handlePaginationClick = (pageNumber: number) => {
+    setSearchParams({ group: `${group}`, unit: `${pageNumber}` });
+  };
+
+  const handlePageNavigate = (navigation: Navigate) => {
+    switch (navigation) {
+      case Navigate.PREV:
+        setSearchParams({ group: `${group}`, unit: `${unit - 1}` });
+        break;
+
+      case Navigate.NEXT:
+        setSearchParams({ group: `${group}`, unit: `${unit + 1}` });
+        break;
+
+      default:
+        break;
+    }
+  };
+
+  const handleWordClick = (word: IWord) => {
+    setWordDetails(word);
+  };
+
   return (
-    <>
-      <h1 className={`${styles.title}`}>Учебник</h1>
-      <Words />
-      <button type='button' onClick={() => dispatch(addCustomWord('hello'))}>
-        Add Custom Word
-      </button>
-      <button type='button' onClick={() => dispatch(clearAll())}>
-        Clear All Words
-      </button>
-      <button type='button' onClick={() => dispatch(fetchCurrentPageWords(2, 3))}>
-        Async Get Words
-      </button>
-      <div>{customWord}</div>
-      <div>
-        {currentPageWords.map((word) => (
-          <div key={word.word}>
-            <div>{word.word}</div>
-            <div>{word.wordTranslate}</div>
-            <img src={`${UrlPath.base}/${word.image}`} alt={word.word} />
-          </div>
-        ))}
-      </div>
-    </>
+    <div className={`${styles.container} ${styles[`group_${group}`]}`}>
+      <h1 className={styles.title}>Учебник</h1>
+      <GroupList onGroupClick={handleGroupClick} group={group} />
+
+      <h2 className={`${styles.title} ${styles.titleColor}`}>Слова</h2>
+      <WordList
+        unit={unit}
+        words={currentPageWords}
+        wordDetails={wordDetails}
+        onWordClick={handleWordClick}
+        onPageNavigate={handlePageNavigate}
+        onPaginationClick={handlePaginationClick}
+      />
+
+      <h2 className={styles.title}>Игры</h2>
+    </div>
   );
 };
 
