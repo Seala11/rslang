@@ -1,0 +1,50 @@
+@use 'src/sass/abstracts/variables' as *;
+@use 'src/sass/abstracts/mixins' as *;
+@use 'sass:color';
+
+.groups {
+  display: flex;
+  justify-content: space-between;
+  column-gap: 15px;
+  margin-bottom: 50px;
+}
+
+.btn {
+  width: 100%;
+  max-width: 200px;
+  padding: 15px 0;
+  border-radius: 50px;
+  color: #404040;
+  background-color: #fff;
+  box-shadow: 0 4px 0 0 #544dde00;
+  transition: box-shadow 0.5s, background-color 0.2s;
+
+  &.active {
+    box-shadow: 0 4px 0 0 var(--group-color);
+
+    .title,
+    .level {
+      color: var(--group-color);
+    }
+  }
+
+  &:hover {
+    // background-color: color.scale($color: #1da6eb, $lightness: 50%);
+    background-color: var(--group-color-light);
+  }
+}
+
+.level {
+  display: block;
+  margin-bottom: 10px;
+  font-size: 2rem;
+  line-height: 1;
+  transition: color 0.5s;
+}
+
+.title {
+  font-size: 3rem;
+  line-height: 1;
+  color: #404040;
+  transition: color 0.5s;
+}
