@@ -1,5 +1,6 @@
+/* eslint-disable react/no-danger */
 import React, { useCallback, useEffect, useState } from 'react';
-import { UrlPath } from 'src/requests/interfaceAPI';
+import { UrlPath } from 'src/requests/constantsAPI';
 import styles from './WordDetails.module.scss';
 import { IWordDetailsProps } from './IWordDetailsProps';
 
@@ -10,13 +11,11 @@ const WordDetails: React.FC<IWordDetailsProps> = ({ word }) => {
   const [stop, setStop] = useState(false);
   const [disabled, setDisabled] = useState(false);
 
-  console.log('раз');
-
   const playAudio = useCallback(async () => {
     const audioSources = [
-      `${UrlPath.base}/${word?.audio}`,
-      `${UrlPath.base}/${word?.audioMeaning}`,
-      `${UrlPath.base}/${word?.audioExample}`,
+      `${UrlPath.BASE}/${word?.audio}`,
+      `${UrlPath.BASE}/${word?.audioMeaning}`,
+      `${UrlPath.BASE}/${word?.audioExample}`,
     ];
 
     if (audioCounter >= audioSources.length) {
@@ -69,7 +68,7 @@ const WordDetails: React.FC<IWordDetailsProps> = ({ word }) => {
     <div className={styles.details}>
       <div
         className={styles.img}
-        style={{ backgroundImage: `url(${UrlPath.base}/${word.image})` }}
+        style={{ backgroundImage: `url(${UrlPath.BASE}/${word.image})` }}
       />
       <div className={styles.content}>
         <span className={styles.word}>{word.word}</span>

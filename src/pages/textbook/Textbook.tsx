@@ -25,7 +25,7 @@ const Textbook = () => {
   }, [currentPageWords]);
 
   useEffect(() => {
-    dispatch(fetchCurrentPageWords(group - 1, unit - 1));
+    dispatch(fetchCurrentPageWords(`${group - 1}`, `${unit - 1}`));
   }, [dispatch, group, unit]);
 
   const handleGroupClick = (groupNumber: number) => {
