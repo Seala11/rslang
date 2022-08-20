@@ -1,7 +1,6 @@
-@use 'src/sass/abstracts/variables' as *;
 @use 'src/sass/base/typography' as *;
 
-@mixin roboto($ff: $ff-roboto-regular, $fs: 1.6rem, $fw: 400, $lh: 1.2, $color: $secundary-light) {
+@mixin roboto($ff: var(--ff-roboto-regular), $fs: 1.6rem, $fw: 400, $lh: 1.2, $color: var(--secundary-light)) {
   font-family: $ff;
   font-size: $fs;
   font-weight: $fw;

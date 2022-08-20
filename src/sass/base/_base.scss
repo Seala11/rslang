@@ -1,5 +1,32 @@
-@use 'src/sass/abstracts/variables' as *;
 @use 'src/sass/abstracts/mixins' as *;
+
+:root {
+  --primary: #554dde;
+
+  --accent: #f44e77;
+  --accent-light: #f4668a;
+
+  --neutral: #f2f6ff;
+  --stroke: #cad6f1;
+  --neutral-dark: #dce2f0;
+
+  --secundary-light: #6a6d9e;
+  --secundary-dark: #16194f;
+
+  --light: #ffffff;
+  --black: #000000;
+
+  // fonts
+  --ff-roboto-regular: 'Roboto Regular', sans-serif;
+  --ff-roboto-bold: 'Roboto Bold', sans-serif;
+
+  // media examples
+  --content-width: 1278px;
+  --tablet-large-width: 1024px;
+  --tablet-width: 766px;
+  --mobile-big-width: 465px;
+  --mobile-small-width: 374px;
+}
 
 html {
   scroll-behavior: smooth;
@@ -9,7 +36,7 @@ html {
 body {
   @include roboto;
   font-size: 1.6rem;
-  background-color: $neutral;
+  background-color: var(--neutral);
 }
 
 .page {
