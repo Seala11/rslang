@@ -2,7 +2,7 @@
 @use 'src/sass/abstracts/mixins' as *;
 
 .wrapper {
-  min-height: calc(100vh - 250px);
+  min-height: calc(100vh - 200px);
 }
 
 .title {
@@ -28,7 +28,7 @@
   border: solid $stroke 0.04rem;
   box-shadow: 0 2.5rem 5rem rgba(22, 25, 79, 0.05);
   padding: 0.5rem;
-  margin-bottom: 2rem;
+  // margin-bottom: 2rem;
   height: 3rem;
   border-radius: 0.5rem;
 }
@@ -37,6 +37,10 @@
   @include roboto($ff: $ff-roboto-regular, $fs: 1.6rem, $lh: 1.5);
   display: flex;
   flex-direction: column;
+
+  &_password {
+    position: relative;
+  }
 }
 
 .button {
@@ -51,7 +55,7 @@
   margin: 3rem 0;
 
   &:hover {
-    background-color: darken($accent, 8%);
+    color: $stroke;
   }
   &:active {
     top: 0.2rem;
@@ -63,5 +67,30 @@
 
   &:hover {
     color: rgb(59, 58, 58);
+  }
+}
+
+.error {
+  color: red;
+  margin-bottom: 2rem;
+}
+
+.password {
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  width: 2rem;
+  height: 2rem;
+  position: absolute;
+  right: 6px;
+  bottom: 5px;
+  background-color: transparent;
+
+  &_show {
+    background-image: url('../../../public/assets/icons/show.svg');
+  }
+
+  &_hide {
+    background-image: url('../../../public/assets/icons/hide.svg');
   }
 }
