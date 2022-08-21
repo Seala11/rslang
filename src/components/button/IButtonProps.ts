@@ -1,8 +1,6 @@
 import React from 'react';
 
-export interface IButtonProps {
-  children: React.ReactElement[] | React.ReactElement | string;
-  className?: string;
+export interface IButtonProps extends React.HTMLAttributes<HTMLDivElement> {
   handler?: () => void;
   disabled?: boolean;
 }
