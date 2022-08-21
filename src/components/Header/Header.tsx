@@ -2,7 +2,7 @@ import React from 'react';
 import { NavLink } from 'react-router-dom';
 import styles from 'src/components/Header/Header.module.scss';
 import NAV_LIST from 'src/data/navigation';
-import Image from '../Image';
+import Image from 'src/components/Image';
 
 const Header: React.FC = () => (
   <header className={styles.header}>

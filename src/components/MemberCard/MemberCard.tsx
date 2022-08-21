@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from 'src/components/MemberCard/MemberCard.module.scss';
-import { IMemberCardProps } from './IMemberCardProps';
-import Image from '../Image';
+import { IMemberCardProps } from 'src/components/MemberCard/IMemberCardProps';
+import Image from 'src/components/Image';
 
 const MemberCard: React.FC<IMemberCardProps> = ({ name, tasks, altImg, srcImg }) => (
   <div className={styles.member}>
