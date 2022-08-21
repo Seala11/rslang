@@ -18,7 +18,13 @@
   }
 
   &__title {
-    @include roboto($ff: var(--ff-roboto-regular), $fs: 5rem, $fw: 700, $lh: 1.2, $color: var(--primary));
+    @include roboto(
+      $ff: var(--ff-roboto-regular),
+      $fs: 5rem,
+      $fw: 700,
+      $lh: 1.2,
+      $color: var(--primary)
+    );
     text-align: center;
   }
 }

@@ -21,7 +21,12 @@
     text-align: center;
   }
   &__descr {
-    @include roboto($ff: var(--ff-roboto-regular), $fs: 2rem, $lh: 1.5, $color: var(--secundary-light));
+    @include roboto(
+      $ff: var(--ff-roboto-regular),
+      $fs: 2rem,
+      $lh: 1.5,
+      $color: var(--secundary-light)
+    );
     text-align: center;
   }
 }
