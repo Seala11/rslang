@@ -11,6 +11,11 @@ const WordDetails: React.FC<IWordDetailsProps> = ({ word }) => {
   const [stop, setStop] = useState(false);
   const [disabled, setDisabled] = useState(false);
 
+  const stopAudio = () => {
+    player.pause();
+    audioCounter = 0;
+  };
+
   const playAudio = useCallback(async () => {
     const audioSources = [
       `${UrlPath.BASE}/${word?.audio}`,
@@ -19,21 +24,16 @@ const WordDetails: React.FC<IWordDetailsProps> = ({ word }) => {
     ];
 
     if (audioCounter >= audioSources.length) {
-      audioCounter = 0;
-      return false;
+      stopAudio();
+      setDisabled(false);
+      setStop(false);
+      return;
     }
 
     player.src = audioSources[audioCounter];
     await player.play();
     audioCounter += 1;
-
-    return true;
   }, [word]);
-
-  const stopAudio = () => {
-    player.pause();
-    audioCounter = 0;
-  };
 
   useEffect(() => {
     player = new Audio();
@@ -47,8 +47,8 @@ const WordDetails: React.FC<IWordDetailsProps> = ({ word }) => {
     return () => {
       player.removeEventListener('ended', playerHandler);
       stopAudio();
-      setStop(false);
       setDisabled(false);
+      setStop(false);
     };
   }, [playAudio, word]);
 
@@ -59,8 +59,8 @@ const WordDetails: React.FC<IWordDetailsProps> = ({ word }) => {
   };
 
   const stopClickHandler = () => {
-    setDisabled(false);
     stopAudio();
+    setDisabled(false);
     setStop(false);
   };
 
