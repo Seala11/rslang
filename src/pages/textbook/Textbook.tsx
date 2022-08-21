@@ -4,8 +4,8 @@ import { fetchCurrentPageWords, selectCurrentPageWords } from 'src/store/wordsSl
 import { useSearchParams } from 'react-router-dom';
 import { IWord } from 'src/store/types';
 import { Navigate } from 'src/helpers/constants';
-import WordList from 'src/section/word-list';
-import GroupList from 'src/section/group-list';
+import WordList from 'src/containers/word-list';
+import GroupList from 'src/containers/group-list';
 import styles from './Textbook.module.scss';
 
 const Textbook = () => {
