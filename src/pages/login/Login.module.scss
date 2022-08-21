@@ -1,4 +1,3 @@
-@use 'src/sass/abstracts/variables' as *;
 @use 'src/sass/abstracts/mixins' as *;
 
 .wrapper {
@@ -6,8 +5,8 @@
 }
 
 .title {
-  @include roboto($fs: 4rem, $ff: $ff-roboto-bold, $fw: 700);
-  color: $primary;
+  @include roboto($fs: 4rem, $ff: var(--ff-roboto-bold), $fw: 700);
+  color: var(--primary);
   text-align: center;
   padding: 12rem 0 2rem;
 }

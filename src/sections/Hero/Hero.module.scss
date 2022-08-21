@@ -1,0 +1,39 @@
+@use 'src/sass/abstracts/mixins' as *;
+
+.hero {
+  display: flex;
+  padding: 2.5rem 13rem 6.7rem 15rem;
+  justify-content: center;
+  gap: 17rem;
+  background-color: var(--secundary-dark);
+  margin-bottom: 12rem;
+
+  &__info {
+    display: flex;
+    flex-direction: column;
+    margin-top: 9.5rem;
+    gap: 3rem;
+    max-width: 39.5rem;
+  }
+
+  &__title {
+    @include roboto(
+      $ff: var(--ff-roboto-regular),
+      $fs: 6rem,
+      $fw: 600,
+      $lh: 1.4,
+      $color: var(--light)
+    );
+  }
+
+  &__text {
+    @include roboto(
+      $ff: var(--ff-roboto-regular),
+      $fs: 2rem,
+      $fw: 400,
+      $lh: 1.2,
+      $color: var(--light)
+    );
+    letter-spacing: 0.04rem;
+  }
+}

@@ -1,25 +1,24 @@
-@use 'src/sass/abstracts/variables' as *;
 @use 'src/sass/abstracts/mixins' as *;
 
 .button {
   @include roboto;
   cursor: pointer;
-  border: 0.1rem solid $accent;
-  background-color: $accent;
-  color: $light;
+  border: 0.1rem solid var(--accent);
+  background-color: var(--accent);
+  color: var(--light);
   margin-right: 0.8rem;
 
   &:hover {
-    background-color: $accent-light;
+    background-color: var(--accent-light);
   }
 
   &_disabled {
-    border: 0.1rem solid $secundary-light;
-    background-color: $secundary-light;
+    border: 0.1rem solid var(--secundary-light);
+    background-color: var(--secundary-light);
     cursor: auto;
 
     &:hover {
-      background-color: $secundary-light;
+      background-color: var(--secundary-light);
     }
   }
 }
