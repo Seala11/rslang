@@ -13,13 +13,16 @@
   box-shadow: 0 2.5rem 5rem rgba(22, 25, 79, 0.05);
   transition: all 0.2s;
   cursor: pointer;
+
   &:hover {
     transform: scale(1.1);
   }
+
   &__name {
     @include roboto($ff: var(--ff-roboto-regular), $fs: 4rem, $lh: 1.5, $color: var(--black));
     text-align: center;
   }
+
   &__descr {
     @include roboto(
       $ff: var(--ff-roboto-regular),

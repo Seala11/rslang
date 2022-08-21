@@ -1,7 +1,7 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 import styles from 'src/components/Header/Header.module.scss';
-import NAV_LIST from 'src/data/NAV_LIST';
+import NAV_LIST from 'src/data/navigation';
 import Image from '../Image';
 
 const Header: React.FC = () => (
@@ -11,7 +11,7 @@ const Header: React.FC = () => (
       <nav className={styles.nav}>
         <ul className={styles.nav__list}>
           {NAV_LIST.map((item) => (
-            <li className={styles.nav__item}>
+            <li key={item.name} className={styles.nav__item}>
               <NavLink
                 className={({ isActive }) =>
                   isActive ? styles.nav__link_active : styles.nav__link

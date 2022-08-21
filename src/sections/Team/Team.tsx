@@ -1,6 +1,6 @@
 import React from 'react';
 import styles from 'src/sections/Team/Team.module.scss';
-import DEVELOPERS_LIST from 'src/data/DEVELOPERS_LIST';
+import DEVELOPERS_LIST from 'src/data/developers';
 import MemberCard from 'src/components/MemberCard';
 
 const Team: React.FC = () => (
@@ -9,7 +9,7 @@ const Team: React.FC = () => (
     <div className={styles.team__wrapper}>
       {DEVELOPERS_LIST.map((item) => {
         const { name, tasks, altImg, srcImg } = item;
-        return <MemberCard {...{ name, tasks, altImg, srcImg }} />;
+        return <MemberCard key={item.id} {...{ name, tasks, altImg, srcImg }} />;
       })}
     </div>
   </section>

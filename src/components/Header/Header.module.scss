@@ -3,6 +3,7 @@
 .header {
   background-color: var(--secundary-dark);
   @include roboto($ff: var(--ff-roboto-regular), $fs: 2rem, $lh: 1.5);
+
   &__wrapper {
     display: flex;
     padding: 6rem 8rem;
@@ -18,17 +19,21 @@
 .nav {
   display: flex;
   gap: 5rem;
+
   &__list {
     display: flex;
     align-items: center;
     gap: 5rem;
   }
+
   &__link {
     color: var(--light);
     transition: all 0.2s;
+
     &:hover {
       color: var(--accent);
     }
+
     &_active {
       color: var(--accent);
     }
@@ -44,9 +49,11 @@
   color: var(--light);
   transition: all 0.2s;
   position: relative;
+
   &:hover {
     color: var(--stroke);
   }
+
   &:active {
     top: 0.2rem;
   }

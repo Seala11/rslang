@@ -1,6 +1,6 @@
 import React from 'react';
 import styles from 'src/sections/Menu/Menu.module.scss';
-import MENU_LIST from 'src/data/MENU_LIST';
+import MENU_LIST from 'src/data/menu';
 import MenuCard from 'src/components/MenuCard/MenuCard';
 
 const Menu: React.FC = () => (
@@ -9,7 +9,7 @@ const Menu: React.FC = () => (
     <div className={styles.menu__wrapper}>
       {MENU_LIST.map((item) => {
         const { title, path, altImg, srcImg, text } = item;
-        return <MenuCard {...{ title, path, altImg, srcImg, text }} />;
+        return <MenuCard key={item.id} {...{ title, path, altImg, srcImg, text }} />;
       })}
     </div>
   </section>

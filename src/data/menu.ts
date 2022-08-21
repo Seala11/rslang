@@ -1,5 +1,6 @@
 const MENU_LIST = [
   {
+    id: 1,
     title: 'Учебник',
     path: '/textbook',
     srcImg: 'assets/images/textbook.png',
@@ -8,6 +9,7 @@ const MENU_LIST = [
     Возможность выбрать подходящий уровень`,
   },
   {
+    id: 2,
     title: 'Игры',
     path: '/games',
     srcImg: 'assets/images/games.png',
@@ -15,6 +17,7 @@ const MENU_LIST = [
     text: 'Мини-игры "Аудиовызов" и "Спринт"',
   },
   {
+    id: 3,
     title: 'Статистика',
     path: '/statistics',
     srcImg: 'assets/images/statistics.png',

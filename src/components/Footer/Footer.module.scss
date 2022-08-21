@@ -3,6 +3,7 @@
 .footer {
   background-color: var(--neutral-dark);
   @include roboto($ff: var(--ff-roboto-regular), $fs: 2rem, $lh: 1.5);
+
   &__wrapper {
     display: flex;
     justify-content: space-between;
@@ -15,12 +16,15 @@
   gap: 6.5rem;
   color: var(--secundary-dark);
 }
+
 .rsLink {
   transition: all 0.2s;
+
   &:hover {
     color: var(--secundary-light);
   }
 }
+
 .gitList {
   display: flex;
   gap: 2.5rem;
@@ -29,6 +33,7 @@
 .gitLink {
   color: var(--secundary-light);
   transition: all 0.2s;
+
   &:hover {
     color: var(--secundary-dark);
   }
