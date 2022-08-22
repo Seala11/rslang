@@ -1,6 +1,6 @@
 import React from 'react';
-import styles from 'src/components/button/Button.module.scss';
-import { IButtonProps } from 'src/components/button/IButtonProps';
+import styles from 'src/components/Button/Button.module.scss';
+import { IButtonProps } from './IButtonProps';
 
 const Button: React.FC<IButtonProps> = ({ children, className = '', handler, disabled }) => (
   <button

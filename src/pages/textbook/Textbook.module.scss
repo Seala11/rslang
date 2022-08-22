@@ -1,9 +1,9 @@
-@use 'src/sass/abstracts/variables' as *;
 @use 'src/sass/abstracts/mixins' as *;
 
 .title {
-  @include roboto($fs: 4rem, $ff: $ff-roboto-bold, $fw: 700, $color: $primary);
   margin-bottom: 30px;
+  color: var(--primary);
+  @include roboto($fs: 4rem, $ff: var(--ff-roboto-bold), $fw: 700);
   transition: color 0.5s;
 }
 
