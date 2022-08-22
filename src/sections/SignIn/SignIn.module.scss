@@ -1,0 +1,22 @@
+@use 'src/sass/abstracts/mixins' as *;
+
+.title {
+  @include roboto($fs: 4rem, $ff: var(--ff-roboto-bold), $fw: 700);
+  color: var(--primary);
+  text-align: center;
+  padding: 12rem 0 2rem;
+}
+
+.subtitle {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.link {
+  @include roboto($fs: 1.6rem, $ff: var(--ff-roboto-bold), $fw: 700);
+
+  &:hover {
+    color: rgb(59, 58, 58);
+  }
+}
+

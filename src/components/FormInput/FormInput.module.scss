@@ -1,0 +1,62 @@
+@use 'src/sass/abstracts/mixins' as *;
+
+.input {
+  border: solid var(--stroke) 0.04rem;
+  box-shadow: 0 2.5rem 5rem rgba(22, 25, 79, 0.05);
+  padding: 2rem 0.8rem;
+  height: 3rem;
+  border-radius: 0.5rem;
+  margin: 0 0 0.4rem;
+
+  &_error {
+    border: solid var(--accent) 0.04rem;
+  }
+
+  &:focus-visible {
+    outline: solid #809ddf 0.1rem;
+  }
+}
+
+.label {
+  @include roboto($ff: var(--ff-roboto-regular), $fs: 1.4rem, $lh: 1.2);
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.error {
+  color: var(--accent);
+  margin-bottom: 1rem;
+  transition: visibility 150ms ease-in-out, opacity 150ms ease-in-out;
+
+  &_show {
+    visibility: visible;
+    opacity: 1;
+  }
+
+  &_hide {
+    visibility: hidden;
+    opacity: 0;
+  }
+}
+
+.password {
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  width: 2rem;
+  height: 2rem;
+  position: absolute;
+  right: 0.8rem;
+  bottom: 1.5rem;
+  background-color: transparent;
+  transition: background-image 150ms ease-in-out;
+
+  &_show {
+    background-image: url('../../../public/assets/icons/show.svg');
+  }
+
+  &_hide {
+    background-image: url('../../../public/assets/icons/hide.svg');
+  }
+}
