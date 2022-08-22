@@ -56,22 +56,22 @@ const Textbook = () => {
   };
 
   return (
-    <div className={`${styles.container} ${styles[`group_${group}`]}`}>
-      <h1 className={styles.title}>Учебник</h1>
-      <GroupList onGroupClick={handleGroupClick} group={group} />
-
-      <h2 className={`${styles.title} ${styles.titleColor}`}>Слова</h2>
-      <WordList
-        unit={unit}
-        words={currentPageWords}
-        wordDetails={wordDetails}
-        onWordClick={handleWordClick}
-        onPageNavigate={handlePageNavigate}
-        onPaginationClick={handlePaginationClick}
-      />
-
-      <h2 className={styles.title}>Игры</h2>
-    </div>
+    <main className={styles.main}>
+      <div className={`${styles.container} ${styles[`group_${group}`]}`}>
+        <h1 className={styles.title}>Учебник</h1>
+        <GroupList onGroupClick={handleGroupClick} group={group} />
+        <h2 className={`${styles.title} ${styles.titleColor}`}>Слова</h2>
+        <WordList
+          unit={unit}
+          words={currentPageWords}
+          wordDetails={wordDetails}
+          onWordClick={handleWordClick}
+          onPageNavigate={handlePageNavigate}
+          onPaginationClick={handlePaginationClick}
+        />
+        <h2 className={styles.title}>Игры</h2>
+      </div>
+    </main>
   );
 };
 
