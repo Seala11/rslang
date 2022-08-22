@@ -1,6 +1,7 @@
 import React from 'react';
 import styles from 'src/containers/login/FormInput/FormInput.module.scss';
 import { IFormInputProps } from 'src/containers/login/FormInput/IFormInputProps';
+import { IInputTypes } from 'src/data/registration';
 
 const FormInput: React.FC<IFormInputProps> = ({
   name,
@@ -14,9 +15,9 @@ const FormInput: React.FC<IFormInputProps> = ({
   showError,
   values,
 }) => {
-  const passwordType = name === 'signin-password' || name === 'login-password';
-  const nameType = name === 'signin-name' || name === 'login-name';
-  const emailType = name === 'signin-email' || name === 'login-email';
+  const passwordType = name === IInputTypes.PASSPASSWORD1 || name === IInputTypes.PASSPASSWORD2;
+  const nameType = name === IInputTypes.NAME1 || name === IInputTypes.NAME2;
+  const emailType = name === IInputTypes.EMAIL1 || name === IInputTypes.EMAIL2;
   if (passwordType) {
     return (
       <>

@@ -1,15 +1,10 @@
 import React from 'react';
 import styles from 'src/containers/login/Form/Form.module.scss';
 import FormInput from 'src/containers/login/FormInput';
+import { IInputTypes } from 'src/data/registration';
 import ILoginFormProps from './IFormProps';
 
-const Form: React.FC<ILoginFormProps> = ({
-  inputsData,
-  text,
-  inputValues,
-  error,
-  password,
-}) => {
+const Form: React.FC<ILoginFormProps> = ({ inputsData, text, inputValues, error, password }) => {
   const { values, setValues } = inputValues;
   const { showError, setShowError } = error;
   const { passwordShown, setPasswordShown } = password;
@@ -20,19 +15,20 @@ const Form: React.FC<ILoginFormProps> = ({
 
   const inputHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
     switch (event.target.id) {
-      case 'signin-name':
-      case 'login-name':
+      case IInputTypes.NAME1:
+      case IInputTypes.NAME2: {
         setValues({ ...values, name: event.target.value });
         if (showError.name) setShowError({ ...showError, name: false });
         break;
-      case 'signin-password':
-      case 'login-password': {
+      }
+      case IInputTypes.PASSPASSWORD1:
+      case IInputTypes.PASSPASSWORD2: {
         setValues({ ...values, password: event.target.value });
         if (showError.password) setShowError({ ...showError, password: false });
         break;
       }
-      case 'signin-email':
-      case 'login-email': {
+      case IInputTypes.EMAIL1:
+      case IInputTypes.EMAIL2: {
         setValues({ ...values, email: event.target.value });
         if (showError.email) setShowError({ ...showError, email: false });
       }
