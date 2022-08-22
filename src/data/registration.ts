@@ -1,20 +1,20 @@
 export const SIGNIN_INPUTS = [
   {
-    name: 'name',
+    name: 'signin-name',
     type: 'text',
     label: 'Имя',
     placeholder: 'Вася',
     errorMessage: 'Введите имя',
   },
   {
-    name: 'email',
+    name: 'signin-email',
     type: 'email',
     label: 'Почта',
     placeholder: 'example@gmail.com',
     errorMessage: 'Введите корректный адрес почты',
   },
   {
-    name: 'password',
+    name: 'signin-password',
     type: 'password',
     label: 'Пароль',
     placeholder: 'Не менее 8 символов',
@@ -24,14 +24,14 @@ export const SIGNIN_INPUTS = [
 
 export const LOGIN_INPUTS = [
   {
-    name: 'email',
+    name: 'login-email',
     type: 'email',
     label: 'Почта',
     placeholder: 'example@gmail.com',
     errorMessage: 'Введите корректный адрес почты',
   },
   {
-    name: 'password',
+    name: 'login-password',
     type: 'password',
     label: 'Пароль',
     placeholder: 'Не менее 8 символов',

@@ -5,7 +5,7 @@ import { SIGNIN_INPUTS } from 'src/data/registration';
 import ISignInProps from './ISignInProps';
 import LoginForm from '../LoginForm';
 
-const SignIn: React.FC<ISignInProps> = ({ showSignIn, setShowSignIn }) => {
+const SignIn: React.FC<ISignInProps> = ({ setShowSignIn }) => {
   const handler = () => {
     console.log('switch to register');
     setShowSignIn((showState) => !showState);
@@ -13,7 +13,7 @@ const SignIn: React.FC<ISignInProps> = ({ showSignIn, setShowSignIn }) => {
   return (
     <>
       <h1 className={styles.title}>Регистрация</h1>
-      <LoginForm inputsData={SIGNIN_INPUTS} showSignIn={showSignIn} text='Зарегистрироваться' />
+      <LoginForm inputsData={SIGNIN_INPUTS} text='Зарегистрироваться' />
       <p className={styles.subtitle}>
         Уже есть аккаунт?
         <button type='button' className={styles.link} onClick={handler}>

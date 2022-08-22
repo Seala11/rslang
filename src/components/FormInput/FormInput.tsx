@@ -13,7 +13,10 @@ const FormInput: React.FC<IFormInputProps> = ({
   inputHandler,
   showError,
 }) => {
-  if (name === 'password') {
+  const passwordType = name === 'signin-password' || name === 'login-password';
+  const nameType = name === 'signin-name' || name === 'login-name';
+  const emailType = name === 'signin-email' || name === 'login-email';
+  if (passwordType) {
     return (
       <>
         <label htmlFor={name} className={styles.label}>
@@ -55,13 +58,13 @@ const FormInput: React.FC<IFormInputProps> = ({
           id={name}
           type={type}
           className={`${styles.input} ${
-            name === 'email' && showError.email ? styles.input_error : ''
-          } ${name === 'name' && showError.name ? styles.input_error : ''}`}
+            emailType && showError.email ? styles.input_error : ''
+          } ${nameType  && showError.name ? styles.input_error : ''}`}
           placeholder={placeholder}
           onChange={inputHandler}
         />
       </label>
-      {name === 'email' ? (
+      {emailType ? (
         <small
           className={`${styles.error} ${showError.email ? styles.error_show : styles.error_hide}`}
         >

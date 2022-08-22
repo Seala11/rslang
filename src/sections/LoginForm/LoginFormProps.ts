@@ -1,5 +1,4 @@
 export default interface ISignInFormProps {
-  showSignIn?: boolean;
   inputsData: TInput[];
   text: string;
 }

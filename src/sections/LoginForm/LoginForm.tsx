@@ -3,7 +3,7 @@ import styles from 'src/sections/LoginForm/LoginForm.module.scss';
 import FormInput from 'src/components/FormInput';
 import ISignInFormProps from './LoginFormProps';
 
-const LoginForm: React.FC<ISignInFormProps> = ({ showSignIn, inputsData, text }) => {
+const LoginForm: React.FC<ISignInFormProps> = ({ inputsData, text }) => {
   const [values, setValues] = useState({ name: '', password: '', email: '' });
   const [showError, setShowError] = useState({ name: false, password: false, email: false });
   const [passwordShown, setPasswordShown] = useState(false);
@@ -54,14 +54,14 @@ const LoginForm: React.FC<ISignInFormProps> = ({ showSignIn, inputsData, text })
   return (
     <form
       action='submit'
-      className={`${styles.form} ${showSignIn ? styles.signin : styles.login}`}
+      className={`${styles.form} `}
       onSubmit={handleSubmit}
     >
       {inputsData.map((input) => {
         const { name, type, label, placeholder, errorMessage } = input;
         return (
           <FormInput
-            key={input.name}
+            key={name}
             {...{
               name,
               type,
