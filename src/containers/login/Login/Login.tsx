@@ -1,8 +1,8 @@
 import React from 'react';
-import styles from 'src/sections/Login/Login.module.scss';
-import LoginForm from 'src/sections/LoginForm';
+import styles from 'src/containers/login/Login/Login.module.scss';
+import LoginForm from 'src/containers/login/Form';
 import { LOGIN_INPUTS } from 'src/data/registration';
-import ILoginProps from './ILoginProps';
+import ILoginProps from 'src/containers/login/Login/ILoginProps';
 
 const Login: React.FC<ILoginProps> = ({ setShowSignIn, inputValues, error, password }) => {
   const { values, setValues } = inputValues;

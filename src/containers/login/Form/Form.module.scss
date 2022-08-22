@@ -7,16 +7,6 @@
   width: 100%;
 }
 
-// .signin {
-//   justify-content: center;
-//   background-color: aquamarine;
-// }
-
-// .login {
-//   justify-content: baseline;
-//   background-color: rgb(68, 60, 60);
-// }
-
 .button {
   @include roboto($ff: var(--ff-roboto-regular), $fs: 1.6rem, $lh: 1.5);
   width: 100%;

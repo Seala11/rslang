@@ -53,10 +53,10 @@
   transition: background-image 150ms ease-in-out;
 
   &_show {
-    background-image: url('../../../public/assets/icons/show.svg');
+    background-image: url('../../../../public/assets/icons/show.svg');
   }
 
   &_hide {
-    background-image: url('../../../public/assets/icons/hide.svg');
+    background-image: url('../../../../public/assets/icons/hide.svg');
   }
 }

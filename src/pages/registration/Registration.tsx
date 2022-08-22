@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styles from 'src/pages/registration/Registration.module.scss';
-import Login from 'src/sections/Login';
-import SignIn from 'src/sections/SignIn/SignIn';
+import Login from 'src/containers/login/Login';
+import SignIn from 'src/containers/login/SignIn';
 
 const Registration: React.FC = () => {
   const [showSignIn, setShowSignIn] = useState(true);

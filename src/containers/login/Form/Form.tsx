@@ -1,9 +1,9 @@
 import React from 'react';
-import styles from 'src/sections/LoginForm/LoginForm.module.scss';
-import FormInput from 'src/components/FormInput';
-import ILoginFormProps from './ILoginFormProps';
+import styles from 'src/containers/login/Form/Form.module.scss';
+import FormInput from 'src/containers/login/FormInput';
+import ILoginFormProps from './IFormProps';
 
-const LoginForm: React.FC<ILoginFormProps> = ({
+const Form: React.FC<ILoginFormProps> = ({
   inputsData,
   text,
   inputValues,
@@ -82,4 +82,4 @@ const LoginForm: React.FC<ILoginFormProps> = ({
   );
 };
 
-export default LoginForm;
+export default Form;
