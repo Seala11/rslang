@@ -23,7 +23,7 @@ const Header: React.FC = () => (
             </li>
           ))}
           <li className={styles.nav__item}>
-            <NavLink to='/login'>
+            <NavLink to='/registration'>
               <button className={styles.logBtn} type='button'>
                 Войти
               </button>

@@ -1,4 +1,4 @@
-const LOGIN_INPUTS = [
+export const SIGNIN_INPUTS = [
   {
     name: 'name',
     type: 'text',
@@ -22,4 +22,20 @@ const LOGIN_INPUTS = [
   },
 ];
 
-export default LOGIN_INPUTS;
+export const LOGIN_INPUTS = [
+  {
+    name: 'email',
+    type: 'email',
+    label: 'Почта',
+    placeholder: 'example@gmail.com',
+    errorMessage: 'Введите корректный адрес почты',
+  },
+  {
+    name: 'password',
+    type: 'password',
+    label: 'Пароль',
+    placeholder: 'Не менее 8 символов',
+    errorMessage: 'Пароль должен содержать не менее 8 символов',
+  },
+];
+

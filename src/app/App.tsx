@@ -1,6 +1,6 @@
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
-import { Home, Textbook, Statistics, Games, Login } from 'src/pages';
+import { Home, Textbook, Statistics, Games, Registration } from 'src/pages';
 import WordsByGroup from 'src/pages/textbook/WordsByGroup';
 import Header from 'src/components/Header';
 import Footer from 'src/components/Footer';
@@ -16,7 +16,7 @@ const App: React.FC = () => (
       </Route>
       <Route path='/games' element={<Games />} />
       <Route path='/statistics' element={<Statistics />} />
-      <Route path='/login' element={<Login />} />
+      <Route path='/registration' element={<Registration />} />
     </Routes>
 
     <Footer />

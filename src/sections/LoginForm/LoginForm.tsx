@@ -1,11 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import styles from 'src/sections/SignIn/SignInForm/SignInForm.module.scss';
-import LOGIN_INPUTS from 'src/data/registration';
+import styles from 'src/sections/LoginForm/LoginForm.module.scss';
 import FormInput from 'src/components/FormInput';
+import ISignInFormProps from './LoginFormProps';
 
-const SignInForm = () => {
-  console.log('here');
-
+const LoginForm: React.FC<ISignInFormProps> = ({ showSignIn, inputsData, text }) => {
   const [values, setValues] = useState({ name: '', password: '', email: '' });
   const [showError, setShowError] = useState({ name: false, password: false, email: false });
   const [passwordShown, setPasswordShown] = useState(false);
@@ -39,23 +37,27 @@ const SignInForm = () => {
     }
   };
 
+  const validEmail = (email: string) => /\S+@\S+\.\S+/.test(email);
+
   const handleSubmit = (event: React.ChangeEvent<HTMLFormElement>) => {
     event.preventDefault();
     console.log(values);
 
     if (values.password.trim().length < 8)
       setShowError((prevState) => ({ ...prevState, password: true }));
-    if (values.name.trim().length < 1) setShowError((prevState) => ({ ...prevState, name: true }));
-    // TODO: password validation
-    if (values.email.trim().length < 1)
+    if (values.name.trim().length < 2) setShowError((prevState) => ({ ...prevState, name: true }));
+    if (!validEmail(values.email.trim()))
       setShowError((prevState) => ({ ...prevState, email: true }));
 
     console.log(showError);
   };
   return (
-    <form action='submit' className={styles.form} onSubmit={handleSubmit}>
-
-      {LOGIN_INPUTS.map((input) => {
+    <form
+      action='submit'
+      className={`${styles.form} ${showSignIn ? styles.signin : styles.login}`}
+      onSubmit={handleSubmit}
+    >
+      {inputsData.map((input) => {
         const { name, type, label, placeholder, errorMessage } = input;
         return (
           <FormInput
@@ -74,12 +76,11 @@ const SignInForm = () => {
           />
         );
       })}
-
       <button className={styles.button} type='submit'>
-        Зарегистрироваться
+        {text}
       </button>
     </form>
   );
 };
 
-export default SignInForm;
+export default LoginForm;
