@@ -1,35 +1,38 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import styles from 'src/sections/LoginForm/LoginForm.module.scss';
 import FormInput from 'src/components/FormInput';
-import ISignInFormProps from './LoginFormProps';
+import ILoginFormProps from './ILoginFormProps';
 
-const LoginForm: React.FC<ISignInFormProps> = ({ inputsData, text }) => {
-  const [values, setValues] = useState({ name: '', password: '', email: '' });
-  const [showError, setShowError] = useState({ name: false, password: false, email: false });
-  const [passwordShown, setPasswordShown] = useState(false);
-
-  useEffect(() => {
-    console.log(showError);
-  }, [showError]);
+const LoginForm: React.FC<ILoginFormProps> = ({
+  inputsData,
+  text,
+  inputValues,
+  error,
+  password,
+}) => {
+  const { values, setValues } = inputValues;
+  const { showError, setShowError } = error;
+  const { passwordShown, setPasswordShown } = password;
 
   const togglePassword = () => {
     setPasswordShown(!passwordShown);
   };
 
   const inputHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
-    console.log(event.target);
-
     switch (event.target.id) {
-      case 'name':
+      case 'signin-name':
+      case 'login-name':
         setValues({ ...values, name: event.target.value });
         if (showError.name) setShowError({ ...showError, name: false });
         break;
-      case 'password': {
+      case 'signin-password':
+      case 'login-password': {
         setValues({ ...values, password: event.target.value });
         if (showError.password) setShowError({ ...showError, password: false });
         break;
       }
-      case 'email': {
+      case 'signin-email':
+      case 'login-email': {
         setValues({ ...values, email: event.target.value });
         if (showError.email) setShowError({ ...showError, email: false });
       }
@@ -37,11 +40,10 @@ const LoginForm: React.FC<ISignInFormProps> = ({ inputsData, text }) => {
     }
   };
 
-  const validEmail = (email: string) => /\S+@\S+\.\S+/.test(email);
+  const validEmail = (email: string) => /[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]$/.test(email);
 
   const handleSubmit = (event: React.ChangeEvent<HTMLFormElement>) => {
     event.preventDefault();
-    console.log(values);
 
     if (values.password.trim().length < 8)
       setShowError((prevState) => ({ ...prevState, password: true }));
@@ -52,11 +54,7 @@ const LoginForm: React.FC<ISignInFormProps> = ({ inputsData, text }) => {
     console.log(showError);
   };
   return (
-    <form
-      action='submit'
-      className={`${styles.form} `}
-      onSubmit={handleSubmit}
-    >
+    <form action='submit' className={`${styles.form} `} onSubmit={handleSubmit} noValidate>
       {inputsData.map((input) => {
         const { name, type, label, placeholder, errorMessage } = input;
         return (
@@ -72,6 +70,7 @@ const LoginForm: React.FC<ISignInFormProps> = ({ inputsData, text }) => {
               togglePassword,
               inputHandler,
               showError,
+              values,
             }}
           />
         );

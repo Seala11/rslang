@@ -4,14 +4,26 @@ import LoginForm from 'src/sections/LoginForm';
 import { LOGIN_INPUTS } from 'src/data/registration';
 import ILoginProps from './ILoginProps';
 
-const Login: React.FC<ILoginProps> = ({ setShowSignIn }) => {
+const Login: React.FC<ILoginProps> = ({ setShowSignIn, inputValues, error, password }) => {
+  const { values, setValues } = inputValues;
+  const { showError, setShowError } = error;
+  const { passwordShown, setPasswordShown } = password;
+
   const handler = () => {
     setShowSignIn((showState) => !showState);
+    setShowError({ name: false, email: false, password: false });
+    setPasswordShown(() => false);
   };
   return (
     <>
       <h1 className={styles.title}>Войти</h1>
-      <LoginForm inputsData={LOGIN_INPUTS} text='Войти' />
+      <LoginForm
+        inputValues={{ values, setValues }}
+        error={{ showError, setShowError }}
+        password={{ passwordShown, setPasswordShown }}
+        inputsData={LOGIN_INPUTS}
+        text='Войти'
+      />
       <p className={styles.subtitle}>
         Еще нет аккаунта?
         <button type='button' className={styles.link} onClick={handler}>

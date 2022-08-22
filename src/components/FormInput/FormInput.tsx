@@ -12,6 +12,7 @@ const FormInput: React.FC<IFormInputProps> = ({
   togglePassword,
   inputHandler,
   showError,
+  values,
 }) => {
   const passwordType = name === 'signin-password' || name === 'login-password';
   const nameType = name === 'signin-name' || name === 'login-name';
@@ -25,6 +26,7 @@ const FormInput: React.FC<IFormInputProps> = ({
             name={name}
             id={name}
             type={passwordShown ? 'text' : 'password'}
+            value={values.password}
             className={`${styles.input} ${showError.password ? styles.input_error : ''}`}
             placeholder={placeholder}
             onChange={inputHandler}
@@ -57,9 +59,10 @@ const FormInput: React.FC<IFormInputProps> = ({
           name={name}
           id={name}
           type={type}
-          className={`${styles.input} ${
-            emailType && showError.email ? styles.input_error : ''
-          } ${nameType  && showError.name ? styles.input_error : ''}`}
+          value={emailType ? values.email : values.name}
+          className={`${styles.input} ${emailType && showError.email ? styles.input_error : ''} ${
+            nameType && showError.name ? styles.input_error : ''
+          }`}
           placeholder={placeholder}
           onChange={inputHandler}
         />

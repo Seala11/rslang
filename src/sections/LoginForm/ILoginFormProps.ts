@@ -1,4 +1,6 @@
-export default interface ISignInFormProps {
+import { IInputsValues } from 'src/sections/SignIn/ISignInProps';
+
+export default interface ISignInFormProps extends IInputsValues {
   inputsData: TInput[];
   text: string;
 }
