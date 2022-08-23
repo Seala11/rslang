@@ -73,6 +73,10 @@ export const fetchCreateUser = (userData: IUser) => async (dispatch: AppDispatch
     }
   } catch (err) {
     throw new Error();
+  } finally {
+    setTimeout(() => {
+      dispatch(addErrorMessage([]));
+    }, 10000);
   }
 };
 

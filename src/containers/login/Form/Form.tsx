@@ -1,6 +1,3 @@
-// import React, { useEffect } from 'react';
-// import { useAppDispatch, useAppSelector } from 'src/store/hooks';
-// import { fetchCreateUser, getErrors, fetchSignInUser } from 'src/store/userSlice';
 import React from 'react';
 import { useAppDispatch } from 'src/store/hooks';
 import { fetchCreateUser, fetchSignInUser } from 'src/store/userSlice';
@@ -25,15 +22,10 @@ const Form: React.FC<ILoginFormProps> = ({
   const { setShowPopUp } = popUp;
 
   const dispatch = useAppDispatch();
-  // const errorMessages = useAppSelector(getErrors);
 
   const togglePassword = () => {
     setPasswordShown(!passwordShown);
   };
-
-  // useEffect(() => {
-  //   if (errorMessages.length > 0) setShowPopUp(() => true);
-  // }, [errorMessages, setShowPopUp]);
 
   const inputHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
     setShowPopUp(() => false);
@@ -110,15 +102,6 @@ const Form: React.FC<ILoginFormProps> = ({
           />
         );
       })}
-      {/* {showPopUp ? (
-        <div className={styles.popup}>
-          {errorMessages.map((err) => (
-            <div key={err}>{err}</div>
-          ))}
-        </div>
-      ) : (
-        ''
-      )} */}
       <button className={styles.button} type='submit'>
         {text}
       </button>

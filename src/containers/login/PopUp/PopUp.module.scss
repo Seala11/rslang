@@ -8,12 +8,49 @@
   right: 1rem;
   background-color: #e190a5;
   border-radius: 2rem;
+  transition: visibility 150ms ease-in-out, opacity 150ms ease-in-out;
+  -webkit-animation: pop-up 10s ease forwards; /*trigger the keyframe*/
+  animation: pop-up 10s ease forwards; /*trigger the keyframe*/
 }
 
 .popup {
+  visibility: visible;
+  opacity: 1;
   padding: 1rem;
+
   &_title {
-    @include roboto($ff: var(--ff-roboto-regular), $fs: 1.8rem, $lh: 1.5, $color: var(--secundary-dark));
+    @include roboto(
+      $ff: var(--ff-roboto-regular),
+      $fs: 1.8rem,
+      $lh: 1.5,
+      $color: var(--secundary-dark)
+    );
   }
-  @include roboto($ff: var(--ff-roboto-regular), $fs: 1.6rem, $lh: 1.5, $color: var(--secundary-dark));
+  @include roboto(
+    $ff: var(--ff-roboto-regular),
+    $fs: 1.6rem,
+    $lh: 1.5,
+    $color: var(--secundary-dark)
+  );
+}
+
+.hide {
+  visibility: hidden;
+  opacity: 0;
+  position: absolute;
+}
+
+@keyframes pop-up {
+  0% {
+    transform: scale(0);
+  }
+  5%{
+    transform: scale(1);
+  }
+  98% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(0);
+  }
 }
