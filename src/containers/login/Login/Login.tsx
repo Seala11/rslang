@@ -1,13 +1,14 @@
 import React from 'react';
 import styles from 'src/containers/login/Login/Login.module.scss';
 import LoginForm from 'src/containers/login/Form';
-import { LOGIN_INPUTS } from 'src/data/registration';
+import { LOGIN_INPUTS, FormTypes } from 'src/data/registration';
 import ILoginProps from 'src/containers/login/Login/ILoginProps';
 
-const Login: React.FC<ILoginProps> = ({ setShowSignIn, inputValues, error, password }) => {
+const Login: React.FC<ILoginProps> = ({ setShowSignIn, inputValues, error, password, popUp }) => {
   const { values, setValues } = inputValues;
   const { showError, setShowError } = error;
   const { passwordShown, setPasswordShown } = password;
+  const { showPopUp, setShowPopUp } = popUp;
 
   const handler = () => {
     setShowSignIn((showState) => !showState);
@@ -23,6 +24,8 @@ const Login: React.FC<ILoginProps> = ({ setShowSignIn, inputValues, error, passw
         password={{ passwordShown, setPasswordShown }}
         inputsData={LOGIN_INPUTS}
         text='Войти'
+        id={FormTypes.LOGIN}
+        popUp = {{showPopUp, setShowPopUp}}
       />
       <p className={styles.subtitle}>
         Еще нет аккаунта?

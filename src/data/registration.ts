@@ -47,3 +47,8 @@ export enum IInputTypes {
   EMAIL1 = 'signin-email',
   EMAIL2 = 'login-email',
 }
+
+export enum FormTypes {
+  LOGIN = 'login',
+  SIGNIN = 'sign-in'
+}
