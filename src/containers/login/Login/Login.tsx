@@ -17,7 +17,7 @@ const Login: React.FC<ILoginProps> = ({ setShowSignIn, inputValues, error, passw
   };
   return (
     <>
-      <h1 className={styles.title}>Войти</h1>
+      <h1 className={styles.title}>Вход</h1>
       <LoginForm
         inputValues={{ values, setValues }}
         error={{ showError, setShowError }}
