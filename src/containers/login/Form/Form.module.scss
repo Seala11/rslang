@@ -24,6 +24,9 @@
   &:active {
     top: 0.2rem;
   }
+
+  &:disabled {
+    background-color: var(--accent-light);
+    cursor: auto;
+  }
 }
-
-

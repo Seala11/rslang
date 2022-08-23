@@ -22,16 +22,10 @@ type TPassword = {
   setPasswordShown: React.Dispatch<SetStateAction<boolean>>;
 };
 
-type TPopUp = {
-  showPopUp: boolean;
-  setShowPopUp: React.Dispatch<SetStateAction<boolean>>;
-}
-
 export interface IInputsValues {
   inputValues: TValues;
   password: TPassword;
   error: TError;
-  popUp: TPopUp;
 }
 
 export interface ISignInProps extends IInputsValues {

@@ -18,3 +18,4 @@ export interface IWord {
 export interface IWordsState {
   currentPage: IWord[];
 }
+

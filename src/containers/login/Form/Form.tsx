@@ -1,6 +1,7 @@
-import React from 'react';
-import { useAppDispatch } from 'src/store/hooks';
-import { fetchCreateUser, fetchSignInUser } from 'src/store/userSlice';
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useAppSelector, useAppDispatch } from 'src/store/hooks';
+import { fetchCreateUser, fetchSignInUser, getErrors } from 'src/store/userSlice';
 import styles from 'src/containers/login/Form/Form.module.scss';
 import FormInput from 'src/containers/login/FormInput';
 import { FormTypes, IInputTypes } from 'src/data/registration';
@@ -14,12 +15,15 @@ const Form: React.FC<ILoginFormProps> = ({
   error,
   password,
   id,
-  popUp,
 }) => {
   const { values, setValues } = inputValues;
   const { showError, setShowError } = error;
   const { passwordShown, setPasswordShown } = password;
-  const { setShowPopUp } = popUp;
+  const [fetchInProgress, setFetchInProgress] = useState({ status: 'init' });
+
+  const navigate = useNavigate();
+
+  const loginError = useAppSelector(getErrors);
 
   const dispatch = useAppDispatch();
 
@@ -27,9 +31,11 @@ const Form: React.FC<ILoginFormProps> = ({
     setPasswordShown(!passwordShown);
   };
 
-  const inputHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setShowPopUp(() => false);
+  useEffect(() => {
+    if (!loginError && fetchInProgress.status === 'done') navigate('/');
+  }, [fetchInProgress, loginError, navigate]);
 
+  const inputHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
     switch (event.target.id) {
       case IInputTypes.NAME1:
       case IInputTypes.NAME2: {
@@ -72,10 +78,19 @@ const Form: React.FC<ILoginFormProps> = ({
     if (!errors) {
       switch (id) {
         case FormTypes.SIGNIN:
-          await dispatch(fetchCreateUser(values));
+          setFetchInProgress((prevState) => ({ ...prevState, status: 'start' }));
+          await dispatch(fetchCreateUser(values)).then(() => {
+            setFetchInProgress((prevState) => ({ ...prevState, status: 'done' }));
+          });
           break;
         case FormTypes.LOGIN:
-          await dispatch(fetchSignInUser({ email: values.email, password: values.password }));
+          setFetchInProgress((prevState) => ({ ...prevState, status: 'start' }));
+          await dispatch(fetchSignInUser({ email: values.email, password: values.password })).then(
+            () => {
+              setFetchInProgress((prevState) => ({ ...prevState, status: 'done' }));
+            }
+          );
+          break;
         // no default
       }
     }
@@ -102,7 +117,7 @@ const Form: React.FC<ILoginFormProps> = ({
           />
         );
       })}
-      <button className={styles.button} type='submit'>
+      <button className={styles.button} type='submit' disabled={fetchInProgress.status === 'start'}>
         {text}
       </button>
     </form>

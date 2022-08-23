@@ -4,11 +4,10 @@ import { SIGNIN_INPUTS, FormTypes } from 'src/data/registration';
 import { ISignInProps } from 'src/containers/login/SignIn/ISignInProps';
 import LoginForm from 'src/containers/login/Form';
 
-const SignIn: React.FC<ISignInProps> = ({ setShowSignIn, inputValues, error, password, popUp }) => {
+const SignIn: React.FC<ISignInProps> = ({ setShowSignIn, inputValues, error, password }) => {
   const { values, setValues } = inputValues;
   const { showError, setShowError } = error;
   const { passwordShown, setPasswordShown } = password;
-  const { showPopUp, setShowPopUp } = popUp;
 
   const handler = () => {
     setShowSignIn((showState) => !showState);
@@ -25,7 +24,6 @@ const SignIn: React.FC<ISignInProps> = ({ setShowSignIn, inputValues, error, pas
         inputsData={SIGNIN_INPUTS}
         text='Зарегистрироваться'
         id={FormTypes.SIGNIN}
-        popUp = {{showPopUp, setShowPopUp}}
       />
       <p className={styles.subtitle}>
         Уже есть аккаунт?
