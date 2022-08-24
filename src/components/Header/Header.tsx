@@ -14,7 +14,7 @@ const Header: React.FC = () => {
   const userLogoutHandler = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     if (userData?.message === UserStorage.AUTH) {
       event.preventDefault();
-      dispatch(addUserData(undefined))
+      dispatch(addUserData(undefined));
       clearUserData();
     }
   };

@@ -4,4 +4,3 @@ import { IInputsValues } from 'src/containers/registration-form/SignIn/ISignInPr
 export default interface ILoginProps extends IInputsValues {
   setShowSignIn: React.Dispatch<SetStateAction<boolean>>;
 }
-
