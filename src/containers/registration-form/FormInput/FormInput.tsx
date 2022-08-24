@@ -1,6 +1,6 @@
 import React from 'react';
-import styles from 'src/containers/login/FormInput/FormInput.module.scss';
-import { IFormInputProps } from 'src/containers/login/FormInput/IFormInputProps';
+import styles from 'src/containers/registration-form/FormInput/FormInput.module.scss';
+import { IFormInputProps } from 'src/containers/registration-form/FormInput/IFormInputProps';
 import { IInputTypes } from 'src/data/registration';
 
 const FormInput: React.FC<IFormInputProps> = ({

@@ -1,4 +1,4 @@
-import { IInputsValues } from 'src/containers/login/SignIn/ISignInProps';
+import { IInputsValues } from 'src/containers/registration-form/SignIn/ISignInProps';
 
 export default interface ISignInFormProps extends IInputsValues {
   inputsData: TInput[];

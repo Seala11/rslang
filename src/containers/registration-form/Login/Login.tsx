@@ -1,10 +1,10 @@
 import React from 'react';
-import styles from 'src/containers/login/SignIn/SignIn.module.scss';
-import { SIGNIN_INPUTS, FormTypes } from 'src/data/registration';
-import { ISignInProps } from 'src/containers/login/SignIn/ISignInProps';
-import LoginForm from 'src/containers/login/Form';
+import styles from 'src/containers/registration-form/Login/Login.module.scss';
+import LoginForm from 'src/containers/registration-form/Form';
+import { LOGIN_INPUTS, FormTypes } from 'src/data/registration';
+import ILoginProps from 'src/containers/registration-form/Login/ILoginProps';
 
-const SignIn: React.FC<ISignInProps> = ({ setShowSignIn, inputValues, error, password }) => {
+const Login: React.FC<ILoginProps> = ({ setShowSignIn, inputValues, error, password }) => {
   const { values, setValues } = inputValues;
   const { showError, setShowError } = error;
   const { passwordShown, setPasswordShown } = password;
@@ -16,23 +16,23 @@ const SignIn: React.FC<ISignInProps> = ({ setShowSignIn, inputValues, error, pas
   };
   return (
     <>
-      <h1 className={styles.title}>Регистрация</h1>
+      <h1 className={styles.title}>Вход</h1>
       <LoginForm
         inputValues={{ values, setValues }}
         error={{ showError, setShowError }}
         password={{ passwordShown, setPasswordShown }}
-        inputsData={SIGNIN_INPUTS}
-        text='Зарегистрироваться'
-        id={FormTypes.SIGNIN}
+        inputsData={LOGIN_INPUTS}
+        text='Войти'
+        id={FormTypes.LOGIN}
       />
       <p className={styles.subtitle}>
-        Уже есть аккаунт?
+        Еще нет аккаунта?
         <button type='button' className={styles.link} onClick={handler}>
-          Войти в учётную запись
+          Создать учетную запись
         </button>
       </p>
     </>
   );
 };
 
-export default SignIn;
+export default Login;

@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAppSelector, useAppDispatch } from 'src/store/hooks';
 import { fetchCreateUser, fetchSignInUser, getErrors } from 'src/store/userSlice';
-import styles from 'src/containers/login/Form/Form.module.scss';
-import FormInput from 'src/containers/login/FormInput';
+import styles from 'src/containers/registration-form/Form/Form.module.scss';
+import FormInput from 'src/containers/registration-form/FormInput';
 import { FormTypes, IInputTypes, FetchStatus } from 'src/data/registration';
 import ILoginFormProps from './IFormProps';
 
