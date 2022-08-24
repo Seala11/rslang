@@ -9,13 +9,11 @@ import signInAPI from 'src/requests/signIn/signInAPI';
 import type { AppDispatch, RootState } from '.';
 
 interface IUserState {
-  current: object;
   userData: ISignInResponse | undefined;
   loginError: boolean;
 }
 
 const initialState: IUserState = {
-  current: {},
   userData: undefined,
   loginError: false,
 };
@@ -27,13 +25,16 @@ const userSlice = createSlice({
     addUserData(state, action: PayloadAction<ISignInResponse | undefined>) {
       state.userData = action.payload;
     },
+    removeUserData(state, action: PayloadAction<ISignInResponse | undefined>) {
+      state.userData = action.payload;
+    },
     addError(state, action: PayloadAction<boolean>) {
       state.loginError = action.payload;
     },
   },
 });
 
-export const { addUserData, addError } = userSlice.actions;
+export const { addUserData, removeUserData, addError } = userSlice.actions;
 
 export const fetchCreateUser = (userData: IUser) => async (dispatch: AppDispatch) => {
   try {

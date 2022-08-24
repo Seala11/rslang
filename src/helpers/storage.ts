@@ -15,3 +15,5 @@ export const clearUserData = () => {
 export enum UserStorage {
   AUTH = 'Authenticated',
 }
+
+export const userIsLogged = (message: string | undefined) => message === UserStorage.AUTH;
