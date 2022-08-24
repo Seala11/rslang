@@ -1,4 +1,4 @@
-import { Methods, UrlPath, Headers } from 'src/requests/constantsAPI';
+import { Methods, UrlPath, Headers } from 'src/helpers/constRequestsAPI';
 
 const deleteUserWordAPI = async (userId: string, wordId: string) => {
   try {

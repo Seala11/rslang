@@ -1,5 +1,5 @@
 import { IUserSignIn } from 'src/requests/interfaceAPI';
-import { Headers, Methods, UrlPath } from 'src/requests/constantsAPI';
+import { Headers, Methods, UrlPath } from 'src/helpers/constRequestsAPI';
 
 const signInAPI = async (userData: IUserSignIn) => {
   try {

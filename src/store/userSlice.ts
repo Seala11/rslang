@@ -3,7 +3,7 @@ import type { PayloadAction } from '@reduxjs/toolkit';
 import { toast } from 'react-toastify';
 import { IUser, ISignInResponse, IUserSignIn, TErrors } from 'src/requests/interfaceAPI';
 import { recordUserData } from 'src/helpers/storage';
-import { ResponseStatus, ErrorMessageRU } from 'src/requests/constantsAPI';
+import { ResponseStatus, ErrorMessageRU } from 'src/helpers/constRequestsAPI';
 import createUserAPI from 'src/requests/users/createUserAPI';
 import signInAPI from 'src/requests/signIn/signInAPI';
 import type { AppDispatch, RootState } from '.';
@@ -25,8 +25,8 @@ const userSlice = createSlice({
     addUserData(state, action: PayloadAction<ISignInResponse | undefined>) {
       state.userData = action.payload;
     },
-    removeUserData(state, action: PayloadAction<ISignInResponse | undefined>) {
-      state.userData = action.payload;
+    removeUserData(state) {
+      state.userData = undefined;
     },
     addError(state, action: PayloadAction<boolean>) {
       state.loginError = action.payload;

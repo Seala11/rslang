@@ -1,6 +1,6 @@
 /* eslint-disable react/no-danger */
 import React, { useCallback, useEffect, useState } from 'react';
-import { UrlPath } from 'src/requests/constantsAPI';
+import { UrlPath } from 'src/helpers/constRequestsAPI';
 import styles from './WordDetails.module.scss';
 import { IWordDetailsProps } from './IWordDetailsProps';
 

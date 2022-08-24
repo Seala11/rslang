@@ -1,4 +1,4 @@
-import { UrlPath, Headers, Methods } from 'src/requests/constantsAPI';
+import { UrlPath, Headers, Methods } from 'src/helpers/constRequestsAPI';
 
 const getWordsAPI = async (group: string, page: string) => {
   try {

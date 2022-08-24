@@ -14,7 +14,7 @@ const Header: React.FC = () => {
   const userLogoutHandler = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     if (userIsLogged(userData?.message)) {
       event.preventDefault();
-      dispatch(removeUserData(undefined));
+      dispatch(removeUserData());
       clearUserData();
     }
   };

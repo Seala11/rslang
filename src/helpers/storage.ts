@@ -1,5 +1,9 @@
 import { ISignInResponse } from 'src/requests/interfaceAPI';
 
+export enum UserStorage {
+  AUTH = 'Authenticated',
+}
+
 export const recordUserData = (data: ISignInResponse) => {
   localStorage.setItem('message', data.message);
   localStorage.setItem('name', data.name);
@@ -11,9 +15,5 @@ export const recordUserData = (data: ISignInResponse) => {
 export const clearUserData = () => {
   localStorage.clear();
 };
-
-export enum UserStorage {
-  AUTH = 'Authenticated',
-}
 
 export const userIsLogged = (message: string | undefined) => message === UserStorage.AUTH;

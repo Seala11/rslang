@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from 'src/containers/registration-form/FormInput/FormInput.module.scss';
 import { IFormInputProps } from 'src/containers/registration-form/FormInput/IFormInputProps';
-import { InputTypes } from 'src/data/registration';
+import { InputTypes } from 'src/helpers/constRegistration';
 
 const FormInput: React.FC<IFormInputProps> = ({
   name,
@@ -33,21 +33,14 @@ const FormInput: React.FC<IFormInputProps> = ({
             placeholder={placeholder}
             onChange={inputHandler}
           />
-          {passwordShown ? (
-            <button
-              type='button'
-              aria-label='Show password'
-              onClick={togglePassword}
-              className={`${styles.password} ${styles.password_hide}`}
-            />
-          ) : (
-            <button
-              type='button'
-              aria-label='Show password'
-              onClick={togglePassword}
-              className={`${styles.password} ${styles.password_show}`}
-            />
-          )}
+          <button
+            type='button'
+            aria-label='Show password'
+            onClick={togglePassword}
+            className={`${styles.password} ${
+              passwordShown ? styles.password_hide : styles.password_show
+            }`}
+          />
         </label>
         <small
           className={`${styles.error} ${

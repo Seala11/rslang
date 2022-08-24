@@ -4,7 +4,7 @@ import { useAppSelector, useAppDispatch } from 'src/store/hooks';
 import { fetchCreateUser, fetchSignInUser, getErrors } from 'src/store/userSlice';
 import styles from 'src/containers/registration-form/Form/Form.module.scss';
 import FormInput from 'src/containers/registration-form/FormInput';
-import { FormTypes, InputTypes, FetchStatus } from 'src/data/registration';
+import { FetchStatus, FormTypes, InputTypes } from 'src/helpers/constRegistration';
 import ILoginFormProps from './IFormProps';
 
 const Form: React.FC<ILoginFormProps> = ({

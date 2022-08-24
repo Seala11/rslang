@@ -1,8 +1,9 @@
 import React from 'react';
 import styles from 'src/containers/registration-form/Login/Login.module.scss';
 import LoginForm from 'src/containers/registration-form/Form';
-import { LOGIN_INPUTS, FormTypes } from 'src/data/registration';
+import { LOGIN_INPUTS } from 'src/data/registration';
 import ILoginProps from 'src/containers/registration-form/Login/ILoginProps';
+import { FormTypes } from 'src/helpers/constRegistration';
 
 const Login: React.FC<ILoginProps> = ({ setShowSignIn, inputValues, error, password }) => {
   const { values, setValues } = inputValues;

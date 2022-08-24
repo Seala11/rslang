@@ -1,5 +1,11 @@
 import { ISettings } from 'src/requests/interfaceAPI';
-import { UrlPath, Headers, Methods, ErrorMessage, ResponseStatus } from 'src/requests/constantsAPI';
+import {
+  UrlPath,
+  Headers,
+  Methods,
+  ErrorMessage,
+  ResponseStatus,
+} from 'src/helpers/constRequestsAPI';
 import createError from 'src/requests/createError';
 
 const updateSettingsAPI = async (userId: string, settingsData: ISettings) => {
