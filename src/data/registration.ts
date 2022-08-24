@@ -50,5 +50,11 @@ export enum IInputTypes {
 
 export enum FormTypes {
   LOGIN = 'login',
-  SIGNIN = 'sign-in'
+  SIGNIN = 'sign-in',
+}
+
+export enum FetchStatus {
+  START = 'start',
+  DONE = 'done',
+  INIT = 'init',
 }

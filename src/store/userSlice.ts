@@ -1,20 +1,12 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
-// import notify from 'src/components/PopUp/PopUp';
 import { toast } from 'react-toastify';
 import { IUser, ISignInResponse, IUserSignIn, TErrors } from 'src/requests/interfaceAPI';
+import { recordUserData } from 'src/helpers/storage';
 import { ResponseStatus, ErrorMessageRU } from 'src/requests/constantsAPI';
 import createUserAPI from 'src/requests/users/createUserAPI';
 import signInAPI from 'src/requests/signIn/signInAPI';
 import type { AppDispatch, RootState } from '.';
-
-const recordUserData = (data: ISignInResponse) => {
-  localStorage.setItem('message', data.message);
-  localStorage.setItem('name', data.name);
-  localStorage.setItem('refreshToken', data.refreshToken);
-  localStorage.setItem('token', data.token);
-  localStorage.setItem('userId', data.userId);
-};
 
 interface IUserState {
   current: object;
@@ -78,8 +70,10 @@ export const fetchCreateUser = (userData: IUser) => async (dispatch: AppDispatch
       }
     }
   } catch (err) {
+    dispatch(addError(true));
     toast.error(ErrorMessageRU.UNKNOWN);
-    throw new Error();
+    // eslint-disable-next-line no-console
+    console.error(err);
   }
 };
 
@@ -106,11 +100,14 @@ export const fetchSignInUser = (userData: IUserSignIn) => async (dispatch: AppDi
       }
     }
   } catch (err) {
+    dispatch(addError(true));
     toast.error(ErrorMessageRU.UNKNOWN);
-    throw new Error();
+    // eslint-disable-next-line no-console
+    console.error(err);
   }
 };
 
 export const getErrors = (state: RootState) => state.user.loginError;
+export const getUserData = (state: RootState) => state.user.userData;
 
 export default userSlice.reducer;
