@@ -6,14 +6,14 @@ import GAMES_LIST from 'src/data/games';
 const Games: React.FC = () => (
   <main className='main'>
     <div className={styles.wrapper}>
-    <h2 className={styles.title}>Игры</h2>
-    <div className={styles.cards}>
-      {GAMES_LIST.map((item) => {
-        const { title, path, altImg, srcImg, text } = item;
-        return <MenuCard key={item.id} {...{ title, path, altImg, srcImg, text }} />;
-      })}
+      <h2 className={styles.title}>Игры</h2>
+      <div className={styles.cards}>
+        {GAMES_LIST.map((item) => {
+          const { title, path, altImg, srcImg, text } = item;
+          return <MenuCard key={item.id} {...{ title, path, altImg, srcImg, text }} />;
+        })}
+      </div>
     </div>
-  </div>
   </main>
 );
 

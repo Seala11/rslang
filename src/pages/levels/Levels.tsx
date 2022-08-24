@@ -1,7 +1,7 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import styles from 'src/pages/levels/Levels.module.scss';
 import { useAppDispatch } from 'src/store/hooks';
-import { fetchCurrentPageWords} from 'src/store/audioSlice';
+import { fetchCurrentPageWords } from 'src/store/audioSlice';
 import Audio from '../audio/Audio';
 
 const levels = [
@@ -13,7 +13,7 @@ const levels = [
   { id: 6, level: 'Level 6', description: 'Hard' },
 ];
 
-const Levels: React.FC<{ game: string }> = ({game}) => {
+const Levels: React.FC<{ game: string }> = ({ game }) => {
   const dispatch = useAppDispatch();
   const [group, setGroup] = useState(0);
   const [page, setPage] = useState('main');
@@ -21,27 +21,33 @@ const Levels: React.FC<{ game: string }> = ({game}) => {
   useEffect(() => {
     dispatch(fetchCurrentPageWords(`${group}`, `${0}`));
   }, [dispatch, group]);
-  
-  return page === 'main' ? <main className='main'>
-    <div className={styles.wrapper}>
-      <h2 className={styles.title}>{game}</h2>
-      <h3 className={styles.subtitle}>Выберите сложность игры</h3>
-      <div className={styles.cards}>
-        {levels.map((value, i) => (
-          <button
-            className={`${i === group ? styles.active : ''} ${styles.btn}`}
-            type='button'
-            key={value.id}
-            onClick={() => setGroup(i)}
-          >
-            <span className={styles.level}>{value.level}</span>
-            <h3 className={styles.titleCard}>{value.description}</h3>
-          </button>
-        ))}
+
+  return page === 'main' ? (
+    <main className='main'>
+      <div className={styles.wrapper}>
+        <h2 className={styles.title}>{game}</h2>
+        <h3 className={styles.subtitle}>Выберите сложность игры</h3>
+        <div className={styles.cards}>
+          {levels.map((value, i) => (
+            <button
+              className={`${i === group ? styles.active : ''} ${styles.btn}`}
+              type='button'
+              key={value.id}
+              onClick={() => setGroup(i)}
+            >
+              <span className={styles.level}>{value.level}</span>
+              <h3 className={styles.titleCard}>{value.description}</h3>
+            </button>
+          ))}
+        </div>
+        <button onClick={() => setPage('game')} className={styles.start} type='button'>
+          Старт
+        </button>
       </div>
-      <button onClick={() => setPage('game')} className={styles.start} type='button'>Старт</button>
-    </div>
-  </main> : <Audio />
+    </main>
+  ) : (
+    <Audio />
+  );
 };
 
 export default Levels;

@@ -14,7 +14,7 @@ const GAMES_LIST = [
     srcImg: '/assets/images/sprint.png',
     altImg: 'Sprint',
     text: 'Проверь свой словарный запас! Выбери правильный перевод слова и набери максимальное количество очков за минуту.',
-  }
-]
+  },
+];
 
 export default GAMES_LIST;

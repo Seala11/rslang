@@ -6,7 +6,7 @@
   flex-direction: column;
   align-items: center;
   padding: 13rem 0 24rem 0;
-  gap: 13rem;  
+  gap: 13rem;
 }
 
 .cards {
@@ -39,7 +39,6 @@
   );
   text-align: center;
 }
-
 
 .groups {
   display: flex;
@@ -94,21 +93,21 @@
 
 .start {
   font-family: var(--ff-roboto-regular);
-    font-size: 2rem;
-    font-weight: 400;
-    line-height: 1.5;
-    color: var(--secundary-light);
-    width: 19.3rem;
-    height: 5.6rem;
-    border-radius: 1.5rem;
-    background-color: var(--accent);
-    color: var(--light);
-    transition: all 0.2s;
-    position: relative;
-    &:hover {
-      color: var(--stroke);
-    }
-    &:active {
-      top: 0.2rem;
-    }
+  font-size: 2rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: var(--secundary-light);
+  width: 19.3rem;
+  height: 5.6rem;
+  border-radius: 1.5rem;
+  background-color: var(--accent);
+  color: var(--light);
+  transition: all 0.2s;
+  position: relative;
+  &:hover {
+    color: var(--stroke);
+  }
+  &:active {
+    top: 0.2rem;
+  }
 }
