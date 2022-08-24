@@ -1,4 +1,3 @@
-// import { ISignInResponse } from 'src/requests/interfaceAPI';
 import { Methods, UrlPath, Headers } from 'src/helpers/constRequestsAPI';
 
 const getUserTokenAPI = async (id: string, token: string) => {
@@ -10,8 +9,6 @@ const getUserTokenAPI = async (id: string, token: string) => {
         Authorization: `Bearer ${token}`,
       },
     });
-
-    // const userSignInData: ISignInResponse = await response.json();
 
     return response;
   } catch (error) {

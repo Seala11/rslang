@@ -11,16 +11,12 @@ import { useAppDispatch, useAppSelector } from 'src/store/hooks';
 import { getUserData, fetchGetUser } from 'src/store/userSlice';
 
 const App: React.FC = () => {
-  console.log('here')
   const dispatch = useAppDispatch();
   const userData = useAppSelector(getUserData);
 
   useEffect(() => {
-    console.log('18', userIsLogged())
-    console.log('19', userData)
     if (userIsLogged() && !userData?.userId) {
       dispatch(fetchGetUser(getUserId(), getUserToken()));
-      console.log('from app', userData);
     }
   }, [dispatch, userData]);
 
