@@ -18,6 +18,7 @@ const FormInput: React.FC<IFormInputProps> = ({
   const passwordType = name === IInputTypes.PASSPASSWORD1 || name === IInputTypes.PASSPASSWORD2;
   const nameType = name === IInputTypes.NAME1 || name === IInputTypes.NAME2;
   const emailType = name === IInputTypes.EMAIL1 || name === IInputTypes.EMAIL2;
+
   if (passwordType) {
     return (
       <>
@@ -32,14 +33,21 @@ const FormInput: React.FC<IFormInputProps> = ({
             placeholder={placeholder}
             onChange={inputHandler}
           />
-          <button
-            type='button'
-            aria-label='Show password'
-            onClick={togglePassword}
-            className={`${styles.password} ${
-              passwordShown ? styles.password_hide : styles.password_show
-            }`}
-          />
+          {passwordShown ? (
+            <button
+              type='button'
+              aria-label='Show password'
+              onClick={togglePassword}
+              className={`${styles.password} ${styles.password_hide}`}
+            />
+          ) : (
+            <button
+              type='button'
+              aria-label='Show password'
+              onClick={togglePassword}
+              className={`${styles.password} ${styles.password_show}`}
+            />
+          )}
         </label>
         <small
           className={`${styles.error} ${
