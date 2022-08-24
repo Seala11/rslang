@@ -1,5 +1,5 @@
 import { IUser } from 'src/requests/interfaceAPI';
-import { Methods, UrlPath, Headers } from 'src/requests/constantsAPI';
+import { Methods, UrlPath, Headers } from 'src/helpers/constRequestsAPI';
 
 const getUserAPI = async (userId: string) => {
   try {

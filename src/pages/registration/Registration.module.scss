@@ -1,0 +1,44 @@
+@use 'src/sass/abstracts/mixins' as *;
+
+.main {
+  // flex: 1 1 auto;
+  min-height: calc(100vh - 200px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+.formCard {
+  background-color: var(--light);
+  width: 45rem;
+  height: 49rem;
+  border-radius: 5rem;
+  padding: 2rem 4rem;
+  border: solid var(--stroke) 0.04rem;
+  box-shadow: 0 2.5rem 5rem rgba(22, 25, 79, 0.05);
+  overflow: hidden;
+}
+
+.slider {
+  display: flex;
+  width: 220%;
+  gap: 10%;
+  transition: transform 0.5s ease-in-out;
+}
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 90%;
+}
+
+.signin {
+  transform: translateX(0);
+}
+
+.login {
+  transform: translateX(-54%);
+}

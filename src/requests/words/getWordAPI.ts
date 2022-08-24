@@ -1,5 +1,5 @@
 import { IWord } from 'src/requests/interfaceAPI';
-import { UrlPath, Headers, Methods } from 'src/requests/constantsAPI';
+import { UrlPath, Headers, Methods } from 'src/helpers/constRequestsAPI';
 
 const getWordAPI = async (wordId: number) => {
   try {

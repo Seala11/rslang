@@ -10,12 +10,12 @@ export interface ICreateUserResponse {
   error?: IErrors;
 }
 
-interface IErrors {
-  status: string;
+export interface IErrors {
+  status?: string;
   errors: TErrors[];
 }
 
-type TErrors = {
+export type TErrors = {
   path: string[];
   message: string;
 };

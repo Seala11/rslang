@@ -29,6 +29,12 @@ export enum ErrorMessage {
   LOGIN_FAILED = 'Wrong email or password',
 }
 
+export enum ErrorMessageRU {
+  FAILED = 'Адрес электронной почты уже зарегистрирован',
+  LOGIN_FAILED = 'Неправильный адрес электронной почты или пароль',
+  UNKNOWN = 'Что-то пошло не так, попробуйте еще раз',
+}
+
 export enum ResponseStatus {
   MISSING_TOKEN = 401,
   NOT_FOUND = 404,

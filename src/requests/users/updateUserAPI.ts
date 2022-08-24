@@ -1,5 +1,5 @@
 import { IUser, IUserSignIn } from 'src/requests/interfaceAPI';
-import { Methods, UrlPath, Headers } from 'src/requests/constantsAPI';
+import { Methods, UrlPath, Headers } from 'src/helpers/constRequestsAPI';
 
 const updateUserAPI = async (userData: IUserSignIn, id: string) => {
   try {

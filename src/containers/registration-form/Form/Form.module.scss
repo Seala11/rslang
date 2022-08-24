@@ -1,0 +1,36 @@
+@use 'src/sass/abstracts/mixins' as *;
+
+.form {
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.button {
+  @include roboto($ff: var(--ff-roboto-regular), $fs: 1.6rem, $lh: 1.5);
+  width: 100%;
+  height: 5rem;
+  margin-top: 3rem;
+  border-radius: 1.5rem;
+  background-color: var(--accent);
+  color: var(--light);
+  transition: all 0.2s;
+  margin: 1rem 0;
+
+  &:hover {
+    color: var(--stroke);
+  }
+  &:active {
+    top: 0.2rem;
+  }
+
+  &:disabled {
+    background-color: var(--secundary-light);
+    cursor: auto;
+
+    &:hover {
+      color: var(--light);
+    }
+  }
+}
