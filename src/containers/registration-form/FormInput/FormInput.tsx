@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from 'src/containers/registration-form/FormInput/FormInput.module.scss';
 import { IFormInputProps } from 'src/containers/registration-form/FormInput/IFormInputProps';
-import { IInputTypes } from 'src/data/registration';
+import { InputTypes } from 'src/data/registration';
 
 const FormInput: React.FC<IFormInputProps> = ({
   name,
@@ -15,9 +15,9 @@ const FormInput: React.FC<IFormInputProps> = ({
   showError,
   values,
 }) => {
-  const passwordType = name === IInputTypes.PASSPASSWORD1 || name === IInputTypes.PASSPASSWORD2;
-  const nameType = name === IInputTypes.NAME1 || name === IInputTypes.NAME2;
-  const emailType = name === IInputTypes.EMAIL1 || name === IInputTypes.EMAIL2;
+  const passwordType = name === InputTypes.PASSPASSWORD1 || name === InputTypes.PASSPASSWORD2;
+  const nameType = name === InputTypes.NAME1 || name === InputTypes.NAME2;
+  const emailType = name === InputTypes.EMAIL1 || name === InputTypes.EMAIL2;
 
   if (passwordType) {
     return (

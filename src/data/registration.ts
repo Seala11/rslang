@@ -39,7 +39,7 @@ export const LOGIN_INPUTS = [
   },
 ];
 
-export enum IInputTypes {
+export enum InputTypes {
   NAME1 = 'signin-name',
   NAME2 = 'login-name',
   PASSPASSWORD1 = 'signin-password',

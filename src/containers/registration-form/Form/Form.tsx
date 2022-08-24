@@ -4,7 +4,7 @@ import { useAppSelector, useAppDispatch } from 'src/store/hooks';
 import { fetchCreateUser, fetchSignInUser, getErrors } from 'src/store/userSlice';
 import styles from 'src/containers/registration-form/Form/Form.module.scss';
 import FormInput from 'src/containers/registration-form/FormInput';
-import { FormTypes, IInputTypes, FetchStatus } from 'src/data/registration';
+import { FormTypes, InputTypes, FetchStatus } from 'src/data/registration';
 import ILoginFormProps from './IFormProps';
 
 const Form: React.FC<ILoginFormProps> = ({
@@ -37,20 +37,20 @@ const Form: React.FC<ILoginFormProps> = ({
 
   const inputHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
     switch (event.target.id) {
-      case IInputTypes.NAME1:
-      case IInputTypes.NAME2: {
+      case InputTypes.NAME1:
+      case InputTypes.NAME2: {
         setValues({ ...values, name: event.target.value });
         if (showError.name) setShowError({ ...showError, name: false });
         break;
       }
-      case IInputTypes.PASSPASSWORD1:
-      case IInputTypes.PASSPASSWORD2: {
+      case InputTypes.PASSPASSWORD1:
+      case InputTypes.PASSPASSWORD2: {
         setValues({ ...values, password: event.target.value });
         if (showError.password) setShowError({ ...showError, password: false });
         break;
       }
-      case IInputTypes.EMAIL1:
-      case IInputTypes.EMAIL2: {
+      case InputTypes.EMAIL1:
+      case InputTypes.EMAIL2: {
         setValues({ ...values, email: event.target.value });
         if (showError.email) setShowError({ ...showError, email: false });
       }
