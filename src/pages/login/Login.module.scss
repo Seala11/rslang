@@ -1,6 +1,0 @@
-@use 'src/sass/abstracts/mixins' as *;
-
-.title {
-  @include roboto($fs: 4rem, $ff: var(--ff-roboto-bold), $fw: 700);
-  color: var(--primary);
-}

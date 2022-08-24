@@ -1,5 +1,11 @@
 import { IStatistics } from 'src/requests/interfaceAPI';
-import { Methods, UrlPath, Headers, ResponseStatus, ErrorMessage } from 'src/requests/constantsAPI';
+import {
+  Methods,
+  UrlPath,
+  Headers,
+  ResponseStatus,
+  ErrorMessage,
+} from 'src/helpers/constRequestsAPI';
 import createError from 'src/requests/createError';
 
 const updateStatisticsAPI = async (userId: string, statisticsData: IStatistics) => {

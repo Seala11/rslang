@@ -1,5 +1,11 @@
 import { IWord } from 'src/requests/interfaceAPI';
-import { UrlPath, Headers, Methods, ResponseStatus, ErrorMessage } from 'src/requests/constantsAPI';
+import {
+  UrlPath,
+  Headers,
+  Methods,
+  ResponseStatus,
+  ErrorMessage,
+} from 'src/helpers/constRequestsAPI';
 import createError from 'src/requests/createError';
 
 const getAllAggrWordsAPI = async (userId: string, wordId: string) => {
