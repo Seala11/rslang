@@ -1,9 +1,7 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
-// import { useAppDispatch } from 'src/store/hooks';
-// import { removeUserData } from 'src/store/userSlice';
-import { useAppDispatch, useAppSelector } from 'src/store/hooks';
-import { getUserData, removeUserData } from 'src/store/userSlice';
+import { useAppDispatch } from 'src/store/hooks';
+import { removeUserData } from 'src/store/userSlice';
 import { clearUserData, userIsLogged } from 'src/helpers/storage';
 import styles from 'src/components/Header/Header.module.scss';
 import NAV_LIST from 'src/data/navigation';
@@ -11,7 +9,6 @@ import Image from 'src/components/Image';
 
 const Header: React.FC = () => {
   const dispatch = useAppDispatch();
-  const userData = useAppSelector(getUserData);
 
   const userLogoutHandler = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     if (userIsLogged()) {
@@ -20,13 +17,6 @@ const Header: React.FC = () => {
       clearUserData();
     }
   };
-
-  // eslint-disable-next-line no-console
-  console.log(userData)
-
-  // useEffect(() => {
-  //   console.log('here');
-  // }, [userData]);
 
   return (
     <header className={styles.header}>

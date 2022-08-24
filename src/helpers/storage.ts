@@ -22,12 +22,12 @@ export const clearUserData = () => {
 };
 
 export const getUserStoredData = () => ({
-    message: localStorage.getItem(UserStorage.MESSAGE),
-    token: localStorage.getItem(UserStorage.TOKEN),
-    refreshToken: localStorage.getItem(UserStorage.REF_TOKEN),
-    userId: localStorage.getItem(UserStorage.USER_ID),
-    name: localStorage.getItem(UserStorage.NAME),
-  });
+  message: localStorage.getItem(UserStorage.MESSAGE),
+  token: localStorage.getItem(UserStorage.TOKEN),
+  refreshToken: localStorage.getItem(UserStorage.REF_TOKEN),
+  userId: localStorage.getItem(UserStorage.USER_ID),
+  name: localStorage.getItem(UserStorage.NAME),
+});
 
 export const userIsLogged = () => localStorage.getItem(UserStorage.MESSAGE) === UserStorage.AUTH;
 export const getUserId = () => localStorage.getItem(UserStorage.USER_ID);
