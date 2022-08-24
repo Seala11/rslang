@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import React, { useEffect } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import { Home, Textbook, Statistics, Games, Registration } from 'src/pages';

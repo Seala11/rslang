@@ -21,6 +21,7 @@ const Header: React.FC = () => {
     }
   };
 
+  // eslint-disable-next-line no-console
   console.log(userData)
 
   // useEffect(() => {
