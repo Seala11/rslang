@@ -1,18 +1,19 @@
-import { IUser } from 'src/requests/interfaceAPI';
+// import { IUser } from 'src/requests/interfaceAPI';
 import { Methods, UrlPath, Headers } from 'src/helpers/constRequestsAPI';
 
-const getUserAPI = async (userId: string) => {
+const getUserAPI = async (userId: string, token: string) => {
   try {
     const response = await fetch(`${UrlPath.BASE}/${UrlPath.USERS}/${userId}`, {
       method: `${Methods.GET}`,
       headers: {
         Accept: `${Headers.TYPE}`,
+        Authorization: `Bearer ${token}`,
       },
     });
 
-    const userData: IUser = await response.json();
+    // const userData: IUser = await response.json();
 
-    return userData;
+    return response;
   } catch (error) {
     throw new Error();
   }

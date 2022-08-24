@@ -1,5 +1,7 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
+// import { useAppDispatch } from 'src/store/hooks';
+// import { removeUserData } from 'src/store/userSlice';
 import { useAppDispatch, useAppSelector } from 'src/store/hooks';
 import { getUserData, removeUserData } from 'src/store/userSlice';
 import { clearUserData, userIsLogged } from 'src/helpers/storage';
@@ -8,16 +10,22 @@ import NAV_LIST from 'src/data/navigation';
 import Image from 'src/components/Image';
 
 const Header: React.FC = () => {
-  const userData = useAppSelector(getUserData);
   const dispatch = useAppDispatch();
+  const userData = useAppSelector(getUserData);
 
   const userLogoutHandler = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-    if (userIsLogged(userData?.message)) {
+    if (userIsLogged()) {
       event.preventDefault();
       dispatch(removeUserData());
       clearUserData();
     }
   };
+
+  console.log(userData)
+
+  // useEffect(() => {
+  //   console.log('here');
+  // }, [userData]);
 
   return (
     <header className={styles.header}>
@@ -40,7 +48,7 @@ const Header: React.FC = () => {
             <li className={styles.nav__item}>
               <NavLink to='/login'>
                 <button className={styles.logBtn} type='button' onClick={userLogoutHandler}>
-                  {userIsLogged(userData?.message) ? 'Выйти' : 'Войти'}
+                  {userIsLogged() ? 'Выйти' : 'Войти'}
                 </button>
               </NavLink>
             </li>
