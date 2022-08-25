@@ -8,6 +8,17 @@ const Audio: React.FC<{ setPage: React.Dispatch<React.SetStateAction<string>> }>
   setPage,
 }) => {
   const currentPageWords = useAppSelector(selectCurrentPageWords);
+  function changeScreen() {
+    if (document.fullscreenElement) {
+      document.exitFullscreen();
+    } else {
+      document.documentElement.requestFullscreen();
+    }
+  }
+  function closeGame() {
+    if (document.fullscreenElement) document.exitFullscreen();
+    setPage('main');
+  }
   useEffect(() => {
     console.log(currentPageWords);
   }, [currentPageWords]);
@@ -20,10 +31,10 @@ const Audio: React.FC<{ setPage: React.Dispatch<React.SetStateAction<string>> }>
             aria-label='close'
             type='button'
             className={styles.close}
-            onClick={() => setPage('main')}
+            onClick={() => closeGame()}
           />
           <button aria-label='mute' type='button' className={styles.mute} />
-          <button aria-label='screen' type='button' className={styles.fullscreen} />
+          <button aria-label='screen' type='button' className={styles.fullscreen} onClick={() => changeScreen()} />
         </div>
       </div>
       <div className={styles.field}>
