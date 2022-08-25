@@ -7,7 +7,6 @@ import styles from 'src/components/Header/Header.module.scss';
 import NAV_LIST from 'src/data/navigation';
 import Image from 'src/components/Image';
 
-
 const Header: React.FC = () => {
   const userData = useAppSelector(getUserData);
   const dispatch = useAppDispatch();

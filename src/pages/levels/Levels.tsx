@@ -46,7 +46,7 @@ const Levels: React.FC<{ game: string }> = ({ game }) => {
       </div>
     </main>
   ) : (
-    <Audio setPage={setPage}/>
+    <Audio setPage={setPage} />
   );
 };
 
