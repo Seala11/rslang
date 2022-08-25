@@ -1,11 +1,12 @@
 import React from 'react';
+import LayoutMain from 'src/containers/LayoutMain';
 import styles from 'src/pages/statistics/Statistics.module.scss';
 
 const Statistic: React.FC = () => (
-  <div>
+  <LayoutMain>
     <h1 className={`${styles.title}`}>Статистика</h1>
     <p>Сегодня</p>
-  </div>
+  </LayoutMain>
 );
 
 export default Statistic;
