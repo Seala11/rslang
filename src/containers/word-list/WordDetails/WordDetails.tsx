@@ -1,8 +1,12 @@
 /* eslint-disable react/no-danger */
 import React, { useCallback, useEffect, useState } from 'react';
 import { UrlPath } from 'src/helpers/constRequestsAPI';
+import { userIsLogged } from 'src/helpers/storage';
+import { useAppSelector } from 'src/store/hooks';
+import { getUserData } from 'src/store/userSlice';
 import styles from './WordDetails.module.scss';
 import { IWordDetailsProps } from './IWordDetailsProps';
+import WordButtons from '../WordButtons';
 
 let audioCounter = 0;
 let player: HTMLAudioElement;
@@ -10,6 +14,8 @@ let player: HTMLAudioElement;
 const WordDetails: React.FC<IWordDetailsProps> = ({ word }) => {
   const [stop, setStop] = useState(false);
   const [disabled, setDisabled] = useState(false);
+
+  const userData = useAppSelector(getUserData);
 
   const stopAudio = () => {
     player.pause();
@@ -118,7 +124,8 @@ const WordDetails: React.FC<IWordDetailsProps> = ({ word }) => {
           <p className={styles.text} dangerouslySetInnerHTML={{ __html: word.textExample }} />
           <p className={styles.textTranslate}>{word.textExampleTranslate}</p>
         </div>
-      </div>
+        {userIsLogged(userData?.message) ? <WordButtons /> : ''}
+    </div>
     </div>
   ) : (
     <div>LOADING...</div>
