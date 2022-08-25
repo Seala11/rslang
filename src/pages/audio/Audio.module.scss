@@ -1,0 +1,74 @@
+@use 'src/sass/abstracts/mixins' as *;
+
+.wrapper {
+  flex: 1 1 auto;
+  background: linear-gradient(
+    rgba(255, 97, 187, 0.21),
+    rgba(156, 38, 218, 0.25),
+    rgba(85, 77, 222, 0.65)
+  );
+  padding: 6rem 8rem;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+}
+
+.title {
+  @include roboto(
+    $ff: var(--ff-roboto-regular),
+    $fs: 4rem,
+    $fw: 400,
+    $lh: 1.5,
+    $color: var(--primary)
+  );
+}
+
+.controls {
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+}
+
+.close {
+  background-image: url('../../../public/assets/icons/close.png');
+  width: 2.5rem;
+  height: 2.5rem;
+  background-color: transparent;
+  background-size: contain;
+  background-repeat: no-repeat;
+  cursor: pointer;
+  transition: all 0.2s;
+  &:hover {
+    transform: scale(1.1);
+  }
+}
+
+.mute {
+  background-image: url('../../../public/assets/icons/mute.png');
+  width: 2.5rem;
+  height: 2.5rem;
+  background-color: transparent;
+  background-size: contain;
+  background-repeat: no-repeat;
+  cursor: pointer;
+  transition: all 0.2s;
+  &:hover {
+    transform: scale(1.1);
+  }
+}
+
+.fullscreen {
+  background-image: url('../../../public/assets/icons/screen.png');
+  width: 2.5rem;
+  height: 2.5rem;
+  background-color: transparent;
+  background-size: contain;
+  background-repeat: no-repeat;
+  cursor: pointer;
+  transition: all 0.2s;
+  &:hover {
+    transform: scale(1.1);
+  }
+}

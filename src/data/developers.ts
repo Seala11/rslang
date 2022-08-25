@@ -4,7 +4,7 @@ const developers = [
     name: 'Аня',
     githubName: 'Seala11',
     githubLink: 'https://github.com/Seala11',
-    srcImg: 'assets/images/anya.png',
+    srcImg: '/assets/images/anya.png',
     altImg: 'Anya',
     tasks:
       'Разработала игру «Оазис», в которой необходимо ввести пропущенное в предложении слово. Придала 3/4 игр внешний вид, сверстала словарь и учебник, сделала их настройки, а еще графики, компоненты для отображения статистики, а также страницу авторизации.',
@@ -14,7 +14,7 @@ const developers = [
     name: 'Наташа',
     githubName: 'Verbena336',
     githubLink: 'https://github.com/Verbena336',
-    srcImg: 'assets/images/natasha.png',
+    srcImg: '/assets/images/natasha.png',
     altImg: 'Natasha',
     tasks:
       'Разработала игру «Оазис», в которой необходимо ввести пропущенное в предложении слово. Придала 3/4 игр внешний вид, сверстала словарь и учебник, сделала их настройки, а еще графики, компоненты для отображения статистики, а также страницу авторизации.',
@@ -24,7 +24,7 @@ const developers = [
     name: 'Марсель',
     githubName: 'iamrealmarsel',
     githubLink: 'https://github.com/iamrealmarsel',
-    srcImg: 'assets/images/marsel.png',
+    srcImg: '/assets/images/marsel.png',
     altImg: 'Marsel',
     tasks:
       'Разработал игру «Оазис», в которой необходимо ввести пропущенное в предложении слово. Придал 3/4 игр внешний вид, сверстал словарь и учебник, сделал их настройки, а еще графики, компоненты для отображения статистики, а также страницу авторизации.',

@@ -18,3 +18,7 @@ export interface IWord {
 export interface IWordsState {
   currentPage: IWord[];
 }
+
+export interface ISprintState {
+  words: IWord[];
+}

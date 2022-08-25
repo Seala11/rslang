@@ -22,7 +22,7 @@ const Header: React.FC = () => {
   return (
     <header className={styles.header}>
       <div className={styles.header__wrapper}>
-        <Image {...{ altImg: 'Logo', srcImg: 'assets/icons/logo.png', className: styles.logo }} />
+        <Image {...{ altImg: 'Logo', srcImg: '/assets/icons/logo.png', className: styles.logo }} />
         <nav className={styles.nav}>
           <ul className={styles.nav__list}>
             {NAV_LIST.map((item) => (
