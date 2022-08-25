@@ -1,6 +1,6 @@
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
-import { Home, Textbook, Statistics, Games, Registration } from 'src/pages';
+import { Home, Textbook, Statistics, Games, Registration, Sprint } from 'src/pages';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Header from 'src/components/Header';
@@ -15,6 +15,7 @@ const App: React.FC = () => (
       <Route path='/' element={<Home />} />
       <Route path='/textbook' element={<Textbook />} />
       <Route path='/games' element={<Games />} />
+      <Route path='/games/sprint' element={<Sprint />} />
       <Route path='/statistics' element={<Statistics />} />
       <Route path='/login' element={<Registration />} />
     </Routes>

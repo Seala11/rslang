@@ -1,11 +1,13 @@
 import { configureStore } from '@reduxjs/toolkit';
 import wordsReducer from './wordsSlice';
 import userReducer from './userSlice';
+import sprintReducer from './sprintSlice';
 
 export const store = configureStore({
   reducer: {
     words: wordsReducer,
     user: userReducer,
+    sprint: sprintReducer,
   },
 });
 
