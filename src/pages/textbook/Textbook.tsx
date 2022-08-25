@@ -6,6 +6,7 @@ import { IWord } from 'src/store/types';
 import { Navigate } from 'src/helpers/constants';
 import WordList from 'src/containers/word-list';
 import GroupList from 'src/containers/group-list';
+import LayoutMain from 'src/containers/LayoutMain/LayoutMain';
 import styles from './Textbook.module.scss';
 
 const Textbook = () => {
@@ -56,7 +57,7 @@ const Textbook = () => {
   };
 
   return (
-    <main className={styles.main}>
+    <LayoutMain>
       <div className={`${styles.container} ${styles[`group_${group}`]}`}>
         <h1 className={styles.title}>Учебник</h1>
         <GroupList onGroupClick={handleGroupClick} group={group} />
@@ -71,7 +72,7 @@ const Textbook = () => {
         />
         <h2 className={styles.title}>Игры</h2>
       </div>
-    </main>
+    </LayoutMain>
   );
 };
 
