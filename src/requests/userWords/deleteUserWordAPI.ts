@@ -1,6 +1,6 @@
 import { Methods, UrlPath, Headers } from 'src/helpers/constRequestsAPI';
 
-const deleteUserWordAPI = async (userId: string, wordId: string) => {
+const deleteUserWordAPI = async (userId: string, wordId: string, token: string) => {
   try {
     const response = await fetch(
       `${UrlPath.BASE}/${UrlPath.USERS}/${userId}/${UrlPath.WORDS}/${wordId}`,
@@ -9,6 +9,7 @@ const deleteUserWordAPI = async (userId: string, wordId: string) => {
         headers: {
           Accept: `${Headers.TYPE}`,
           'Content-Type': `${Headers.TYPE}`,
+          Authorization: `Bearer ${token}`,
         },
       }
     );

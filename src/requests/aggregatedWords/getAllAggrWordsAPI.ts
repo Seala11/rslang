@@ -10,6 +10,7 @@ import createError from 'src/requests/createError';
 
 const getAllAggrWordsAPI = async (
   userId: string,
+  token: string,
   group = '',
   page = '',
   wordsPerPage = '',
@@ -29,6 +30,7 @@ const getAllAggrWordsAPI = async (
         method: `${Methods.GET}`,
         headers: {
           'Content-Type': `${Headers.TYPE}`,
+          Authorization: `Bearer ${token}`,
         },
       }
     );

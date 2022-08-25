@@ -8,7 +8,7 @@ import {
 } from 'src/helpers/constRequestsAPI';
 import createError from 'src/requests/createError';
 
-const updateStatisticsAPI = async (userId: string, statisticsData: IStatistics) => {
+const updateStatisticsAPI = async (userId: string, statisticsData: IStatistics, token: string) => {
   try {
     const response = await fetch(
       `${UrlPath.BASE}/${UrlPath.USERS}/${userId}/${UrlPath.STATISTICS}`,
@@ -17,6 +17,7 @@ const updateStatisticsAPI = async (userId: string, statisticsData: IStatistics) 
         headers: {
           Accept: `${Headers.TYPE}`,
           'Content-Type': `${Headers.TYPE}`,
+          Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify(statisticsData),
       }

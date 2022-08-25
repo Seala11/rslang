@@ -1,11 +1,20 @@
+/* eslint-disable no-console */
 import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
 import { toast } from 'react-toastify';
-import { IUser, ISignInResponse, IUserSignIn, TErrors } from 'src/requests/interfaceAPI';
-import { recordUserData } from 'src/helpers/storage';
-import { ResponseStatus, ErrorMessageRU } from 'src/helpers/constRequestsAPI';
+import {
+  IUser,
+  ISignInResponse,
+  IUserSignIn,
+  TErrors,
+  IUpdateUserToken,
+} from 'src/requests/interfaceAPI';
+import { clearUserData, getUserStoredData, recordUserData } from 'src/helpers/storage';
+import { ResponseStatus, ErrorMessageRU, ErrorMessage } from 'src/helpers/constRequestsAPI';
+import getUserTokenAPI from 'src/requests/users/getUserTokenAPI';
 import createUserAPI from 'src/requests/users/createUserAPI';
 import signInAPI from 'src/requests/signIn/signInAPI';
+import getUserAPI from 'src/requests/users/getUserAPI';
 import type { AppDispatch, RootState } from '.';
 
 interface IUserState {
@@ -50,22 +59,20 @@ export const fetchCreateUser = (userData: IUser) => async (dispatch: AppDispatch
       dispatch(addUserData(data));
       toast.success(`Пользователь ${data.name} успешно зарегестрирован`);
     } else {
+      dispatch(addError(true));
       switch (response.status) {
         case ResponseStatus.FAILED:
-          dispatch(addError(true));
           toast.error(ErrorMessageRU.FAILED);
           break;
         case ResponseStatus.WRONG_ENTITY: {
           const res = await response.json();
           const errorsResponse: TErrors[] = res.error.errors;
           const err = errorsResponse.map((item) => item.message);
-          dispatch(addError(true));
           toast.error(err);
           break;
         }
         default: {
           const data: string = await response.text();
-          dispatch(addError(true));
           toast.error(data);
         }
       }
@@ -73,7 +80,6 @@ export const fetchCreateUser = (userData: IUser) => async (dispatch: AppDispatch
   } catch (err) {
     dispatch(addError(true));
     toast.error(ErrorMessageRU.UNKNOWN);
-    // eslint-disable-next-line no-console
     console.error(err);
   }
 };
@@ -88,25 +94,73 @@ export const fetchSignInUser = (userData: IUserSignIn) => async (dispatch: AppDi
       dispatch(addUserData(data));
       toast.success(`Welcome back, ${data.name}!`);
     } else {
+      dispatch(addError(true));
       switch (response.status) {
         case ResponseStatus.FORBIDDEN:
-          dispatch(addError(true));
           toast.error(ErrorMessageRU.LOGIN_FAILED);
           break;
         default: {
           const data: string = await response.text();
           toast.error(data);
-          dispatch(addError(true));
         }
       }
     }
   } catch (err) {
     dispatch(addError(true));
     toast.error(ErrorMessageRU.UNKNOWN);
-    // eslint-disable-next-line no-console
     console.error(err);
   }
 };
+
+// TODO: check if we need it
+export const fetchUpdateToken = (id: string | null, refreshToken: string | null) => async () => {
+  if (!id || !refreshToken) return;
+  try {
+    const response: Response | undefined = await getUserTokenAPI(id, refreshToken);
+    if (response.ok) {
+      const data: IUpdateUserToken = await response.json();
+      console.log(data);
+    } else {
+      switch (response.status) {
+        case ResponseStatus.MISSING_TOKEN:
+          console.error(ErrorMessage.MISSING_TOKEN);
+          break;
+        default: {
+          console.error(response.statusText);
+        }
+      }
+    }
+  } catch (err) {
+    console.error(err);
+  }
+};
+
+export const fetchGetUser =
+  (id: string | null, token: string | null) => async (dispatch: AppDispatch) => {
+    if (!id || !token) return;
+    try {
+      const response: Response | undefined = await getUserAPI(id, token);
+      if (response.ok) {
+        const data = getUserStoredData();
+        dispatch(addUserData(data));
+      } else {
+        clearUserData();
+        switch (response.status) {
+          case ResponseStatus.MISSING_TOKEN:
+            console.error(ErrorMessage.MISSING_TOKEN);
+            break;
+          case ResponseStatus.NOT_FOUND:
+            console.error(ErrorMessage.USER_NOT_FOUND);
+            break;
+          default:
+            throw new Error(`${response.statusText}`);
+        }
+      }
+    } catch (err) {
+      clearUserData();
+      console.error(err);
+    }
+  };
 
 export const getErrors = (state: RootState) => state.user.loginError;
 export const getUserData = (state: RootState) => state.user.userData;
