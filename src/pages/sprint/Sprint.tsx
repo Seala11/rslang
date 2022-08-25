@@ -2,6 +2,7 @@
 import React from 'react';
 import { useAppDispatch } from 'src/store/hooks';
 import { fetchWords } from 'src/store/sprintSlice';
+import styles from './Sprint.module.scss';
 
 const GROUPS = [
   { id: 1, level: 'Level 1', description: 'Easy' },
@@ -15,18 +16,32 @@ const GROUPS = [
 const Sprint = () => {
   const dispath = useAppDispatch();
 
-  const clickHandler = () => {
-    dispath(fetchWords(`1`, `1`));
+  const onGroupClick = (idGroup: number) => {
+    dispath(fetchWords(`${idGroup}`, `1`));
   };
 
   return (
     <div>
-      {GROUPS.map((value) => (
-        <div>
-          <span>{value.level}</span>
-          <span>{value.description}</span>
-        </div>
-      ))}
+      <h1 className={styles.title}>Спринт</h1>
+      <span className={styles.caption}>Выберите сложность игры</span>
+      <div className={styles.groups}>
+        {GROUPS.map((value, i) => (
+          <button
+            className={`${styles.btn}`}
+            type='button'
+            onClick={() => onGroupClick(i)}
+            key={value.id}
+          >
+            <span className={styles.level}>{value.level}</span>
+            <h3 className={styles.title}>{value.description}</h3>
+          </button>
+        ))}
+      </div>
+      <div className={styles.start}>
+        <button className={styles.btn} type='button'>
+          Старт
+        </button>
+      </div>
     </div>
   );
 };
