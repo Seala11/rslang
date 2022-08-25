@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import React, { useEffect } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import { Home, Textbook, Statistics, Games, Registration } from 'src/pages';
@@ -6,7 +5,7 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Header from 'src/components/Header';
 import Footer from 'src/components/Footer';
-import { getUserId, getUserToken, userIsLogged } from 'src/helpers/storage';
+import { getUserId, getUserToken, userIsInStorage } from 'src/helpers/storage';
 import { useAppDispatch, useAppSelector } from 'src/store/hooks';
 import { getUserData, fetchGetUser } from 'src/store/userSlice';
 
@@ -15,7 +14,7 @@ const App: React.FC = () => {
   const userData = useAppSelector(getUserData);
 
   useEffect(() => {
-    if (userIsLogged() && !userData?.userId) {
+    if (userIsInStorage() && !userData?.userId) {
       dispatch(fetchGetUser(getUserId(), getUserToken()));
     }
   }, [dispatch, userData]);

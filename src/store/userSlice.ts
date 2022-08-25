@@ -9,13 +9,12 @@ import {
   TErrors,
   IUpdateUserToken,
 } from 'src/requests/interfaceAPI';
-import { getUserStoredData, recordUserData } from 'src/helpers/storage';
+import { clearUserData, getUserStoredData, recordUserData } from 'src/helpers/storage';
 import { ResponseStatus, ErrorMessageRU, ErrorMessage } from 'src/helpers/constRequestsAPI';
 import getUserTokenAPI from 'src/requests/users/getUserTokenAPI';
 import createUserAPI from 'src/requests/users/createUserAPI';
 import signInAPI from 'src/requests/signIn/signInAPI';
 import getUserAPI from 'src/requests/users/getUserAPI';
-import createError from 'src/requests/createError';
 import type { AppDispatch, RootState } from '.';
 
 interface IUserState {
@@ -60,22 +59,20 @@ export const fetchCreateUser = (userData: IUser) => async (dispatch: AppDispatch
       dispatch(addUserData(data));
       toast.success(`Пользователь ${data.name} успешно зарегестрирован`);
     } else {
+      dispatch(addError(true));
       switch (response.status) {
         case ResponseStatus.FAILED:
-          dispatch(addError(true));
           toast.error(ErrorMessageRU.FAILED);
           break;
         case ResponseStatus.WRONG_ENTITY: {
           const res = await response.json();
           const errorsResponse: TErrors[] = res.error.errors;
           const err = errorsResponse.map((item) => item.message);
-          dispatch(addError(true));
           toast.error(err);
           break;
         }
         default: {
           const data: string = await response.text();
-          dispatch(addError(true));
           toast.error(data);
         }
       }
@@ -97,15 +94,14 @@ export const fetchSignInUser = (userData: IUserSignIn) => async (dispatch: AppDi
       dispatch(addUserData(data));
       toast.success(`Welcome back, ${data.name}!`);
     } else {
+      dispatch(addError(true));
       switch (response.status) {
         case ResponseStatus.FORBIDDEN:
-          dispatch(addError(true));
           toast.error(ErrorMessageRU.LOGIN_FAILED);
           break;
         default: {
           const data: string = await response.text();
           toast.error(data);
-          dispatch(addError(true));
         }
       }
     }
@@ -148,17 +144,20 @@ export const fetchGetUser =
         const data = getUserStoredData();
         dispatch(addUserData(data));
       } else {
+        clearUserData();
         switch (response.status) {
           case ResponseStatus.MISSING_TOKEN:
-            throw createError(new Error(ErrorMessage.MISSING_TOKEN), `${response.status}`);
+            console.error(ErrorMessage.MISSING_TOKEN);
+            break;
           case ResponseStatus.NOT_FOUND:
-            throw createError(new Error(ErrorMessage.USER_NOT_FOUND), `${response.status}`);
-          default: {
+            console.error(ErrorMessage.USER_NOT_FOUND);
+            break;
+          default:
             throw new Error(`${response.statusText}`);
-          }
         }
       }
     } catch (err) {
+      clearUserData();
       console.error(err);
     }
   };

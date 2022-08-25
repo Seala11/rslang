@@ -29,6 +29,7 @@ export const getUserStoredData = () => ({
   name: localStorage.getItem(UserStorage.NAME),
 });
 
-export const userIsLogged = () => localStorage.getItem(UserStorage.MESSAGE) === UserStorage.AUTH;
+export const userIsInStorage = () => localStorage.getItem(UserStorage.MESSAGE) === UserStorage.AUTH;
+export const userIsLogged = (message: string | null | undefined) => message === UserStorage.AUTH;
 export const getUserId = () => localStorage.getItem(UserStorage.USER_ID);
 export const getUserToken = () => localStorage.getItem(UserStorage.TOKEN);
