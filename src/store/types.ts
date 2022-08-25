@@ -22,3 +22,13 @@ export interface IWordsState {
 export interface ISprintState {
   words: IWord[];
 }
+
+// export interface IUserWord {
+//   difficulty: string;
+//   id: string;
+// }
+
+export interface IUserDiffWord {
+  difficulty: string;
+  id: string;
+}

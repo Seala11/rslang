@@ -16,9 +16,11 @@ const createUserWordAPI = async (userId: string, wordId: string, wordData: IUser
       }
     );
 
-    const word: IUserWord = await response.json();
+    return response;
 
-    return word;
+    // const word: IUserWord = await response.json();
+
+    // return word;
   } catch (error) {
     throw new Error();
   }

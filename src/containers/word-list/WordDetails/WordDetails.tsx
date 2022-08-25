@@ -124,8 +124,8 @@ const WordDetails: React.FC<IWordDetailsProps> = ({ word }) => {
           <p className={styles.text} dangerouslySetInnerHTML={{ __html: word.textExample }} />
           <p className={styles.textTranslate}>{word.textExampleTranslate}</p>
         </div>
-        {userIsLogged(userData?.message) ? <WordButtons /> : ''}
-    </div>
+        {userIsLogged(userData?.message) ? <WordButtons word={word} /> : ''}
+      </div>
     </div>
   ) : (
     <div>LOADING...</div>

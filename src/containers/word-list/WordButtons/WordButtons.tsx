@@ -1,13 +1,20 @@
 import React from 'react';
+import { getUserId, getUserToken } from 'src/helpers/storage';
+import { useAppDispatch } from 'src/store/hooks';
+import { fetchCreateDiffWord } from 'src/store/userWordsSlice';
+import { IWordButtonsProps } from './IWordButtonsProps';
 import styles from './WordButtons.module.scss';
 
-const WordButtons = () => {
+const WordButtons: React.FC<IWordButtonsProps> = ({ word }) => {
+  const dispatch = useAppDispatch();
+
   const addDiffWord = () => {
-    console.log('add to diff');
+    console.log('add to diff', word);
+    dispatch(fetchCreateDiffWord(getUserId(), word?.id, `${word?.group}`, getUserToken()));
   };
 
   const addLearnedWord = () => {
-    console.log('add to leafned');
+    console.log('add to leafned', word);
   };
 
   return (

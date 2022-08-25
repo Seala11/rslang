@@ -45,3 +45,8 @@ export enum ResponseStatus {
   FORBIDDEN = 403,
   OK = 200,
 }
+
+export enum UserWordType {
+  DIFFICULT = 'difficult',
+  LEARNED = 'learned',
+}
