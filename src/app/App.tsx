@@ -17,8 +17,8 @@ const App: React.FC = () => (
       <Route path='/games' element={<Games />} />
       <Route path='/statistics' element={<Statistics />} />
       <Route path='/login' element={<Registration />} />
-      <Route path='/games/audio-levels' element={<Levels game='Аудиовызов' />} />
-      <Route path='/games/sprint-levels' element={<Levels game='Спринт' />} />
+      <Route path='/games/audio' element={<Levels game='audio' />} />
+      <Route path='/games/sprint' element={<Levels game='sprint' />} />
     </Routes>
 
     <Footer />

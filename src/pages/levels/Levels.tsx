@@ -40,13 +40,13 @@ const Levels: React.FC<{ game: string }> = ({ game }) => {
             </button>
           ))}
         </div>
-        <button onClick={() => setPage('game')} className={styles.start} type='button'>
+        <button onClick={() => setPage(`${game}`)} className={styles.start} type='button'>
           Старт
         </button>
       </div>
     </main>
   ) : (
-    <Audio />
+    <Audio setPage={setPage}/>
   );
 };
 
