@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import styles from 'src/pages/registration/Registration.module.scss';
 import Login from 'src/containers/registration-form/Login';
 import SignIn from 'src/containers/registration-form/SignIn';
-import LayoutMain from 'src/containers/LayoutMain/LayoutMain';
+import LayoutMain from 'src/containers/LayoutMain';
 
 const Registration: React.FC = () => {
   const [showSignIn, setShowSignIn] = useState(true);

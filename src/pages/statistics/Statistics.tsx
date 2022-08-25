@@ -1,5 +1,5 @@
 import React from 'react';
-import LayoutMain from 'src/containers/LayoutMain/LayoutMain';
+import LayoutMain from 'src/containers/LayoutMain';
 import styles from 'src/pages/statistics/Statistics.module.scss';
 
 const Statistic: React.FC = () => (

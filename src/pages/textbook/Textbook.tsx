@@ -6,7 +6,7 @@ import { IWord } from 'src/store/types';
 import { Navigate } from 'src/helpers/constants';
 import WordList from 'src/containers/word-list';
 import GroupList from 'src/containers/group-list';
-import LayoutMain from 'src/containers/LayoutMain/LayoutMain';
+import LayoutMain from 'src/containers/LayoutMain';
 import styles from './Textbook.module.scss';
 
 const Textbook = () => {

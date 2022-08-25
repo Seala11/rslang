@@ -1,5 +1,5 @@
 import React from 'react';
-import LayoutMain from 'src/containers/LayoutMain/LayoutMain';
+import LayoutMain from 'src/containers/LayoutMain';
 import styles from 'src/pages/games/Games.module.scss';
 
 const Games: React.FC = () => (
