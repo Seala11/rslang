@@ -20,7 +20,7 @@ const Levels: React.FC<{ game: string }> = ({ game }) => {
   const [page, setPage] = useState('main');
 
   useEffect(() => {
-    dispatch(fetchCurrentPageWords(`${group}`, `${0}`));
+    dispatch(fetchCurrentPageWords(`${group}`));
   }, [dispatch, group]);
 
   return page === 'main' ? (

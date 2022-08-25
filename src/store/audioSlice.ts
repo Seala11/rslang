@@ -21,10 +21,17 @@ const audioSlice = createSlice({
 export const { addCurrentPageWords } = audioSlice.actions;
 
 export const fetchCurrentPageWords =
-  (group: string, page: string) => async (dispatch: AppDispatch) => {
-    const words = await getWordsAPI(group, page);
-
-    dispatch(addCurrentPageWords(words));
+  (group: string) => async (dispatch: AppDispatch) => {
+      const results = [];
+      for (let i = 0; i < 30; i += 1) {
+        const arr = getWordsAPI(group, `${i}`)
+        results.push(arr);
+      }
+    // const words = await getWordsAPI(group, page);
+    // dispatch(addCurrentPageWords(words));
+    const res = await Promise.all(results);
+    const res2 = res.flat()
+    dispatch(addCurrentPageWords(res2))
   };
 
 export const selectCurrentPageWords = (state: RootState) => state.audio.currentPage;

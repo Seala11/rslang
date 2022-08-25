@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import React, { useEffect } from 'react';
 import styles from 'src/pages/audio/Audio.module.scss';
 import { selectCurrentPageWords } from 'src/store/audioSlice';
