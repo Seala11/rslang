@@ -11,16 +11,6 @@ const Audio: React.FC<{ setPage: React.Dispatch<React.SetStateAction<string>> }>
     console.log(currentPageWords);
   }, [currentPageWords]);
   return (
-    // <main className='main'>
-    //   <div className={styles.wrapper}>
-    //     <h2 className={styles.title}>Игры</h2>
-    //     <div className={styles.cards}>
-    //       {currentPageWords.map((item) => (
-    //         <div>{item.word}</div>
-    //       ))}
-    //     </div>
-    //   </div>
-    // </main>
     <div className={styles.wrapper}>
       <div className={styles.header}>
         <h2 className={styles.title}>Аудиовызов</h2>
