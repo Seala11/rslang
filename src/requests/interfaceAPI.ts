@@ -5,6 +5,12 @@ export interface IUser {
   password: string;
 }
 
+export interface IGetUser {
+  name: string;
+  email: string;
+  id: string;
+}
+
 export interface ICreateUserResponse {
   data?: IUser;
   error?: IErrors;
@@ -62,9 +68,14 @@ export interface IUserSignIn {
 }
 
 export interface ISignInResponse {
-  message: string;
+  message: string | null;
+  token: string | null;
+  refreshToken: string | null;
+  userId: string | null;
+  name: string | null;
+}
+
+export interface IUpdateUserToken {
   token: string;
   refreshToken: string;
-  userId: string;
-  name: string;
 }

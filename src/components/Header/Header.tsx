@@ -8,8 +8,8 @@ import NAV_LIST from 'src/data/navigation';
 import Image from 'src/components/Image';
 
 const Header: React.FC = () => {
-  const userData = useAppSelector(getUserData);
   const dispatch = useAppDispatch();
+  const userData = useAppSelector(getUserData);
 
   const userLogoutHandler = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     if (userIsLogged(userData?.message)) {
@@ -22,7 +22,7 @@ const Header: React.FC = () => {
   return (
     <header className={styles.header}>
       <div className={styles.header__wrapper}>
-        <Image {...{ altImg: 'Logo', srcImg: 'assets/icons/logo.png', className: styles.logo }} />
+        <Image {...{ altImg: 'Logo', srcImg: '/assets/icons/logo.png', className: styles.logo }} />
         <nav className={styles.nav}>
           <ul className={styles.nav__list}>
             {NAV_LIST.map((item) => (

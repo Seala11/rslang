@@ -8,13 +8,14 @@ import {
 } from 'src/helpers/constRequestsAPI';
 import createError from 'src/requests/createError';
 
-const updateSettingsAPI = async (userId: string, settingsData: ISettings) => {
+const updateSettingsAPI = async (userId: string, settingsData: ISettings, token: string) => {
   try {
     const response = await fetch(`${UrlPath.BASE}/${UrlPath.USERS}/${userId}/${UrlPath.SETTINGS}`, {
       method: `${Methods.PUT}`,
       headers: {
         Accept: `${Headers.TYPE}`,
         'Content-Type': `${Headers.TYPE}`,
+        Authorization: `Bearer ${token}`,
       },
       body: JSON.stringify(settingsData),
     });

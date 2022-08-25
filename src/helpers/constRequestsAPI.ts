@@ -23,6 +23,7 @@ export enum Methods {
 export enum ErrorMessage {
   BAD_REQUEST = 'Bad request',
   SETTING_NOT_FOUND = 'Settings not found',
+  USER_NOT_FOUND = 'User not found',
   USER_WORD_NOT_FOUND = 'User`s word not found',
   STATISTICS_NOT_FOUND = 'Statistics not found',
   MISSING_TOKEN = 'Access token is missing or invalid',
