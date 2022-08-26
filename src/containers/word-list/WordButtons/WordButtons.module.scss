@@ -27,5 +27,9 @@
   &:disabled {
     background-color: var(--secundary-light);
     cursor: auto;
+
+    &:hover {
+      color:  var(--light);
+    }
   }
 }

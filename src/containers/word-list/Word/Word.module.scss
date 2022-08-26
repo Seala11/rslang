@@ -1,0 +1,39 @@
+.word {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 100%;
+    max-width: 200px;
+    height: 140px;
+    padding: 10px;
+    border-radius: 50px;
+    color: #404040;
+    background-color: #fff;
+    text-align: center;
+    overflow: hidden;
+    cursor: pointer;
+    transition: background 0.2s;
+  
+    &.active {
+      // background-color: color.scale($color: #f44e77, $lightness: 50%);
+      background-color: var(--group-color-light);
+    }
+  
+    &:hover {
+      // background-color: color.scale($color: #f44e77, $lightness: 50%);
+      background-color: var(--group-color-light);
+    }
+  }
+  
+  .original {
+    display: block;
+    margin-bottom: 10px;
+    font-size: 2.5rem;
+    white-space: nowrap;
+  }
+  
+  .translate {
+    display: block;
+    font-size: 2rem;
+    overflow-wrap: break-word;
+  }

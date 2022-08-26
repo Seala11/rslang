@@ -4,18 +4,20 @@ import { UrlPath } from 'src/helpers/constRequestsAPI';
 import { userIsLogged } from 'src/helpers/storage';
 import { useAppSelector } from 'src/store/hooks';
 import { getUserData } from 'src/store/userSlice';
+import { selectWordDetails } from 'src/store/wordsSlice';
 import styles from './WordDetails.module.scss';
-import { IWordDetailsProps } from './IWordDetailsProps';
 import WordButtons from '../WordButtons';
+
 
 let audioCounter = 0;
 let player: HTMLAudioElement;
 
-const WordDetails: React.FC<IWordDetailsProps> = ({ word }) => {
+const WordDetails = () => {
   const [stop, setStop] = useState(false);
   const [disabled, setDisabled] = useState(false);
 
   const userData = useAppSelector(getUserData);
+  const word = useAppSelector(selectWordDetails);
 
   const stopAudio = () => {
     player.pause();

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from 'src/store/hooks';
-import { fetchCurrentPageWords, selectCurrentPageWords } from 'src/store/wordsSlice';
+import { addWordDetails, fetchCurrentPageWords, selectCurrentPageWords, selectWordDetails } from 'src/store/wordsSlice';
 import { useSearchParams } from 'react-router-dom';
 import { IWord } from 'src/store/types';
 import { Navigate } from 'src/helpers/constants';
@@ -9,7 +9,8 @@ import GroupList from 'src/containers/group-list';
 import LayoutMain from 'src/containers/LayoutMain';
 import DifficultWords from 'src/containers/DifficultWords';
 import { getUserData } from 'src/store/userSlice';
-import { userIsLogged } from 'src/helpers/storage';
+import { getUserId, getUserToken, userIsLogged } from 'src/helpers/storage';
+import { fetchGetAllUserWords } from 'src/store/userWordsSlice';
 import styles from './Textbook.module.scss';
 
 enum TextbookSections {
@@ -21,6 +22,7 @@ const Textbook = () => {
   const dispatch = useAppDispatch();
   const currentPageWords = useAppSelector(selectCurrentPageWords);
   const userData = useAppSelector(getUserData);
+  const wordDetails = useAppSelector(selectWordDetails);
 
   const [searchParams, setSearchParams] = useSearchParams();
   const groupParam = searchParams.get('group') ?? '1';
@@ -28,17 +30,26 @@ const Textbook = () => {
   const unitParam = searchParams.get('unit') ?? '1';
   const unit = +unitParam;
 
-  const [wordDetails, setWordDetails] = useState<IWord | null>(null);
+  // const [wordDetails, setWordDetails] = useState<IWord | null>(null);
 
   const [sectionDisplay, setSectionDisplay] = useState(TextbookSections.TEXTBOOK);
 
   useEffect(() => {
-    setWordDetails(currentPageWords[0]);
-  }, [currentPageWords]);
+    console.log('WORD DET', wordDetails, group, unit);
+    console.log(!wordDetails || wordDetails.group !== group);
+    if (!wordDetails || wordDetails.group !== group - 1 || wordDetails.page !== unit - 1) {
+      console.log('inside')
+      console.log(wordDetails);
+      dispatch(addWordDetails(currentPageWords[0]))
+    }
+    // setWordDetails(currentPageWords[0])
+    console.log('chenged');
+  }, [currentPageWords, dispatch, wordDetails, group, unit]);
 
   useEffect(() => {
-    dispatch(fetchCurrentPageWords(`${group - 1}`, `${unit - 1}`));
-  }, [dispatch, group, unit]);
+    if (!userIsLogged(userData?.message)) dispatch(fetchCurrentPageWords(`${group - 1}`, `${unit - 1}`));
+    if (userIsLogged(userData?.message)) dispatch(fetchGetAllUserWords(getUserId(), getUserToken(), `${group - 1}`, `${unit - 1}`));
+  }, [dispatch, group, unit, userData]);
 
   const handleGroupClick = (groupNumber: number) => {
     setSearchParams({ group: `${groupNumber}`, unit: `${unit}` });
@@ -64,7 +75,8 @@ const Textbook = () => {
   };
 
   const handleWordClick = (word: IWord) => {
-    setWordDetails(word);
+    console.log(wordDetails);
+    dispatch(addWordDetails(word))
   };
 
   const handleDisplay = (
