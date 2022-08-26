@@ -8,7 +8,6 @@ import { selectWordDetails } from 'src/store/wordsSlice';
 import styles from './WordDetails.module.scss';
 import WordButtons from '../WordButtons';
 
-
 let audioCounter = 0;
 let player: HTMLAudioElement;
 

@@ -3,7 +3,7 @@ import wordsReducer from './wordsSlice';
 import userReducer from './userSlice';
 import audioReducer from './audioSlice';
 import sprintReducer from './sprintSlice';
-import userWordsReducer from './userWordsSlice'
+import userWordsReducer from './userWordsSlice';
 
 export const store = configureStore({
   reducer: {

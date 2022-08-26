@@ -1,6 +1,13 @@
+/* eslint-disable no-nested-ternary */
+/* eslint-disable no-console */
 import React, { useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from 'src/store/hooks';
-import { addWordDetails, fetchCurrentPageWords, selectCurrentPageWords, selectWordDetails } from 'src/store/wordsSlice';
+import {
+  addWordDetails,
+  fetchCurrentPageWords,
+  selectCurrentPageWords,
+  selectWordDetails,
+} from 'src/store/wordsSlice';
 import { useSearchParams } from 'react-router-dom';
 import { IWord } from 'src/store/types';
 import { Navigate } from 'src/helpers/constants';
@@ -30,25 +37,25 @@ const Textbook = () => {
   const unitParam = searchParams.get('unit') ?? '1';
   const unit = +unitParam;
 
-  // const [wordDetails, setWordDetails] = useState<IWord | null>(null);
-
   const [sectionDisplay, setSectionDisplay] = useState(TextbookSections.TEXTBOOK);
 
   useEffect(() => {
-    console.log('WORD DET', wordDetails, group, unit);
-    console.log(!wordDetails || wordDetails.group !== group);
+    console.log('WORD DET', wordDetails, group, unit, currentPageWords);
+    if (currentPageWords.length === 0) return;
     if (!wordDetails || wordDetails.group !== group - 1 || wordDetails.page !== unit - 1) {
-      console.log('inside')
+      console.log('inside');
       console.log(wordDetails);
-      dispatch(addWordDetails(currentPageWords[0]))
+      dispatch(addWordDetails(currentPageWords[0]));
     }
-    // setWordDetails(currentPageWords[0])
     console.log('chenged');
   }, [currentPageWords, dispatch, wordDetails, group, unit]);
 
   useEffect(() => {
-    if (!userIsLogged(userData?.message)) dispatch(fetchCurrentPageWords(`${group - 1}`, `${unit - 1}`));
-    if (userIsLogged(userData?.message)) dispatch(fetchGetAllUserWords(getUserId(), getUserToken(), `${group - 1}`, `${unit - 1}`));
+    console.log('textbook loading');
+    if (!userIsLogged(userData?.message))
+      dispatch(fetchCurrentPageWords(`${group - 1}`, `${unit - 1}`));
+    if (userIsLogged(userData?.message))
+      dispatch(fetchGetAllUserWords(getUserId(), getUserToken(), `${group - 1}`, `${unit - 1}`));
   }, [dispatch, group, unit, userData]);
 
   const handleGroupClick = (groupNumber: number) => {
@@ -75,8 +82,7 @@ const Textbook = () => {
   };
 
   const handleWordClick = (word: IWord) => {
-    console.log(wordDetails);
-    dispatch(addWordDetails(word))
+    dispatch(addWordDetails(word));
   };
 
   const handleDisplay = (
@@ -128,6 +134,7 @@ const Textbook = () => {
             ''
           )}
         </div>
+
         {sectionDisplay === TextbookSections.TEXTBOOK ? (
           <>
             <GroupList onGroupClick={handleGroupClick} group={group} />

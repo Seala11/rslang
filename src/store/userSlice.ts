@@ -20,11 +20,13 @@ import type { AppDispatch, RootState } from '.';
 interface IUserState {
   userData: ISignInResponse | undefined;
   loginError: boolean;
+  loading: boolean;
 }
 
 const initialState: IUserState = {
   userData: undefined,
   loginError: false,
+  loading: false,
 };
 
 const userSlice = createSlice({
@@ -40,10 +42,17 @@ const userSlice = createSlice({
     addError(state, action: PayloadAction<boolean>) {
       state.loginError = action.payload;
     },
+    setUserLoading(state) {
+      state.loading = true;
+    },
+    removeUserLoading(state) {
+      state.loading = false;
+    },
   },
 });
 
-export const { addUserData, removeUserData, addError } = userSlice.actions;
+export const { addUserData, removeUserData, addError, setUserLoading, removeUserLoading } =
+  userSlice.actions;
 
 export const fetchCreateUser = (userData: IUser) => async (dispatch: AppDispatch) => {
   try {
@@ -139,6 +148,7 @@ export const fetchGetUser =
   (id: string | null, token: string | null) => async (dispatch: AppDispatch) => {
     if (!id || !token) return;
     try {
+      dispatch(setUserLoading());
       const response: Response | undefined = await getUserAPI(id, token);
       if (response.ok) {
         const data = getUserStoredData();
@@ -159,10 +169,13 @@ export const fetchGetUser =
     } catch (err) {
       clearUserData();
       console.error(err);
+    } finally {
+      dispatch(removeUserLoading());
     }
   };
 
 export const getErrors = (state: RootState) => state.user.loginError;
 export const getUserData = (state: RootState) => state.user.userData;
+export const getUserIsLoading = (state: RootState) => state.user.loading;
 
 export default userSlice.reducer;

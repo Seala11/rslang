@@ -22,6 +22,7 @@ export interface IWord {
 export interface IWordsState {
   currentPage: IWord[];
   wordDetails: IWord | null;
+  loading: boolean;
 }
 
 export interface ISprintState {

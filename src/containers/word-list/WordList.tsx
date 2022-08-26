@@ -13,23 +13,19 @@ const WordList: React.FC<IWordListProps> = ({
   onPageNavigate,
   onPaginationClick,
 }) => (
-    <div className={styles.wrapper}>
-      <div className={styles.row}>
-        <div className={styles.words}>
-          {words.map((word) => (
-            <Word key={word.word} {...{ onWordClick, word }} />
-          ))}
-        </div>
-        <div className={styles.details}>
-          <WordDetails />
-        </div>
+  <div className={styles.wrapper}>
+    <div className={styles.row}>
+      <div className={styles.words}>
+        {words.map((word) => (
+          <Word key={word.word} {...{ onWordClick, word }} />
+        ))}
       </div>
-      <Pagination
-        unit={unit}
-        onPageNavigate={onPageNavigate}
-        onPaginationClick={onPaginationClick}
-      />
+      <div className={styles.details}>
+        <WordDetails />
+      </div>
     </div>
-  );
+    <Pagination unit={unit} onPageNavigate={onPageNavigate} onPaginationClick={onPaginationClick} />
+  </div>
+);
 
 export default WordList;

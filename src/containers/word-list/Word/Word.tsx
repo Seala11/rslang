@@ -10,33 +10,61 @@ import { IWordProps } from './IWordProps';
 const Word: React.FC<IWordProps> = ({ onWordClick, word }) => {
   const userData = useAppSelector(getUserData);
   const wordDetails = useAppSelector(selectWordDetails);
-//   console.log(word, wordDetails?.id, word._id);
-//   console.log(userIsLogged(userData?.message));
 
   if (userIsLogged(userData?.message))
     return (
       <div
-        className={`${wordDetails?._id === word._id || wordDetails?.id === word._id ? styles.active : ''} ${styles.word}`}
-        key={word._id}
+        className={`${
+          wordDetails?.id === word._id || wordDetails?._id === word._id ? styles.active : ''
+        } ${styles.word}`}
+        key={word.id}
         onClick={() => onWordClick(word)}
         aria-hidden
       >
-        <span className={styles.original}>{word.word}</span>
-        <span className={styles.translate}>{word.wordTranslate}</span>
-        {word.userWord?.optional.difficult ? <span>difficult</span> : ''}
+        <div className={styles.container}>
+          <span className={styles.original}>{word.word}</span>
+          <span className={styles.translate}>{word.wordTranslate}</span>
+        </div>
+        <div className={styles.wrapper}>
+          {word.userWord?.optional.difficult ? (
+            <div className={`${styles.difficult} ${styles.selected}`} />
+          ) : (
+            <div className={styles.difficult} />
+          )}
+
+          {word.userWord?.optional.difficult ? (
+            <div className={`${styles.learned} ${styles.selected}`} />
+          ) : (
+            <div className={styles.learned} />
+          )}
+        </div>
       </div>
     );
 
   return (
     <div
-      className={`${wordDetails?.id === word.id || wordDetails?.id === word._id ? styles.active : ''} ${styles.word}`}
+      className={`${wordDetails?.id === word.id ? styles.active : ''} ${styles.word}`}
       key={word.id}
       onClick={() => onWordClick(word)}
       aria-hidden
     >
-      <span className={styles.original}>{word.word}</span>
-      <span className={styles.translate}>{word.wordTranslate}</span>
-      {word.userWord?.optional.difficult ? <span>difficult</span> : ''}
+      <div className={styles.container}>
+        <span className={styles.original}>{word.word}</span>
+        <span className={styles.translate}>{word.wordTranslate}</span>
+      </div>
+      <div className={styles.wrapper}>
+        {word.userWord?.optional.difficult ? (
+          <div className={`${styles.difficult} ${styles.selected}`} />
+        ) : (
+          <div className={styles.difficult} />
+        )}
+
+        {word.userWord?.optional.difficult ? (
+          <div className={`${styles.learned} ${styles.selected}`} />
+        ) : (
+          <div className={styles.learned} />
+        )}
+      </div>
     </div>
   );
 };

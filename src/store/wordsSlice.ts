@@ -6,6 +6,8 @@ import { IWord, IWordsState } from './types';
 
 const initialState: IWordsState = {
   currentPage: [],
+  wordDetails: null,
+  loading: false,
 };
 
 const wordsSlice = createSlice({
@@ -15,18 +17,37 @@ const wordsSlice = createSlice({
     addCurrentPageWords(state, action: PayloadAction<IWord[]>) {
       state.currentPage = action.payload;
     },
+    addWordDetails(state, action: PayloadAction<IWord | null>) {
+      state.wordDetails = action.payload;
+    },
+    setLoading(state) {
+      state.loading = true;
+    },
+    removeLoading(state) {
+      state.loading = false;
+    },
   },
 });
 
-export const { addCurrentPageWords } = wordsSlice.actions;
+export const { addCurrentPageWords, addWordDetails, setLoading, removeLoading } =
+  wordsSlice.actions;
 
 export const fetchCurrentPageWords =
   (group: string, page: string) => async (dispatch: AppDispatch) => {
-    const words = await getWordsAPI(group, page);
-
-    dispatch(addCurrentPageWords(words));
+    try {
+      dispatch(setLoading());
+      const words = await getWordsAPI(group, page);
+      dispatch(addCurrentPageWords(words));
+    } catch (err) {
+      // eslint-disable-next-line no-console
+      console.error(err);
+    } finally {
+      removeLoading();
+    }
   };
 
 export const selectCurrentPageWords = (state: RootState) => state.words.currentPage;
+export const selectWordDetails = (state: RootState) => state.words.wordDetails;
+export const getLoading = (state: RootState) => state.words.loading;
 
 export default wordsSlice.reducer;

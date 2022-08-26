@@ -5,7 +5,7 @@ import createUserWordAPI from 'src/requests/userWords/createUserWordAPI';
 import getAllAggrWordsAPI from 'src/requests/aggregatedWords/getAllAggrWordsAPI';
 import type { AppDispatch, RootState } from '.';
 import { IUserDiffWord } from './types';
-import { addCurrentPageWords } from './wordsSlice';
+import { addCurrentPageWords, removeLoading, setLoading } from './wordsSlice';
 
 interface IUserWordsState {
   diffWords: IUserDiffWord[];
@@ -36,30 +36,27 @@ export const { addDiffWord, removeDiffWord } = userWordsSlice.actions;
 export const fetchGetAllUserWords =
   (userId: string | null, token: string | null, group: string, page: string) =>
   async (dispatch: AppDispatch) => {
-    console.log('get all words');
     if (!userId || !token) return;
-
     try {
+      dispatch(setLoading());
       const response: Response | undefined = await getAllAggrWordsAPI(
         userId,
         token,
-        `{"$and":[{"group": ${group}, "page": ${page}}]}`,
+        `{"$and":[{"group": ${group}, "page": ${page}}]}`
       );
-
-      console.log(response);
-
       if (response.ok) {
         const data = await response?.json();
-
         dispatch(addCurrentPageWords(data[0].paginatedResults));
         // dispatch(addDiffWord({ difficulty, id: wordId }));
-          console.log('should get all words', data[0]);
+        // console.log('should get all words', data[0]);
       } else {
         const data: string = await response.text();
         console.error(data, response.status);
       }
     } catch (err) {
       console.error(err);
+    } finally {
+      dispatch(removeLoading());
     }
   };
 
@@ -90,12 +87,11 @@ export const fetchCreateDiffWord =
         fetchDataBody,
         token
       );
-
-      console.log(response);
+      // console.log(response);
 
       if (response.ok) {
         dispatch(addDiffWord({ difficulty, id: wordId }));
-        console.log({ difficulty, id: wordId });
+        // console.log({ difficulty, id: wordId });
         dispatch(fetchGetAllUserWords(userId, token, difficulty, page));
       } else {
         const data: string = await response.text();

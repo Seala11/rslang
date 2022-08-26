@@ -4,7 +4,7 @@ const getAllAggrWordsAPI = async (
   userId: string,
   token: string,
   filter: string,
-  wordsPerPage = '20',
+  wordsPerPage = '20'
 ) => {
   try {
     const query = {
