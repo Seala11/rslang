@@ -1,7 +1,7 @@
 import { IUserWord } from 'src/requests/interfaceAPI';
 import { Methods, UrlPath, Headers } from 'src/helpers/constRequestsAPI';
 
-const getUserWordAPI = async (
+const updateUserWordAPI = async (
   userId: string,
   wordId: string,
   wordData: IUserWord,
@@ -21,12 +21,14 @@ const getUserWordAPI = async (
       }
     );
 
-    const updatedWord: IUserWord = await response.json();
+    return response;
 
-    return updatedWord;
+    // const updatedWord: IUserWord = await response.json();
+
+    // return updatedWord;
   } catch (error) {
     throw new Error();
   }
 };
 
-export default getUserWordAPI;
+export default updateUserWordAPI;
