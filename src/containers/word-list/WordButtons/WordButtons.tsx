@@ -3,13 +3,14 @@
 import React, { useEffect, useState } from 'react';
 import { getUserId, getUserToken } from 'src/helpers/storage';
 import { useAppDispatch, useAppSelector } from 'src/store/hooks';
-import { fetchCreateDiffWord, getDifficultWords } from 'src/store/userWordsSlice';
+import { fetchCreateDiffWord } from 'src/store/userWordsSlice';
+import { selectWordDetails } from 'src/store/wordsSlice';
 import { IWordButtonsProps } from './IWordButtonsProps';
 import styles from './WordButtons.module.scss';
 
 const WordButtons: React.FC<IWordButtonsProps> = ({ word }) => {
   const dispatch = useAppDispatch();
-  const userDiffWords = useAppSelector(getDifficultWords);
+  const wordDetails = useAppSelector(selectWordDetails);
 
   const [diffWord, setDiffWord] = useState(false);
 
@@ -17,6 +18,7 @@ const WordButtons: React.FC<IWordButtonsProps> = ({ word }) => {
     dispatch(
       fetchCreateDiffWord(getUserId(), word?._id, `${word?.group}`, `${word?.page}`, getUserToken())
     );
+    setDiffWord(() => true);
   };
 
   const addLearnedWord = () => {
@@ -24,21 +26,15 @@ const WordButtons: React.FC<IWordButtonsProps> = ({ word }) => {
   };
 
   useEffect(() => {
-    const wordIsAdded = userDiffWords.some(
-      (userWord) => userWord.id === word?.id || userWord.id === word?._id
-    );
-    if (wordIsAdded) setDiffWord(() => true);
-    if (!wordIsAdded) setDiffWord(() => false);
-  }, [userDiffWords, setDiffWord, word, diffWord]);
+    const wordIsDiff =
+      wordDetails?.userWord?.optional.difficult || word?.userWord?.optional.difficult;
+    if (wordIsDiff) setDiffWord(() => true);
+    if (!wordIsDiff) setDiffWord(() => false);
+  }, [word, setDiffWord, wordDetails]);
 
   return (
     <div className={styles.wordButtons}>
-      <button
-        type='button'
-        onClick={addDiffWord}
-        className={styles.wordButton}
-        disabled={diffWord || word?.userWord?.optional.difficult}
-      >
+      <button type='button' onClick={addDiffWord} className={styles.wordButton} disabled={diffWord}>
         Сложное слово
       </button>
       <button type='button' onClick={addLearnedWord} className={styles.wordButton}>
