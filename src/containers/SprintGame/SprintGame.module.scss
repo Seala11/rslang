@@ -1,0 +1,49 @@
+.controlls {
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+.btn {
+  width: 200px;
+  padding: 15px;
+  margin-right: 15px;
+  background-color: #daeda3;
+  font-size: 2rem;
+
+  &:hover {
+    background-color: #a3edb3;
+  }
+
+  &.active {
+    outline: solid red 1px;
+  }
+}
+
+.points {
+  margin-bottom: 30px;
+  font-size: 2rem;
+  text-align: center;
+
+  span {
+    margin-right: 30px;
+  }
+}
+
+.words {
+  margin-bottom: 30px;
+  font-size: 2rem;
+  text-align: center;
+
+  span {
+    margin-right: 30px;
+  }
+}
+
+.shape {
+  width: 100%;
+  max-width: 500px;
+  margin: 0 auto;
+  padding: 15px;
+
+  outline: #98b34a solid 1px;
+}

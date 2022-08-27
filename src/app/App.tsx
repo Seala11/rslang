@@ -26,10 +26,9 @@ const App: React.FC = () => {
         <Route path='/textbook' element={<Textbook />} />
         <Route path='/games' element={<Games />} />
         <Route path='/games/sprint' element={<Sprint />} />
+        <Route path='/games/audio' element={<Levels game='audio' />} />
         <Route path='/statistics' element={<Statistics />} />
         <Route path='/login' element={<Registration />} />
-        <Route path='/games/audio' element={<Levels game='audio' />} />
-        <Route path='/games/sprint' element={<Levels game='sprint' />} />
       </Routes>
     </div>
   );
