@@ -1,19 +1,32 @@
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable no-console */
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styles from 'src/containers/DifficultWords/DifficultWord/DifficultWord.module.scss';
 import { UrlPath } from 'src/helpers/constRequestsAPI';
 import { getUserId, getUserToken } from 'src/helpers/storage';
 import { useAppDispatch } from 'src/store/hooks';
-import { fetchRemoveDiffWord } from 'src/store/userWordsSlice';
+import { fetchUpdateDiffWord } from 'src/store/userWordsSlice';
 import { IDifficultWordProps } from './IDifficultWord.Props';
 
 const DifficultWord: React.FC<IDifficultWordProps> = ({ word }) => {
   const dispatch = useAppDispatch();
+  const [disable, setDisable] = useState(false);
+
+  useEffect(() => {}, [disable]);
 
   const removeWord = () => {
     console.log(word);
-    dispatch(fetchRemoveDiffWord(getUserId(), word?._id, `${word?.group}`, `${word?.page}`, getUserToken()))
+    setDisable(() => true);
+    dispatch(
+      fetchUpdateDiffWord(
+        getUserId(),
+        word?._id,
+        `${word?.group}`,
+        `${word?.page}`,
+        getUserToken(),
+        false
+      )
+    );
   };
 
   return (
@@ -29,7 +42,9 @@ const DifficultWord: React.FC<IDifficultWordProps> = ({ word }) => {
           <span className={styles.transcription}>{word?.transcription}</span>
         </div>
       </div>
-      <button type='button' onClick={removeWord} className={styles.button}>Удалить из списка</button>
+      <button type='button' onClick={removeWord} className={styles.button} disabled={disable}>
+        Удалить из списка
+      </button>
     </div>
   );
 };

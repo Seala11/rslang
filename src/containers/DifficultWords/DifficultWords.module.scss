@@ -1,7 +1,9 @@
 @use 'src/sass/abstracts/mixins' as *;
 
 .wrapper {
-    margin-top: 2rem;
+    // margin-top: 2rem;
+    width: 80%;
+    margin: 0 auto;
 }
 
 .empty {

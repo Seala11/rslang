@@ -50,9 +50,15 @@ export interface IUserWord {
 }
 
 interface IOptions {
-  wordId: string;
   learned?: boolean;
   difficult?: boolean;
+}
+
+export interface IUserWordResponse {
+    id: string;
+    difficulty: string;
+    optional: IOptions;
+    wordId: string;
 }
 
 // Statistics

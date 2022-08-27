@@ -4,6 +4,9 @@ import type { PayloadAction } from '@reduxjs/toolkit';
 import createUserWordAPI from 'src/requests/userWords/createUserWordAPI';
 import getAllAggrWordsAPI from 'src/requests/aggregatedWords/getAllAggrWordsAPI';
 import updateUserWordAPI from 'src/requests/userWords/updateUserWordAPI';
+import getUserWordAPI from 'src/requests/userWords/getUserWordAPI';
+import { IUserWordResponse } from 'src/requests/interfaceAPI';
+import { ErrorMessage, ResponseStatus } from 'src/helpers/constRequestsAPI';
 import type { AppDispatch, RootState } from '.';
 import { IUserDiffWord, IWord } from './types';
 import { addCurrentPageWords, removeLoading, setLoading } from './wordsSlice';
@@ -103,63 +106,21 @@ export const fetchGetAllDiffWords =
     }
   };
 
-export const fetchCreateDiffWord =
+export const fetchUpdateDiffWord =
   (
     userId: string | null,
     wordId: string | undefined,
     difficulty: string,
     page: string | undefined,
-    token: string | null
+    token: string | null,
+    updateValue: boolean
   ) =>
   async (dispatch: AppDispatch) => {
     if (!userId || !wordId || !token || !page) return;
     const fetchDataBody = {
       difficulty,
       optional: {
-        wordId,
-        difficult: true,
-      },
-    };
-
-    try {
-      const response: Response | undefined = await createUserWordAPI(
-        userId,
-        wordId,
-        fetchDataBody,
-        token
-      );
-
-      if (response.ok) {
-        // const word = await response.json();
-        // console.log(word);
-        // dispatch(addDiffWord({ difficulty, id: wordId }));
-        // console.log({ difficulty, id: wordId });
-        dispatch(fetchGetAllUserWords(userId, token, difficulty, page));
-        dispatch(fetchGetAllDiffWords(userId, token));
-      } else {
-        const data: string = await response.text();
-        console.error(data, response.status);
-      }
-    } catch (err) {
-      console.error(err);
-    }
-  };
-
-export const fetchRemoveDiffWord =
-  (
-    userId: string | null,
-    wordId: string | undefined,
-    difficulty: string,
-    page: string | undefined,
-    token: string | null
-  ) =>
-  async (dispatch: AppDispatch) => {
-    if (!userId || !wordId || !token || !page) return;
-    const fetchDataBody = {
-      difficulty,
-      optional: {
-        wordId,
-        difficult: false,
+        difficult: updateValue,
       },
     };
 
@@ -181,6 +142,69 @@ export const fetchRemoveDiffWord =
       }
     } catch (err) {
       console.error(err);
+    }
+  };
+
+export const fetchCreateDiffWord =
+  (
+    userId: string | null,
+    wordId: string | undefined,
+    difficulty: string,
+    page: string | undefined,
+    token: string | null
+  ) =>
+  async (dispatch: AppDispatch) => {
+    if (!userId || !wordId || !token || !page) return;
+    const fetchDataBody = {
+      difficulty,
+      optional: {
+        difficult: true,
+      },
+    };
+
+    try {
+      const response: Response | undefined = await getUserWordAPI(userId, wordId, token);
+
+      if (response.ok) {
+        const word: IUserWordResponse = await response.json();
+        console.log(word);
+
+        if (word.optional.difficult) {
+          // difficult word cant be added to difficult
+          console.error('user should not be able to add difficult twice');
+          return;
+        }
+        if (word.optional.learned) {
+          // update word to difficult and learned
+          return;
+        }
+        if (!word.optional.difficult) {
+          // if difficult = false , change diff = true;
+          dispatch(fetchUpdateDiffWord(userId, wordId, difficulty, page, token, true));
+          console.log('word update');
+        }
+      } else {
+        switch (response.status) {
+          case ResponseStatus.MISSING_TOKEN:
+            // TODO: logout user then or refresh token
+            console.error(ErrorMessage.MISSING_TOKEN);
+            break;
+          case ResponseStatus.NOT_FOUND: {
+            const res = await createUserWordAPI(userId, wordId, fetchDataBody, token);
+
+            await dispatch(fetchGetAllUserWords(userId, token, difficulty, page));
+            await dispatch(fetchGetAllDiffWords(userId, token));
+            console.log(res);
+            console.log('word create');
+            break;
+          }
+          default:
+            throw new Error(`${response.statusText}`);
+        }
+      }
+    } catch (err) {
+      console.error(err);
+      throw(err);
     }
   };
 
