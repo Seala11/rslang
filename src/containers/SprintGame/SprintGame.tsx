@@ -3,6 +3,7 @@ import { useAppSelector } from 'src/store/hooks';
 import { selectWords } from 'src/store/sprintSlice';
 import Timer from 'src/containers/SprintGame/Timer';
 import Result from 'src/containers/SprintGame/Result';
+import { ISprintWord } from 'src/store/types';
 import styles from './SprintGame.module.scss';
 
 const SECONDS = 30;
@@ -13,6 +14,8 @@ const SprintGame = () => {
   const [points, setPoints] = useState({ value: 0, weight: 1 });
   const [progress, setProgress] = useState(0);
   const [finishGame, setFinishGame] = useState(false);
+  const [rightAnswers, setRightAnswers] = useState<ISprintWord[]>([]);
+  const [wrongAnswers, setWrongAnswers] = useState<ISprintWord[]>([]);
 
   const handleAnswerClick = (choice: number) => {
     if (words[step].choice === choice) {
@@ -24,9 +27,11 @@ const SprintGame = () => {
         setProgress((prev) => prev + 1);
       }
       setPoints((prev) => ({ ...prev, value: prev.value + 10 * prev.weight }));
+      setRightAnswers((prev) => [...prev, words[step]]);
     } else {
       setProgress(0);
       setPoints((prev) => ({ ...prev, weight: 1 }));
+      setWrongAnswers((prev) => [...prev, words[step]]);
     }
 
     setStep((prev) => prev + 1);
@@ -35,6 +40,43 @@ const SprintGame = () => {
   const handleTimerFinish = () => {
     setFinishGame(true);
   };
+
+  const GameProccess = (
+    <div className={styles.proccess}>
+      <div className={styles.shape}>
+        <div className={styles.points}>
+          <span>Очки: {points.value}</span>
+          <span>Weight: x{points.weight}</span>
+          <span>Прогресс: {progress}</span>
+        </div>
+        <div className={styles.words}>
+          <span>{words[step]?.word}</span>
+          <span>
+            {words[step]?.choice ? words[step]?.wordTranslate : words[step]?.wrongTranslate}
+          </span>
+        </div>
+        <div>
+          <button
+            className={`${words[step]?.choice === 1 ? styles.active : ''} ${styles.btn}`}
+            type='button'
+            onClick={() => handleAnswerClick(1)}
+          >
+            верно
+          </button>
+          <button
+            className={`${words[step]?.choice === 0 ? styles.active : ''} ${styles.btn}`}
+            type='button'
+            onClick={() => handleAnswerClick(0)}
+          >
+            неверно
+          </button>
+        </div>
+      </div>
+      <div className={styles.timer}>
+        <Timer onTimerFinish={handleTimerFinish} seconds={SECONDS} />
+      </div>
+    </div>
+  );
 
   return (
     <div>
@@ -49,43 +91,11 @@ const SprintGame = () => {
           fullscreen
         </button>
       </div>
-      {finishGame ? (
-        <Result />
+
+      {finishGame || step >= words.length ? (
+        <Result rightAnswers={rightAnswers} wrongAnswers={wrongAnswers} />
       ) : (
-        <div className={styles.proccess}>
-          <div className={styles.shape}>
-            <div className={styles.points}>
-              <span>Очки: {points.value}</span>
-              <span>Weight: x{points.weight}</span>
-              <span>Прогресс: {progress}</span>
-            </div>
-            <div className={styles.words}>
-              <span>{words[step].word}</span>
-              <span>
-                {words[step].choice ? words[step].wordTranslate : words[step].wrongTranslate}
-              </span>
-            </div>
-            <div>
-              <button
-                className={`${words[step].choice === 1 ? styles.active : ''} ${styles.btn}`}
-                type='button'
-                onClick={() => handleAnswerClick(1)}
-              >
-                верно
-              </button>
-              <button
-                className={`${words[step].choice === 0 ? styles.active : ''} ${styles.btn}`}
-                type='button'
-                onClick={() => handleAnswerClick(0)}
-              >
-                неверно
-              </button>
-            </div>
-          </div>
-          <div className={styles.timer}>
-            <Timer onTimerFinish={handleTimerFinish} seconds={SECONDS} />
-          </div>
-        </div>
+        GameProccess
       )}
     </div>
   );

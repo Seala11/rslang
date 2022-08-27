@@ -1,6 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { ITimerProps } from './ITimerProps';
 import styles from './Timer.module.scss';
+
+export interface ITimerProps {
+  onTimerFinish: () => void;
+  seconds: number;
+}
 
 const Timer: React.FC<ITimerProps> = ({ onTimerFinish, seconds }) => {
   const [time, setTime] = useState(seconds);

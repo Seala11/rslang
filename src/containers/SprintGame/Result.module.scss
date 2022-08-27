@@ -1,0 +1,46 @@
+.result {
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 15px;
+  background-color: #fff;
+}
+
+.right {
+  margin-bottom: 30px;
+}
+
+.btn {
+  margin-right: 15px;
+
+  svg {
+    width: 32px;
+  }
+
+  &:active {
+    svg {
+      fill: greenyellow;
+    }
+  }
+}
+
+.caption {
+  margin-bottom: 15px;
+}
+
+.word {
+  margin-right: 15px;
+}
+
+.amountRight,
+.amountWrong {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  padding: 5px 10px;
+  border-radius: 100%;
+  background-color: greenyellow;
+}
+
+.amountWrong {
+  background-color: pink;
+}
