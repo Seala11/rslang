@@ -16,6 +16,14 @@ const Result: React.FC<IResultProps> = ({ rightAnswers, wrongAnswers }) => {
     audio.play().catch((error) => error);
   };
 
+  const handleLinkToTextbook = () => {
+    // ..
+  };
+
+  const handlePlayAgain = () => {
+    // ..
+  };
+
   return (
     <div className={styles.result}>
       <div className={styles.right}>
@@ -57,6 +65,14 @@ const Result: React.FC<IResultProps> = ({ rightAnswers, wrongAnswers }) => {
             <span className={styles.wordTranslate}>{word.wordTranslate}</span>
           </div>
         ))}
+      </div>
+      <div>
+        <button type='button' onClick={handlePlayAgain}>
+          Сыграть еще раз
+        </button>
+        <button type='button' onClick={handleLinkToTextbook}>
+          Перейти в учебник
+        </button>
       </div>
     </div>
   );
