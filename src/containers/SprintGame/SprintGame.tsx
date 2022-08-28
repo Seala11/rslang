@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useCallback, useEffect, useState } from 'react';
 import { useAppSelector } from 'src/store/hooks';
 import { selectWords } from 'src/store/sprintSlice';
@@ -22,6 +21,7 @@ const SprintGame: React.FC<ISprintGameProps> = ({ onGameClose }) => {
   const [finishGame, setFinishGame] = useState(false);
   const [rightAnswers, setRightAnswers] = useState<ISprintWord[]>([]);
   const [wrongAnswers, setWrongAnswers] = useState<ISprintWord[]>([]);
+  const [time, setTime] = useState(SECONDS);
 
   const handleAnswerClick = useCallback(
     (choice: number) => {
@@ -76,16 +76,6 @@ const SprintGame: React.FC<ISprintGameProps> = ({ onGameClose }) => {
     };
   }, [finishGame, handleAnswerClick, step, words.length]);
 
-  const handleFullScreen = () => {
-    if (document.fullscreenElement) {
-      document.exitFullscreen().catch((err) => err);
-    } else {
-      document.documentElement.requestFullscreen().catch((err) => err);
-    }
-  };
-
-  const [time, setTime] = useState(SECONDS);
-
   useEffect(() => {
     const timeId = setTimeout(() => {
       if (time > 0) {
@@ -97,6 +87,14 @@ const SprintGame: React.FC<ISprintGameProps> = ({ onGameClose }) => {
 
     return () => clearTimeout(timeId);
   }, [time]);
+
+  const handleFullScreen = () => {
+    if (document.fullscreenElement) {
+      document.exitFullscreen().catch((err) => err);
+    } else {
+      document.documentElement.requestFullscreen().catch((err) => err);
+    }
+  };
 
   const handleSoundToggle = () => {
     if (audioCorrect.muted) {
