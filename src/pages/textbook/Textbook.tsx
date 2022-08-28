@@ -17,7 +17,9 @@ import DifficultWords from 'src/containers/DifficultWords';
 import { getUserData, getUserIsLoading } from 'src/store/userSlice';
 import { getUserId, getUserToken, userIsInStorage, userIsLogged } from 'src/helpers/storage';
 import { fetchGetAllUserWords } from 'src/store/userWordsSlice';
+import Loading from 'src/components/Loading';
 import styles from './Textbook.module.scss';
+
 
 enum TextbookSections {
   TEXTBOOK = 'textbook',
@@ -58,6 +60,9 @@ const Textbook = () => {
   useEffect(() => {
     if (userIsLoggedLoading || (userIsInStorage() && !userData)) return;
 
+    // TODO: ask Marsel for the better solution)
+    if (group === 7) setSectionDisplay(TextbookSections.DIFF_WORDS);
+
     if (!userIsLogged(userData?.message))
       dispatch(fetchCurrentPageWords(`${group - 1}`, `${unit - 1}`));
 
@@ -82,9 +87,7 @@ const Textbook = () => {
       case Navigate.NEXT:
         setSearchParams({ group: `${group}`, unit: `${unit + 1}` });
         break;
-
-      default:
-        break;
+      // no default
     }
   };
 
@@ -97,14 +100,25 @@ const Textbook = () => {
   ) => {
     switch (event.target.name) {
       case TextbookSections.TEXTBOOK:
+        // TODO: ask Marsel for the better solution)
         setSectionDisplay(() => TextbookSections.TEXTBOOK);
+        setSearchParams({ group: `${1}`, unit: `${1}` });
         break;
       case TextbookSections.DIFF_WORDS:
+        // TODO: ask Marsel for the better solution)
         setSectionDisplay(() => TextbookSections.DIFF_WORDS);
+        setSearchParams({ group: `${7}`, unit: `${1}` });
         break;
       // no default
     }
   };
+
+  if (userIsLoggedLoading || (userIsInStorage() && !userData))
+    return (
+      <LayoutMain>
+        <Loading />
+      </LayoutMain>
+    );
 
   return (
     <LayoutMain>

@@ -42,7 +42,7 @@ export const fetchCurrentPageWords =
       // eslint-disable-next-line no-console
       console.error(err);
     } finally {
-      removeLoading();
+      dispatch(removeLoading());
     }
   };
 
