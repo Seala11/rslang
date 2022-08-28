@@ -11,7 +11,11 @@ const SECONDS = 30;
 const audioCorrect = new Audio('/audio/correct.mp3');
 const audioWrong = new Audio('/audio/wrong.mp3');
 
-const SprintGame = () => {
+export interface ISprintGameProps {
+  onGameClose: () => void;
+}
+
+const SprintGame: React.FC<ISprintGameProps> = ({ onGameClose }) => {
   const words = useAppSelector(selectWords);
   const [step, setStep] = useState(0);
   const [points, setPoints] = useState({ value: 0, weight: 1 });
@@ -73,8 +77,26 @@ const SprintGame = () => {
     };
   }, [finishGame, handleAnswerClick, step, words.length]);
 
+  const handleFullScreen = () => {
+    if (document.fullscreenElement) {
+      document.exitFullscreen().catch((err) => err);
+    } else {
+      document.documentElement.requestFullscreen().catch((err) => err);
+    }
+  };
+
   const handleTimerFinish = () => {
     setFinishGame(true);
+  };
+
+  const handleSoundToggle = () => {
+    if (audioCorrect.muted) {
+      audioCorrect.muted = false;
+      audioWrong.muted = false;
+    } else {
+      audioCorrect.muted = true;
+      audioWrong.muted = true;
+    }
   };
 
   const handlePlayAgain = () => {
@@ -126,13 +148,13 @@ const SprintGame = () => {
   return (
     <div>
       <div className={styles.controlls}>
-        <button className={styles.btn} type='button'>
+        <button className={styles.btn} type='button' onClick={onGameClose}>
           close
         </button>
-        <button className={styles.btn} type='button'>
+        <button className={styles.btn} type='button' onClick={handleSoundToggle}>
           sound
         </button>
-        <button className={styles.btn} type='button'>
+        <button className={styles.btn} type='button' onClick={handleFullScreen}>
           fullscreen
         </button>
       </div>

@@ -20,6 +20,9 @@ const Result: React.FC<IResultProps> = ({ rightAnswers, wrongAnswers, onPlayAgai
   };
 
   const handleLinkToTextbook = () => {
+    if (document.fullscreenElement) {
+      document.exitFullscreen().catch((err) => err);
+    }
     navigate('/textbook');
   };
 

@@ -16,10 +16,13 @@ const sprintSlice = createSlice({
     addWords(state, action: PayloadAction<ISprintWord[]>) {
       state.words = action.payload;
     },
+    removeWords(state) {
+      state.words = [];
+    },
   },
 });
 
-export const { addWords } = sprintSlice.actions;
+export const { addWords, removeWords } = sprintSlice.actions;
 
 const convertToSprintWords = (words: IWord[]) =>
   words.map((word, i) => ({
