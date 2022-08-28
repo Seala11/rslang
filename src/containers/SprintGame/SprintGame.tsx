@@ -2,12 +2,11 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { useAppSelector } from 'src/store/hooks';
 import { selectWords } from 'src/store/sprintSlice';
-import Timer from 'src/containers/SprintGame/Timer';
 import Result from 'src/containers/SprintGame/Result';
 import { ISprintWord } from 'src/store/types';
 import styles from './SprintGame.module.scss';
 
-const SECONDS = 30;
+const SECONDS = 60;
 const audioCorrect = new Audio('/audio/correct.mp3');
 const audioWrong = new Audio('/audio/wrong.mp3');
 
@@ -85,9 +84,19 @@ const SprintGame: React.FC<ISprintGameProps> = ({ onGameClose }) => {
     }
   };
 
-  const handleTimerFinish = () => {
-    setFinishGame(true);
-  };
+  const [time, setTime] = useState(SECONDS);
+
+  useEffect(() => {
+    const timeId = setTimeout(() => {
+      if (time > 0) {
+        setTime((prev) => prev - 1);
+      } else {
+        setFinishGame(true);
+      }
+    }, 1000);
+
+    return () => clearTimeout(timeId);
+  }, [time]);
 
   const handleSoundToggle = () => {
     if (audioCorrect.muted) {
@@ -106,6 +115,7 @@ const SprintGame: React.FC<ISprintGameProps> = ({ onGameClose }) => {
     setFinishGame(false);
     setRightAnswers([]);
     setWrongAnswers([]);
+    setTime(SECONDS);
   };
 
   const GameProccess = (
@@ -139,8 +149,8 @@ const SprintGame: React.FC<ISprintGameProps> = ({ onGameClose }) => {
           </button>
         </div>
       </div>
-      <div className={styles.timer}>
-        <Timer onTimerFinish={handleTimerFinish} seconds={SECONDS} />
+      <div className={styles.timerWrapper}>
+        <span className={styles.timer}>{time}</span>
       </div>
     </div>
   );
