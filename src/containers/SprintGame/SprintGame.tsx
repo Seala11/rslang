@@ -77,6 +77,15 @@ const SprintGame = () => {
     setFinishGame(true);
   };
 
+  const handlePlayAgain = () => {
+    setStep(0);
+    setPoints({ value: 0, weight: 1 });
+    setProgress(0);
+    setFinishGame(false);
+    setRightAnswers([]);
+    setWrongAnswers([]);
+  };
+
   const GameProccess = (
     <div className={styles.proccess}>
       <div className={styles.shape}>
@@ -129,7 +138,11 @@ const SprintGame = () => {
       </div>
 
       {finishGame || step >= words.length ? (
-        <Result rightAnswers={rightAnswers} wrongAnswers={wrongAnswers} />
+        <Result
+          rightAnswers={rightAnswers}
+          wrongAnswers={wrongAnswers}
+          onPlayAgain={handlePlayAgain}
+        />
       ) : (
         GameProccess
       )}

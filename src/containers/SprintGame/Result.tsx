@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import { UrlPath } from 'src/helpers/constRequestsAPI';
 import { ISprintWord } from 'src/store/types';
 import styles from './Result.module.scss';
@@ -6,9 +7,11 @@ import styles from './Result.module.scss';
 export interface IResultProps {
   rightAnswers: ISprintWord[];
   wrongAnswers: ISprintWord[];
+  onPlayAgain: () => void;
 }
 
-const Result: React.FC<IResultProps> = ({ rightAnswers, wrongAnswers }) => {
+const Result: React.FC<IResultProps> = ({ rightAnswers, wrongAnswers, onPlayAgain }) => {
+  const navigate = useNavigate();
   const audio = new Audio();
 
   const handlePlayClick = (src: string) => {
@@ -17,11 +20,7 @@ const Result: React.FC<IResultProps> = ({ rightAnswers, wrongAnswers }) => {
   };
 
   const handleLinkToTextbook = () => {
-    // ..
-  };
-
-  const handlePlayAgain = () => {
-    // ..
+    navigate('/textbook');
   };
 
   return (
@@ -33,7 +32,7 @@ const Result: React.FC<IResultProps> = ({ rightAnswers, wrongAnswers }) => {
         {rightAnswers.map((word) => (
           <div key={word.id}>
             <button
-              className={styles.btn}
+              className={styles.btnSound}
               type='button'
               onClick={() => handlePlayClick(word.audio)}
             >
@@ -53,7 +52,7 @@ const Result: React.FC<IResultProps> = ({ rightAnswers, wrongAnswers }) => {
         {wrongAnswers.map((word) => (
           <div key={word.id}>
             <button
-              className={styles.btn}
+              className={styles.btnSound}
               type='button'
               onClick={() => handlePlayClick(word.audio)}
             >
@@ -66,11 +65,11 @@ const Result: React.FC<IResultProps> = ({ rightAnswers, wrongAnswers }) => {
           </div>
         ))}
       </div>
-      <div>
-        <button type='button' onClick={handlePlayAgain}>
+      <div className={styles.btnWrapper}>
+        <button type='button' className={styles.btn} onClick={onPlayAgain}>
           Сыграть еще раз
         </button>
-        <button type='button' onClick={handleLinkToTextbook}>
+        <button type='button' className={styles.btn} onClick={handleLinkToTextbook}>
           Перейти в учебник
         </button>
       </div>
