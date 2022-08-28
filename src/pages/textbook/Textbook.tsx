@@ -41,8 +41,8 @@ const Textbook = () => {
   const [sectionDisplay, setSectionDisplay] = useState(TextbookSections.TEXTBOOK);
 
   useEffect(() => {
-    if (currentPageWords.length === 0 || userIsLoggedLoading || textBookIsLoading) return;
-    if (!wordDetails || wordDetails.group !== group - 1 || wordDetails.page !== unit - 1) {
+    if (currentPageWords.length === 0 || userIsLoggedLoading) return;
+    if (wordDetails?.group !== group - 1 || wordDetails?.page !== unit - 1) {
       dispatch(addWordDetails(currentPageWords[0]));
     }
   }, [
