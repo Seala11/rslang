@@ -25,8 +25,13 @@ export interface IWordsState {
   loading: boolean;
 }
 
+export interface ISprintWord extends IWord {
+  wrongTranslate: string;
+  choice: number;
+}
+
 export interface ISprintState {
-  words: IWord[];
+  words: ISprintWord[];
 }
 
 export interface IAudioState {
