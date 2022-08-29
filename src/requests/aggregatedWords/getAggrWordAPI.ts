@@ -8,7 +8,7 @@ import {
 } from 'src/helpers/constRequestsAPI';
 import createError from 'src/requests/createError';
 
-const getAllAggrWordsAPI = async (userId: string, wordId: string, token: string) => {
+const getAggrWordsAPI = async (userId: string, wordId: string, token: string) => {
   try {
     const response = await fetch(
       `${UrlPath.BASE}/${UrlPath.USERS}/${userId}/${UrlPath.AGGREGATED}/${wordId}`,
@@ -52,4 +52,4 @@ const getAllAggrWordsAPI = async (userId: string, wordId: string, token: string)
   }
 };
 
-export default getAllAggrWordsAPI;
+export default getAggrWordsAPI;

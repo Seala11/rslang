@@ -46,7 +46,19 @@ export interface IWord {
 
 export interface IUserWord {
   difficulty: string;
-  optional: object;
+  optional: IOptions;
+}
+
+interface IOptions {
+  learned?: boolean;
+  difficult?: boolean;
+}
+
+export interface IUserWordResponse {
+  id: string;
+  difficulty: string;
+  optional: IOptions;
+  wordId: string;
 }
 
 // Statistics

@@ -1,7 +1,12 @@
 import { IUserWord } from 'src/requests/interfaceAPI';
 import { Methods, UrlPath, Headers } from 'src/helpers/constRequestsAPI';
 
-const getUserWordAPI = async (userId: string, wordId: string, wordData: IUserWord, token: string) => {
+const updateUserWordAPI = async (
+  userId: string,
+  wordId: string,
+  wordData: IUserWord,
+  token: string
+) => {
   try {
     const response = await fetch(
       `${UrlPath.BASE}/${UrlPath.USERS}/${userId}/${UrlPath.WORDS}/${wordId}`,
@@ -16,12 +21,14 @@ const getUserWordAPI = async (userId: string, wordId: string, wordData: IUserWor
       }
     );
 
-    const updatedWord: IUserWord = await response.json();
+    return response;
 
-    return updatedWord;
+    // const updatedWord: IUserWord = await response.json();
+
+    // return updatedWord;
   } catch (error) {
     throw new Error();
   }
 };
 
-export default getUserWordAPI;
+export default updateUserWordAPI;

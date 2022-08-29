@@ -1,0 +1,120 @@
+@use 'src/sass/abstracts/mixins' as *;
+
+.wrapper {
+  display: flex;
+  justify-content: flex-start;
+  background-color: #fff;
+  margin-bottom: 2rem;
+  border-radius: 1.5rem;
+  border-top-left-radius: 10rem;
+  @include roboto($ff: var(--ff-roboto-regular), $fs: 1.6rem, $lh: 1.5, $color: #404040);
+}
+
+.img {
+  height: 20rem;
+  width: 20rem;
+  border-top-right-radius: 1.5rem;
+  border-top-left-radius: 10rem;
+  border-bottom-right-radius: 10rem;
+  border-bottom-left-radius: 1.5rem;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.content {
+  padding: 3rem;
+  flex-grow: 1;
+}
+
+.word {
+  @include roboto($ff: var(--ff-roboto-bold), $fs: 2rem, $lh: 1.5, $color: #404040);
+  display: flex;
+  justify-content: flex-start;
+}
+
+.wordTranslate {
+  @include roboto($ff: var(--ff-roboto-regular), $fs: 1.8rem, $lh: 1.5, $color: #404040);
+}
+
+.button {
+  @include roboto($ff: var(--ff-roboto-regular), $fs: 1.6rem, $lh: 1.5);
+  width: 16rem;
+  height: 5rem;
+  margin-top: 3rem;
+  border-radius: 1.5rem;
+  background-color: var(--accent);
+  color: var(--light);
+  transition: all 0.2s;
+  margin: 1rem 0;
+
+  &:hover {
+    color: var(--stroke);
+  }
+  &:active {
+    top: 0.2rem;
+  }
+
+  &:disabled {
+    background-color: var(--secundary-light);
+    cursor: auto;
+
+    &:hover {
+      color: var(--light);
+    }
+  }
+}
+
+// .audioWrapper {
+//   display: flex;
+//   align-items: center;
+//   margin-bottom: 20px;
+// }
+
+.transcription {
+  margin-right: 15px;
+}
+
+// .audio {
+//   display: flex;
+//   justify-content: center;
+//   align-items: center;
+//   cursor: pointer;
+
+//   svg {
+//     width: 24px;
+//     fill: var(--group-color);
+//   }
+// }
+
+// .btn {
+//   background-color: transparent;
+
+//   &:disabled {
+//     svg {
+//       fill: #bababa;
+//     }
+//   }
+// }
+
+// .description {
+//   margin-bottom: 25px;
+
+//   &:last-child {
+//     margin-bottom: 0;
+//   }
+// }
+
+// .caption {
+//   margin-bottom: 15px;
+//   font-size: 1.8rem;
+// }
+
+// .text {
+//   margin-bottom: 10px;
+//   font-size: 1.8rem;
+// }
+
+// .textTranslate {
+//   font-size: 1.8rem;
+// }
