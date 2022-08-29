@@ -204,7 +204,7 @@ export const fetchCreateDiffWord =
       }
     } catch (err) {
       console.error(err);
-      throw(err);
+      throw err;
     }
   };
 

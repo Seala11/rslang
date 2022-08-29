@@ -55,10 +55,10 @@ interface IOptions {
 }
 
 export interface IUserWordResponse {
-    id: string;
-    difficulty: string;
-    optional: IOptions;
-    wordId: string;
+  id: string;
+  difficulty: string;
+  optional: IOptions;
+  wordId: string;
 }
 
 // Statistics

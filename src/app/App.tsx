@@ -20,7 +20,7 @@ const App: React.FC = () => {
   return (
     <div className='page'>
       <ToastContainer autoClose={8000} />
-  
+
       <Routes>
         <Route path='/' element={<Home />} />
         <Route path='/textbook' element={<Textbook />} />

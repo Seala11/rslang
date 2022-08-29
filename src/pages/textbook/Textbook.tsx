@@ -20,7 +20,6 @@ import { fetchGetAllUserWords } from 'src/store/userWordsSlice';
 import Loading from 'src/components/Loading';
 import styles from './Textbook.module.scss';
 
-
 enum TextbookSections {
   TEXTBOOK = 'textbook',
   DIFF_WORDS = 'diff-words',

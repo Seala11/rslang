@@ -1,7 +1,12 @@
 import React from 'react';
 import { NavLink, useLocation, useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from 'src/store/hooks';
-import { getUserData, removeUserData, removeUserLoading, setUserLoading } from 'src/store/userSlice';
+import {
+  getUserData,
+  removeUserData,
+  removeUserLoading,
+  setUserLoading,
+} from 'src/store/userSlice';
 import { clearUserData, userIsLogged } from 'src/helpers/storage';
 import styles from 'src/components/Header/Header.module.scss';
 import NAV_LIST from 'src/data/navigation';
