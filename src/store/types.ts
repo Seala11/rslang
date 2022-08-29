@@ -19,6 +19,11 @@ export interface IWordsState {
   currentPage: IWord[];
 }
 
+export interface ISprintWord extends IWord {
+  wrongTranslate: string;
+  choice: number;
+}
+
 export interface ISprintState {
-  words: IWord[];
+  words: ISprintWord[];
 }

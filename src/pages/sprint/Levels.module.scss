@@ -1,0 +1,65 @@
+@use 'src/sass/abstracts/mixins' as *;
+
+.groups {
+  display: flex;
+  justify-content: space-between;
+  gap: 15px;
+  flex-wrap: wrap;
+  max-width: 700px;
+  padding: 15px;
+  margin: 0 auto;
+  margin-bottom: 50px;
+}
+
+.btn {
+  width: 100%;
+  max-width: 200px;
+  padding: 15px 0;
+  border-radius: 50px;
+  color: #404040;
+  background-color: #fff;
+  box-shadow: 0 4px 0 0 #544dde00;
+  transition: box-shadow 0.5s, background-color 0.2s;
+
+  &.active {
+    box-shadow: 0 4px 0 0 #554dde;
+
+    .title,
+    .level {
+      color: #554dde;
+    }
+  }
+
+  &:hover {
+    background-color: #9792f5;
+  }
+}
+
+.level {
+  display: block;
+  margin-bottom: 10px;
+  font-size: 2rem;
+  line-height: 1;
+  transition: color 0.5s;
+}
+
+.title {
+  margin-bottom: 15px;
+  color: #404040;
+  font-size: 3rem;
+  line-height: 1;
+  text-align: center;
+}
+
+.caption {
+  display: block;
+  margin-bottom: 15px;
+  color: #404040;
+  font-size: 2.2rem;
+  line-height: 1;
+  text-align: center;
+}
+
+.start {
+  text-align: center;
+}
