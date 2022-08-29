@@ -1,33 +1,28 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import React from 'react';
-import { useAppDispatch } from 'src/store/hooks';
-import { fetchWords } from 'src/store/sprintSlice';
-
-const GROUPS = [
-  { id: 1, level: 'Level 1', description: 'Easy' },
-  { id: 2, level: 'Level 2', description: 'Easy' },
-  { id: 3, level: 'Level 3', description: 'Medium' },
-  { id: 4, level: 'Level 4', description: 'Medium' },
-  { id: 5, level: 'Level 5', description: 'Hard' },
-  { id: 6, level: 'Level 6', description: 'Hard' },
-];
+import SprintGame from 'src/containers/SprintGame';
+import { useAppDispatch, useAppSelector } from 'src/store/hooks';
+import { fetchWords, removeWords, selectWords } from 'src/store/sprintSlice';
+import Levels from './Levels';
 
 const Sprint = () => {
-  const dispath = useAppDispatch();
+  const dispatch = useAppDispatch();
+  const words = useAppSelector(selectWords);
 
-  const clickHandler = () => {
-    dispath(fetchWords(`1`, `1`));
+  const handleStartClick = async (groupId: number) => {
+    dispatch(fetchWords(`${groupId}`, `${Math.floor(Math.random() * 30)}`));
   };
 
-  return (
-    <div>
-      {GROUPS.map((value) => (
-        <div>
-          <span>{value.level}</span>
-          <span>{value.description}</span>
-        </div>
-      ))}
-    </div>
+  const handleGameClose = () => {
+    dispatch(removeWords());
+    if (document.fullscreenElement) {
+      document.exitFullscreen().catch((err) => err);
+    }
+  };
+
+  return words.length ? (
+    <SprintGame onGameClose={handleGameClose} />
+  ) : (
+    <Levels onStartClick={handleStartClick} />
   );
 };
 

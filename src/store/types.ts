@@ -1,5 +1,8 @@
+import { IUserWord } from 'src/requests/interfaceAPI';
+
 export interface IWord {
   id: string;
+  _id?: string;
   group: number;
   page: number;
   word: string;
@@ -13,10 +16,18 @@ export interface IWord {
   wordTranslate: string;
   textMeaningTranslate: string;
   textExampleTranslate: string;
+  userWord?: IUserWord;
 }
 
 export interface IWordsState {
   currentPage: IWord[];
+  wordDetails: IWord | null;
+  loading: boolean;
+}
+
+export interface ISprintWord extends IWord {
+  wrongTranslate: string;
+  choice: number;
 }
 
 export interface IAudioState {
@@ -28,5 +39,19 @@ export interface IAudioState {
 }
 
 export interface ISprintState {
-  words: IWord[];
+  words: ISprintWord[];
+}
+
+export interface IAudioState {
+  currentPage: IWord[];
+}
+
+// export interface IUserWord {
+//   difficulty: string;
+//   id: string;
+// }
+
+export interface IUserDiffWord {
+  difficulty: string;
+  id: string;
 }

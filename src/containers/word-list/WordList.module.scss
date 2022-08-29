@@ -8,13 +8,16 @@
   display: flex;
   column-gap: 15px;
   margin-bottom: 30px;
+  min-height: 83rem;
 }
 
 .words {
   display: flex;
   flex-wrap: wrap;
-  align-content: flex-start;
+  // align-content: flex-start;
   gap: 15px;
+  align-content: space-around;
+  justify-content: space-evenly;
 }
 
 .details {

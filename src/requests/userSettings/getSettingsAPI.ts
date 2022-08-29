@@ -8,12 +8,13 @@ import {
 } from 'src/helpers/constRequestsAPI';
 import createError from 'src/requests/createError';
 
-const getSettingsAPI = async (userId: string) => {
+const getSettingsAPI = async (userId: string, token: string) => {
   try {
     const response = await fetch(`${UrlPath.BASE}/${UrlPath.USERS}/${userId}/${UrlPath.SETTINGS}`, {
       method: `${Methods.GET}`,
       headers: {
         Accept: `${Headers.TYPE}`,
+        Authorization: `Bearer ${token}`,
       },
     });
 

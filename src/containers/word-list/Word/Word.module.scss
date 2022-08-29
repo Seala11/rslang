@@ -1,0 +1,86 @@
+@use 'src/sass/abstracts/mixins' as *;
+
+.word {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  width: 100%;
+  max-width: 20rem;
+  height: 14rem;
+  padding: 1rem;
+  border-radius: 5rem;
+  color: #404040;
+  background-color: #fff;
+  text-align: center;
+  overflow: hidden;
+  cursor: pointer;
+  transition: background 0.2s;
+
+  &.active {
+    // background-color: color.scale($color: #f44e77, $lightness: 50%);
+    background-color: var(--group-color-light);
+  }
+
+  &:hover {
+    // background-color: color.scale($color: #f44e77, $lightness: 50%);
+    background-color: var(--group-color-light);
+  }
+}
+
+.original {
+  @include roboto($ff: var(--ff-roboto-bold), $fs: 2rem, $lh: 1.5, $color: #404040);
+  display: block;
+  margin-bottom: 1rem;
+  white-space: nowrap;
+}
+
+.translate {
+  display: block;
+  font-size: 1.6rem;
+  overflow-wrap: break-word;
+  text-align: left;
+  // width: min-content;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding-left: 1rem;
+    width: 80%;
+}
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  justify-content: space-evenly;
+  align-items: center;
+  width: 20%;
+}
+
+.difficult,
+.learned {
+  width: 2rem;
+  height: 2rem;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  visibility: hidden;
+  opacity: 0;
+  transition: visibility 0.2s ease-in-out, opacity 0.2s ease-in-out;
+}
+
+.learned {
+  background-image: url('../../../../public/assets/icons/learned-word.svg');
+}
+
+.difficult {
+  background-image: url('../../../../public/assets/icons/difficult-word.svg');
+}
+
+.selected {
+  visibility: visible;
+  opacity: 100%;
+  filter: invert(15%) sepia(14%) saturate(100%) hue-rotate(201deg) brightness(0%) contrast(110%);
+}

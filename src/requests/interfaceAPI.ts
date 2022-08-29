@@ -5,6 +5,12 @@ export interface IUser {
   password: string;
 }
 
+export interface IGetUser {
+  name: string;
+  email: string;
+  id: string;
+}
+
 export interface ICreateUserResponse {
   data?: IUser;
   error?: IErrors;
@@ -40,7 +46,19 @@ export interface IWord {
 
 export interface IUserWord {
   difficulty: string;
-  optional: object;
+  optional: IOptions;
+}
+
+interface IOptions {
+  learned?: boolean;
+  difficult?: boolean;
+}
+
+export interface IUserWordResponse {
+  id: string;
+  difficulty: string;
+  optional: IOptions;
+  wordId: string;
 }
 
 // Statistics
@@ -62,9 +80,14 @@ export interface IUserSignIn {
 }
 
 export interface ISignInResponse {
-  message: string;
+  message: string | null;
+  token: string | null;
+  refreshToken: string | null;
+  userId: string | null;
+  name: string | null;
+}
+
+export interface IUpdateUserToken {
   token: string;
   refreshToken: string;
-  userId: string;
-  name: string;
 }

@@ -1,7 +1,7 @@
-import { IUserWord } from 'src/requests/interfaceAPI';
+// import { IUserWord } from 'src/requests/interfaceAPI';
 import { Methods, UrlPath, Headers } from 'src/helpers/constRequestsAPI';
 
-const getUserWordAPI = async (userId: string, wordId: string) => {
+const getUserWordAPI = async (userId: string, wordId: string, token: string) => {
   try {
     const response = await fetch(
       `${UrlPath.BASE}/${UrlPath.USERS}/${userId}/${UrlPath.WORDS}/${wordId}`,
@@ -10,13 +10,16 @@ const getUserWordAPI = async (userId: string, wordId: string) => {
         headers: {
           Accept: `${Headers.TYPE}`,
           'Content-Type': `${Headers.TYPE}`,
+          Authorization: `Bearer ${token}`,
         },
       }
     );
 
-    const userWord: IUserWord = await response.json();
+    // const userWord: IUserWord = await response.json();
 
-    return userWord;
+    // return userWord;
+
+    return response;
   } catch (error) {
     throw new Error();
   }
