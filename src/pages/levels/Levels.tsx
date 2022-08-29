@@ -1,9 +1,11 @@
-import React, { useState, useEffect } from 'react';
+/* eslint-disable no-nested-ternary */
+/* eslint-disable no-console */
+import React, { useState } from 'react';
 import styles from 'src/pages/levels/Levels.module.scss';
-import { useAppDispatch } from 'src/store/hooks';
-import { fetchCurrentPageWords } from 'src/store/audioSlice';
+import { useAppDispatch, useAppSelector } from 'src/store/hooks';
+import { fetchWordsArr, fetchisLoading } from 'src/store/audioSlice';
 import LayoutMain from 'src/containers/LayoutMain';
-import Audio from '../audio/Audio';
+import AudioGame from '../audio/Audio';
 
 const levels = [
   { id: 1, level: 'Level 1', description: 'Easy' },
@@ -18,10 +20,19 @@ const Levels: React.FC<{ game: string }> = ({ game }) => {
   const dispatch = useAppDispatch();
   const [group, setGroup] = useState(0);
   const [page, setPage] = useState('main');
+  const [isDis, setIsDis] = useState(false);
+  const loading = useAppSelector(fetchisLoading);
 
-  useEffect(() => {
-    dispatch(fetchCurrentPageWords(`${group}`));
-  }, [dispatch, group]);
+  async function setWords() {
+    if (!loading) {
+      setPage('loading')
+      setIsDis(true);
+      const randomPage = Math.floor(Math.random() * 30)
+      await dispatch(fetchWordsArr(`${group}`, `${randomPage}`));
+    }
+    setPage(`${game}`)
+    setIsDis(false);
+  }
 
   return page === 'main' ? (
     <LayoutMain>
@@ -42,14 +53,14 @@ const Levels: React.FC<{ game: string }> = ({ game }) => {
               </button>
             ))}
           </div>
-          <button onClick={() => setPage(`${game}`)} className={styles.start} type='button'>
+          <button disabled={isDis} onClick={() => setWords()} className={styles.start} type='button'>
             Старт
           </button>
         </div>
       </main>
     </LayoutMain>
-  ) : (
-    <Audio setPage={setPage} />
+  ) : page === 'loading' ? <div>Loading</div> : (
+    <AudioGame setPage={setPage} />
   );
 };
 

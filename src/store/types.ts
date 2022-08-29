@@ -19,6 +19,14 @@ export interface IWordsState {
   currentPage: IWord[];
 }
 
+export interface IAudioState {
+  wordsArr: IWord[];
+  loading: boolean;
+  disable: boolean;
+  answers: string[];
+  question: number;
+}
+
 export interface ISprintState {
   words: IWord[];
 }
