@@ -30,12 +30,16 @@ export interface ISprintWord extends IWord {
   choice: number;
 }
 
-export interface ISprintState {
-  words: ISprintWord[];
+export interface IAudioState {
+  wordsArr: IWord[];
+  loading: boolean;
+  disable: boolean;
+  answers: string[];
+  question: number;
 }
 
-export interface IAudioState {
-  currentPage: IWord[];
+export interface ISprintState {
+  words: ISprintWord[];
 }
 
 // export interface IUserWord {

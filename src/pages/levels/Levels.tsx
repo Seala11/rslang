@@ -1,9 +1,12 @@
-import React, { useState, useEffect } from 'react';
+/* eslint-disable no-nested-ternary */
+/* eslint-disable no-console */
+import React, { useState } from 'react';
 import styles from 'src/pages/levels/Levels.module.scss';
-import { useAppDispatch } from 'src/store/hooks';
-import { fetchCurrentPageWords } from 'src/store/audioSlice';
+import { useAppDispatch, useAppSelector } from 'src/store/hooks';
+import { fetchWordsArr, fetchisLoading } from 'src/store/audioSlice';
 import LayoutMain from 'src/containers/LayoutMain';
-import Audio from '../audio/Audio';
+import Loading from 'src/components/Loading';
+import AudioGame from '../audio/Audio';
 
 const levels = [
   { id: 1, level: 'Level 1', description: 'Easy' },
@@ -14,20 +17,29 @@ const levels = [
   { id: 6, level: 'Level 6', description: 'Hard' },
 ];
 
-const Levels: React.FC<{ game: string }> = ({ game }) => {
+const Levels: React.FC = () => {
   const dispatch = useAppDispatch();
   const [group, setGroup] = useState(0);
   const [page, setPage] = useState('main');
+  const [isDis, setIsDis] = useState(false);
+  const loading = useAppSelector(fetchisLoading);
 
-  useEffect(() => {
-    dispatch(fetchCurrentPageWords(`${group}`));
-  }, [dispatch, group]);
+  async function setWords() {
+    if (!loading) {
+      setPage('loading');
+      setIsDis(true);
+      const randomPage = Math.floor(Math.random() * 30);
+      await dispatch(fetchWordsArr(`${group}`, `${randomPage}`));
+    }
+    setPage('game');
+    setIsDis(false);
+  }
 
   return page === 'main' ? (
     <LayoutMain>
       <main className='main'>
         <div className={styles.wrapper}>
-          <h2 className={styles.title}>{game}</h2>
+          <h2 className={styles.title}>Аудиовызов</h2>
           <h3 className={styles.subtitle}>Выберите сложность игры</h3>
           <div className={styles.cards}>
             {levels.map((value, i) => (
@@ -42,14 +54,21 @@ const Levels: React.FC<{ game: string }> = ({ game }) => {
               </button>
             ))}
           </div>
-          <button onClick={() => setPage(`${game}`)} className={styles.start} type='button'>
+          <button
+            disabled={isDis}
+            onClick={() => setWords()}
+            className={styles.start}
+            type='button'
+          >
             Старт
           </button>
         </div>
       </main>
     </LayoutMain>
+  ) : page === 'loading' ? (
+    <Loading />
   ) : (
-    <Audio setPage={setPage} />
+    <AudioGame setPage={setPage} />
   );
 };
 

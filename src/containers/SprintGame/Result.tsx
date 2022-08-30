@@ -1,12 +1,12 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { UrlPath } from 'src/helpers/constRequestsAPI';
-import { ISprintWord } from 'src/store/types';
+import { ISprintWord, IWord } from 'src/store/types';
 import styles from './Result.module.scss';
 
 export interface IResultProps {
-  rightAnswers: ISprintWord[];
-  wrongAnswers: ISprintWord[];
+  rightAnswers: ISprintWord[] | IWord[];
+  wrongAnswers: ISprintWord[] | IWord[];
   onPlayAgain: () => void;
 }
 
