@@ -35,25 +35,25 @@ const audioSlice = createSlice({
   },
 });
 
-export const { addWordsArr, addLoading, addDis, updateAnswers, updateQuestion } = audioSlice.actions;
+export const { addWordsArr, addLoading, addDis, updateAnswers, updateQuestion } =
+  audioSlice.actions;
 
-export const fetchWordsArr =
-  (group: string, page: string) => async (dispatch: AppDispatch) => {
-    dispatch(addLoading(true))
-    try   {
+export const fetchWordsArr = (group: string, page: string) => async (dispatch: AppDispatch) => {
+  dispatch(addLoading(true));
+  try {
     const words = await getWordsAPI(group, page);
     const set: Set<IWord> = new Set();
-    while(set.size < 20) {
-      set.add(words[Math.floor(Math.random() * 20)])
+    while (set.size < 20) {
+      set.add(words[Math.floor(Math.random() * 20)]);
     }
-    const res = Array.from(set)
+    const res = Array.from(set);
     dispatch(addWordsArr(res));
-    } catch(err) {
-      console.error(err);
-    } finally {
-      dispatch(addLoading(false))
-    }
-  };
+  } catch (err) {
+    console.error(err);
+  } finally {
+    dispatch(addLoading(false));
+  }
+};
 
 export const selectwordsArr = (state: RootState) => state.audio.wordsArr;
 export const fetchisLoading = (state: RootState) => state.audio.loading;

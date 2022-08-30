@@ -26,12 +26,12 @@ const Levels: React.FC = () => {
 
   async function setWords() {
     if (!loading) {
-      setPage('loading')
+      setPage('loading');
       setIsDis(true);
-      const randomPage = Math.floor(Math.random() * 30)
+      const randomPage = Math.floor(Math.random() * 30);
       await dispatch(fetchWordsArr(`${group}`, `${randomPage}`));
     }
-    setPage('game')
+    setPage('game');
     setIsDis(false);
   }
 
@@ -54,13 +54,20 @@ const Levels: React.FC = () => {
               </button>
             ))}
           </div>
-          <button disabled={isDis} onClick={() => setWords()} className={styles.start} type='button'>
+          <button
+            disabled={isDis}
+            onClick={() => setWords()}
+            className={styles.start}
+            type='button'
+          >
             Старт
           </button>
         </div>
       </main>
     </LayoutMain>
-  ) : page === 'loading' ? <Loading /> : (
+  ) : page === 'loading' ? (
+    <Loading />
+  ) : (
     <AudioGame setPage={setPage} />
   );
 };
