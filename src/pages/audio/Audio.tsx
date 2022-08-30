@@ -9,9 +9,13 @@ import { selectwordsArr, isDis, addDis, getAnswers, updateAnswers, getQuestion, 
 import { useAppDispatch, useAppSelector } from 'src/store/hooks';
 import { UrlPath } from 'src/helpers/constRequestsAPI';
 import { NavLink } from 'react-router-dom';
+import {IWord} from 'src/store/types';
+import Result from 'src/containers/SprintGame/Result';
 
 let audioCounter = 0;
 let player: HTMLAudioElement;
+const audioCorrect = new Audio('/audio/correct.mp3');
+const audioWrong = new Audio('/audio/wrong.mp3');
 
 const AudioGame: React.FC<{ setPage: React.Dispatch<React.SetStateAction<string>> }> = ({
   setPage,
@@ -25,6 +29,11 @@ const AudioGame: React.FC<{ setPage: React.Dispatch<React.SetStateAction<string>
   const [answerStyle, setAnswerStyle] = useState('');
   const [nextBtn, setNextBtn] = useState<'Не знаю'|'->'>('Не знаю');
   const [result, setResult] = useState(false);
+  const [isMute, setIsMute] = useState(false);
+  const [key, setKey] = useState('');
+  const [rightAnswers, setRightAnswers] = useState<IWord[]>([]);
+  const [wrongAnswers, setWrongAnswers] = useState<IWord[]>([]);
+  const [muteStyles, setMuteStyles] = useState('unmute');
   
   function collectAnswers() {
     const set: Set<string> = new Set();
@@ -45,10 +54,16 @@ const AudioGame: React.FC<{ setPage: React.Dispatch<React.SetStateAction<string>
     const targetElem = (e as HTMLButtonElement);
     if(targetElem.textContent === wordsArr[question].wordTranslate) {
       targetElem.style.color = 'green'
+      audioCorrect.muted = isMute;
+      audioCorrect.play();
+      setRightAnswers((prev) => [...prev, wordsArr[question]]);
     } else {
       targetElem.style.color = 'red'
       targetElem.style.textDecoration = 'line-through'
       setAnswerStyle(styles.correct);
+      audioWrong.muted = isMute;
+      audioWrong.play();
+      setWrongAnswers((prev) => [...prev, wordsArr[question]]);
     }
     dispatch(addDis(true));
     setNextBtn('->');
@@ -66,6 +81,9 @@ const AudioGame: React.FC<{ setPage: React.Dispatch<React.SetStateAction<string>
     }
     } else {
       setResult(true);
+      dispatch(addDis(false));
+      setAnswerStyle('');
+      setNextBtn('Не знаю')
       console.log(result);
     }
   }
@@ -131,13 +149,35 @@ const AudioGame: React.FC<{ setPage: React.Dispatch<React.SetStateAction<string>
     // setStop(true);
   };
 
+  const handlePlayAgain = () => {
+    dispatch(updateQuestion(0));
+    dispatch(updateAnswers([]));
+    dispatch(addDis(false));
+    setResult(false)
+    setRightAnswers([]);
+    setWrongAnswers([]);
+    playClickHandler();
+  };
+
   useEffect(() => {
     if(answers.length === 0) {
       collectAnswers();
       playClickHandler();
     }
+    const handleAnswerKeyup = (e: KeyboardEvent) => {
+      const { code } = e;
+      setKey(code);
+      console.log(key);
+    }  
+    document.addEventListener('keyup', handleAnswerKeyup);
+    return () => {
+      document.removeEventListener('keyup', handleAnswerKeyup);
+    };
   }, [question])
-  return (
+
+  return (result ? <Result rightAnswers={rightAnswers}
+    wrongAnswers={wrongAnswers}
+    onPlayAgain={handlePlayAgain}/> : 
     <div className={styles.wrapper}>
       <div className={styles.header}>
         <h2 className={styles.title}>Аудиовызов</h2>
@@ -150,12 +190,20 @@ const AudioGame: React.FC<{ setPage: React.Dispatch<React.SetStateAction<string>
             onClick={() => closeGame()}
           />
           </NavLink>
-          <button aria-label='mute' type='button' className={styles.mute} />
+          <button aria-label='mute' type='button' className={muteStyles === 'mute' ? styles.mute : styles.unmute} onClick={() => {
+            setIsMute(!isMute)
+            if (muteStyles === 'mute') { 
+              setMuteStyles('unmute')
+             } else {
+              setMuteStyles('mute')
+             } 
+          }
+           } />
           <button aria-label='screen' type='button' className={styles.fullscreen} onClick={() => changeScreen()} />
         </div>
       </div>
       <div className={styles.field} >
-        {result ? <div>Results</div> : <><button aria-label='sound' type='button' className={styles.sound} onClick={playClickHandler} /><div className={styles.cards}>
+        <button aria-label='sound' type='button' className={styles.sound} onClick={playClickHandler} /><div className={styles.cards}>
           <div>{words[question]}</div>
           <div className={styles.answers}>
             {answers.map((value) => (
@@ -173,7 +221,7 @@ const AudioGame: React.FC<{ setPage: React.Dispatch<React.SetStateAction<string>
           <button className={styles.start} type='button' onClick={() => nextQuestion()}>
             {nextBtn}
           </button>
-        </div></>}
+        </div>
       </div>
     </div>
   );

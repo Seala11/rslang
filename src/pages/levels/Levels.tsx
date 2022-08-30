@@ -5,6 +5,7 @@ import styles from 'src/pages/levels/Levels.module.scss';
 import { useAppDispatch, useAppSelector } from 'src/store/hooks';
 import { fetchWordsArr, fetchisLoading } from 'src/store/audioSlice';
 import LayoutMain from 'src/containers/LayoutMain';
+import Loading from 'src/components/Loading';
 import AudioGame from '../audio/Audio';
 
 const levels = [
@@ -16,7 +17,7 @@ const levels = [
   { id: 6, level: 'Level 6', description: 'Hard' },
 ];
 
-const Levels: React.FC<{ game: string }> = ({ game }) => {
+const Levels: React.FC = () => {
   const dispatch = useAppDispatch();
   const [group, setGroup] = useState(0);
   const [page, setPage] = useState('main');
@@ -30,7 +31,7 @@ const Levels: React.FC<{ game: string }> = ({ game }) => {
       const randomPage = Math.floor(Math.random() * 30)
       await dispatch(fetchWordsArr(`${group}`, `${randomPage}`));
     }
-    setPage(`${game}`)
+    setPage('game')
     setIsDis(false);
   }
 
@@ -38,7 +39,7 @@ const Levels: React.FC<{ game: string }> = ({ game }) => {
     <LayoutMain>
       <main className='main'>
         <div className={styles.wrapper}>
-          <h2 className={styles.title}>{game}</h2>
+          <h2 className={styles.title}>Аудиовызов</h2>
           <h3 className={styles.subtitle}>Выберите сложность игры</h3>
           <div className={styles.cards}>
             {levels.map((value, i) => (
@@ -59,7 +60,7 @@ const Levels: React.FC<{ game: string }> = ({ game }) => {
         </div>
       </main>
     </LayoutMain>
-  ) : page === 'loading' ? <div>Loading</div> : (
+  ) : page === 'loading' ? <Loading /> : (
     <AudioGame setPage={setPage} />
   );
 };

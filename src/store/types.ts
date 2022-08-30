@@ -42,10 +42,6 @@ export interface ISprintState {
   words: ISprintWord[];
 }
 
-export interface IAudioState {
-  currentPage: IWord[];
-}
-
 // export interface IUserWord {
 //   difficulty: string;
 //   id: string;

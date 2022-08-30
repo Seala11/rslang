@@ -45,6 +45,20 @@
   }
 }
 
+.unmute {
+  background-image: url('../../../public/assets/icons/unmute.png');
+  width: 2.5rem;
+  height: 2.5rem;
+  background-color: transparent;
+  background-size: contain;
+  background-repeat: no-repeat;
+  cursor: pointer;
+  transition: all 0.2s;
+  &:hover {
+    transform: scale(1.1);
+  }
+}
+
 .mute {
   background-image: url('../../../public/assets/icons/mute.png');
   width: 2.5rem;
