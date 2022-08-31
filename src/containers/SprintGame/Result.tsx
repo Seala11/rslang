@@ -8,9 +8,10 @@ export interface IResultProps {
   rightAnswers: ISprintWord[] | IWord[];
   wrongAnswers: ISprintWord[] | IWord[];
   onPlayAgain: () => void;
+  strike: number;
 }
 
-const Result: React.FC<IResultProps> = ({ rightAnswers, wrongAnswers, onPlayAgain }) => {
+const Result: React.FC<IResultProps> = ({ rightAnswers, wrongAnswers, onPlayAgain, strike }) => {
   const navigate = useNavigate();
   const audio = new Audio();
 
@@ -28,6 +29,7 @@ const Result: React.FC<IResultProps> = ({ rightAnswers, wrongAnswers, onPlayAgai
 
   return (
     <div className={styles.result}>
+      <div>Strike: {strike}</div>
       <div className={styles.right}>
         <h3 className={styles.caption}>
           Я знаю <span className={styles.amountRight}>{rightAnswers.length}</span>

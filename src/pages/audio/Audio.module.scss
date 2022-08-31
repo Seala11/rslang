@@ -74,7 +74,21 @@
 }
 
 .fullscreen {
-  background-image: url('../../../public/assets/icons/screen.png');
+  background-image: url('../../../public/assets/icons/full.png');
+  width: 2.5rem;
+  height: 2.5rem;
+  background-color: transparent;
+  background-size: contain;
+  background-repeat: no-repeat;
+  cursor: pointer;
+  transition: all 0.2s;
+  &:hover {
+    transform: scale(1.1);
+  }
+}
+
+.unfullscreen {
+  background-image: url('../../../public/assets/icons/unfull.png');
   width: 2.5rem;
   height: 2.5rem;
   background-color: transparent;

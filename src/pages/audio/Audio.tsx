@@ -13,6 +13,8 @@ import {
   updateAnswers,
   getQuestion,
   updateQuestion,
+  setStrike,
+  getStrike
 } from 'src/store/audioSlice';
 import { useAppDispatch, useAppSelector } from 'src/store/hooks';
 import { UrlPath } from 'src/helpers/constRequestsAPI';
@@ -38,10 +40,12 @@ const AudioGame: React.FC<{ setPage: React.Dispatch<React.SetStateAction<string>
   const [nextBtn, setNextBtn] = useState<'Не знаю' | '->'>('Не знаю');
   const [result, setResult] = useState(false);
   const [isMute, setIsMute] = useState(false);
-  const [key, setKey] = useState('');
   const [rightAnswers, setRightAnswers] = useState<IWord[]>([]);
   const [wrongAnswers, setWrongAnswers] = useState<IWord[]>([]);
   const [muteStyles, setMuteStyles] = useState('unmute');
+  const strike = useAppSelector(getStrike);
+  const [strikeTemp, setStrikeTemp] = useState(0);
+  const [screenStyles, setScreenStyles] = useState('unfull');
 
   function collectAnswers() {
     const set: Set<string> = new Set();
@@ -65,6 +69,7 @@ const AudioGame: React.FC<{ setPage: React.Dispatch<React.SetStateAction<string>
       audioCorrect.muted = isMute;
       audioCorrect.play();
       setRightAnswers((prev) => [...prev, wordsArr[question]]);
+      setStrikeTemp(strikeTemp + 1)
     } else {
       targetElem.style.color = 'red';
       targetElem.style.textDecoration = 'line-through';
@@ -72,6 +77,8 @@ const AudioGame: React.FC<{ setPage: React.Dispatch<React.SetStateAction<string>
       audioWrong.muted = isMute;
       audioWrong.play();
       setWrongAnswers((prev) => [...prev, wordsArr[question]]);
+      if(strikeTemp > strike) dispatch(setStrike(strikeTemp))
+      setStrikeTemp(0)
     }
     dispatch(addDis(true));
     setNextBtn('->');
@@ -177,19 +184,26 @@ const AudioGame: React.FC<{ setPage: React.Dispatch<React.SetStateAction<string>
       collectAnswers();
       playClickHandler();
     }
+  }, [question]);
+
+  useEffect(() => {
     const handleAnswerKeyup = (e: KeyboardEvent) => {
       const { code } = e;
-      setKey(code);
-      console.log(key);
-    };
+      if(code.startsWith('Digit') || code.startsWith('Numpad')){
+      const index = +code.slice(-1) - 1;
+      if (!Number.isNaN(index) && index >= 0 && index < 5) {
+        document.getElementById(`${index}`)?.click();
+      }
+    }
+  };
     document.addEventListener('keyup', handleAnswerKeyup);
     return () => {
       document.removeEventListener('keyup', handleAnswerKeyup);
     };
-  }, [question]);
+  }, [answers]);
 
   return result ? (
-    <Result rightAnswers={rightAnswers} wrongAnswers={wrongAnswers} onPlayAgain={handlePlayAgain} />
+    <Result rightAnswers={rightAnswers} wrongAnswers={wrongAnswers} onPlayAgain={handlePlayAgain} strike={strike}/>
   ) : (
     <div className={styles.wrapper}>
       <div className={styles.header}>
@@ -219,8 +233,15 @@ const AudioGame: React.FC<{ setPage: React.Dispatch<React.SetStateAction<string>
           <button
             aria-label='screen'
             type='button'
-            className={styles.fullscreen}
-            onClick={() => changeScreen()}
+            className={screenStyles === 'full' ? styles.unfullscreen : styles.fullscreen}
+            onClick={() => {
+              changeScreen();
+              if (screenStyles === 'full') {
+                setScreenStyles('unfull');
+              } else {
+                setScreenStyles('full');
+              }
+            }}
           />
         </div>
       </div>
@@ -234,8 +255,9 @@ const AudioGame: React.FC<{ setPage: React.Dispatch<React.SetStateAction<string>
         <div className={styles.cards}>
           <div>{words[question]}</div>
           <div className={styles.answers}>
-            {answers.map((value) => (
+            {answers.map((value, i) => (
               <button
+              id={`${i}`}
                 className={`${styles.btn} ${
                   value === wordsArr[question].wordTranslate ? answerStyle : ''
                 }`}
