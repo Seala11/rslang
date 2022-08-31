@@ -50,3 +50,10 @@ export enum UserWordType {
   DIFFICULT = 'difficult',
   LEARNED = 'learned',
 }
+
+export enum IUserWordOptions {
+  DIFFICULT = 'difficult',
+  LEARNED = 'learned',
+  SPRINT = 'sprint',
+  AUDIO = 'audio'
+}

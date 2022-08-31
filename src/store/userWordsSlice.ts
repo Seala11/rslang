@@ -5,11 +5,21 @@ import createUserWordAPI from 'src/requests/userWords/createUserWordAPI';
 import getAllAggrWordsAPI from 'src/requests/aggregatedWords/getAllAggrWordsAPI';
 import updateUserWordAPI from 'src/requests/userWords/updateUserWordAPI';
 import getUserWordAPI from 'src/requests/userWords/getUserWordAPI';
-import { IUserWordResponse } from 'src/requests/interfaceAPI';
-import { ErrorMessage, ResponseStatus } from 'src/helpers/constRequestsAPI';
+import { IOptions, IUserWordResponse } from 'src/requests/interfaceAPI';
+import { ErrorMessage, IUserWordOptions, ResponseStatus } from 'src/helpers/constRequestsAPI';
 import type { AppDispatch, RootState } from '.';
 import { IUserDiffWord, IWord } from './types';
 import { addCurrentPageWords, removeLoading, setLoading } from './wordsSlice';
+
+const defaultUserWordOptions = {
+  difficulty: '0',
+  optional: {
+    difficult: false,
+    learned: false,
+    sprint: { right: 0, wrong: 0 },
+    audio: { right: 0, wrong: 0 },
+  },
+};
 
 interface IUserWordsState {
   diffSectionEmpty: boolean | null;
@@ -28,7 +38,6 @@ const userWordsSlice = createSlice({
   initialState,
   reducers: {
     addDiffWord(state, action: PayloadAction<IWord[]>) {
-      // state.diffWords = [...state.diffWords, action.payload];
       state.diffWords = action.payload;
       state.diffSectionEmpty = false;
     },
@@ -86,11 +95,9 @@ export const fetchGetAllDiffWords =
         '3600'
       );
       if (response.ok) {
-        console.log(response);
         const data = await response?.json();
         const arr = data[0].paginatedResults;
         if (arr.length === 0) {
-          console.log('should not retrigger');
           dispatch(setDiffSectionEmpty());
         } else {
           dispatch(addDiffWord(data[0].paginatedResults));
@@ -106,22 +113,21 @@ export const fetchGetAllDiffWords =
     }
   };
 
-export const fetchUpdateDiffWord =
+export const fetchUpdateUserWord =
   (
     userId: string | null,
     wordId: string | undefined,
-    difficulty: string,
-    page: string | undefined,
     token: string | null,
-    updateValue: boolean
+    optional: IOptions,
+    option: IUserWordOptions,
+    difficulty?: string,
+    page?: string | undefined
   ) =>
   async (dispatch: AppDispatch) => {
-    if (!userId || !wordId || !token || !page) return;
+    if (!userId || !wordId || !token || !page || !difficulty || !optional) return;
     const fetchDataBody = {
       difficulty,
-      optional: {
-        difficult: updateValue,
-      },
+      optional,
     };
 
     try {
@@ -133,8 +139,11 @@ export const fetchUpdateDiffWord =
       );
 
       if (response.ok) {
-        dispatch(fetchGetAllUserWords(userId, token, difficulty, page));
-        dispatch(fetchGetAllDiffWords(userId, token));
+        if (option === IUserWordOptions.DIFFICULT || option === IUserWordOptions.LEARNED) {
+          dispatch(fetchGetAllUserWords(userId, token, difficulty, page));
+          dispatch(fetchGetAllDiffWords(userId, token));
+        }
+
         console.log(response);
       } else {
         const data: string = await response.text();
@@ -145,22 +154,18 @@ export const fetchUpdateDiffWord =
     }
   };
 
-export const fetchCreateDiffWord =
+export const fetchCreateUserWord =
   (
     userId: string | null,
     wordId: string | undefined,
+    token: string | null,
     difficulty: string,
-    page: string | undefined,
-    token: string | null
+    option: IUserWordOptions,
+    gameOption?: boolean,
+    page?: string | undefined
   ) =>
   async (dispatch: AppDispatch) => {
-    if (!userId || !wordId || !token || !page) return;
-    const fetchDataBody = {
-      difficulty,
-      optional: {
-        difficult: true,
-      },
-    };
+    if (!userId || !wordId || !token) return;
 
     try {
       const response: Response | undefined = await getUserWordAPI(userId, wordId, token);
@@ -168,20 +173,33 @@ export const fetchCreateDiffWord =
       if (response.ok) {
         const word: IUserWordResponse = await response.json();
         console.log(word);
+        const { optional } = word;
 
-        if (word.optional.difficult) {
-          // difficult word cant be added to difficult
-          console.error('user should not be able to add difficult twice');
-          return;
-        }
-        if (word.optional.learned) {
-          // update word to difficult and learned
-          return;
-        }
-        if (!word.optional.difficult) {
-          // if difficult = false , change diff = true;
-          dispatch(fetchUpdateDiffWord(userId, wordId, difficulty, page, token, true));
-          console.log('word update');
+        switch (option) {
+          case IUserWordOptions.DIFFICULT: {
+            if (optional.difficult) {
+              optional.difficult = false;
+            } else {
+              optional.learned = false;
+              optional.difficult = true;
+            }
+            dispatch(
+              fetchUpdateUserWord(userId, wordId, token, optional, option, difficulty, page)
+            );
+            break;
+          }
+          case IUserWordOptions.LEARNED:
+            optional.learned = true;
+            optional.difficult = false;
+            dispatch(
+              fetchUpdateUserWord(userId, wordId, token, optional, option, difficulty, page)
+            );
+            break;
+          case IUserWordOptions.AUDIO:
+            break;
+          case IUserWordOptions.SPRINT:
+            break;
+          // no default
         }
       } else {
         switch (response.status) {
@@ -190,8 +208,30 @@ export const fetchCreateDiffWord =
             console.error(ErrorMessage.MISSING_TOKEN);
             break;
           case ResponseStatus.NOT_FOUND: {
-            const res = await createUserWordAPI(userId, wordId, fetchDataBody, token);
+            const userWordOptions = { ...defaultUserWordOptions };
+            userWordOptions.difficulty = difficulty;
+            switch (option) {
+              case IUserWordOptions.DIFFICULT: {
+                userWordOptions.optional.difficult = true;
+                break;
+              }
+              case IUserWordOptions.LEARNED:
+                userWordOptions.optional.learned = true;
+                break;
+              case IUserWordOptions.AUDIO:
+                // TODO: depends on gameOption
+                userWordOptions.optional.audio.right = 1;
+                userWordOptions.optional.audio.wrong = 0;
+                break;
+              case IUserWordOptions.SPRINT:
+                userWordOptions.optional.sprint.right = 1;
+                userWordOptions.optional.sprint.wrong = 0;
+                break;
+              // no default
+            }
 
+            const res = await createUserWordAPI(userId, wordId, userWordOptions, token);
+            if (!page) return;
             await dispatch(fetchGetAllUserWords(userId, token, difficulty, page));
             await dispatch(fetchGetAllDiffWords(userId, token));
             console.log(res);

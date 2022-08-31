@@ -49,9 +49,11 @@ export interface IUserWord {
   optional: IOptions;
 }
 
-interface IOptions {
-  learned?: boolean;
-  difficult?: boolean;
+export interface IOptions {
+  learned: boolean;
+  difficult: boolean;
+  sprint: { right: number; wrong: number };
+  audio: { right: number; wrong: number };
 }
 
 export interface IUserWordResponse {

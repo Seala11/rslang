@@ -54,7 +54,8 @@
   display: flex;
   flex-direction: column;
   height: 100%;
-  justify-content: space-evenly;
+  justify-content: flex-start;
+  padding: 2rem;
   align-items: center;
   width: 20%;
 }

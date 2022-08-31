@@ -15,7 +15,10 @@ const Word: React.FC<IWordProps> = ({ onWordClick, word }) => {
     return (
       <div
         className={`${
-          wordDetails?.id === word._id || wordDetails?._id === word._id ? styles.active : ''
+          (wordDetails?.id && wordDetails?.id === word._id) ||
+          (wordDetails?._id && wordDetails?._id === word._id)
+            ? styles.active
+            : ''
         } ${styles.word}`}
         key={word.id}
         onClick={() => onWordClick(word)}
@@ -29,13 +32,13 @@ const Word: React.FC<IWordProps> = ({ onWordClick, word }) => {
           {word.userWord?.optional.difficult ? (
             <div className={`${styles.difficult} ${styles.selected}`} />
           ) : (
-            <div className={styles.difficult} />
+            ''
           )}
 
-          {word.userWord?.optional.difficult ? (
+          {word.userWord?.optional.learned ? (
             <div className={`${styles.learned} ${styles.selected}`} />
           ) : (
-            <div className={styles.learned} />
+            ''
           )}
         </div>
       </div>
@@ -43,7 +46,9 @@ const Word: React.FC<IWordProps> = ({ onWordClick, word }) => {
 
   return (
     <div
-      className={`${wordDetails?.id === word.id ? styles.active : ''} ${styles.word}`}
+      className={`${wordDetails?.id && wordDetails?.id === word.id ? styles.active : ''} ${
+        styles.word
+      }`}
       key={word.id}
       onClick={() => onWordClick(word)}
       aria-hidden
