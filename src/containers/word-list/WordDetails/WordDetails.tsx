@@ -7,6 +7,7 @@ import { getUserData } from 'src/store/userSlice';
 import { selectWordDetails } from 'src/store/wordsSlice';
 import styles from './WordDetails.module.scss';
 import WordButtons from '../WordButtons';
+import WordStatistic from '../WordStatistic';
 
 let audioCounter = 0;
 let player: HTMLAudioElement;
@@ -125,7 +126,7 @@ const WordDetails = () => {
           <p className={styles.text} dangerouslySetInnerHTML={{ __html: word.textExample }} />
           <p className={styles.textTranslate}>{word.textExampleTranslate}</p>
         </div>
-        {userIsLogged(userData?.message) ? <WordButtons word={word} /> : ''}
+        {userIsLogged(userData?.message) ? <><WordButtons word={word} /> < WordStatistic word={word}/></> : ''}
       </div>
     </div>
   ) : (

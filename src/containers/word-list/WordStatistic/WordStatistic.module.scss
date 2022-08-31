@@ -1,0 +1,27 @@
+@use 'src/sass/abstracts/mixins' as *;
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+}
+
+.title {
+  @include roboto($ff: var(--ff-roboto-bold), $fs: 2rem, $lh: 1.5, $color: var(--secundary-dark), $fw: 600);
+}
+
+.subtitle {
+    @include roboto($ff: var(--ff-roboto-bold), $fs: 2rem, $lh: 1.5, $color: var(--primary), $fw: 600);
+}
+
+.game {
+  display: flex;
+  flex-direction: column;
+}
+
+.statistic {
+  display: flex;
+
+  &_title {
+    margin: 0 0.8rem;
+  }
+}
