@@ -16,7 +16,7 @@ import LayoutMain from 'src/containers/LayoutMain';
 import DifficultWords from 'src/containers/DifficultWords';
 import { getUserData, getUserIsLoading } from 'src/store/userSlice';
 import { getUserId, getUserToken, userIsInStorage, userIsLogged } from 'src/helpers/storage';
-import { fetchGetAllUserWords } from 'src/store/userWordsSlice';
+import { fetchGetUserWords } from 'src/store/userWordsSlice';
 import Loading from 'src/components/Loading';
 import styles from './Textbook.module.scss';
 
@@ -66,7 +66,7 @@ const Textbook = () => {
       dispatch(fetchCurrentPageWords(`${group - 1}`, `${unit - 1}`));
 
     if (userIsLogged(userData?.message))
-      dispatch(fetchGetAllUserWords(getUserId(), getUserToken(), `${group - 1}`, `${unit - 1}`));
+      dispatch(fetchGetUserWords(getUserId(), getUserToken(), `${group - 1}`, `${unit - 1}`));
   }, [dispatch, group, unit, userData, userIsLoggedLoading]);
 
   const handleGroupClick = (groupNumber: number) => {

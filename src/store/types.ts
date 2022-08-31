@@ -1,4 +1,4 @@
-import { IUserWord } from 'src/requests/interfaceAPI';
+import { IStatistics, IUserWord } from 'src/requests/interfaceAPI';
 
 export interface IWord {
   id: string;
@@ -42,12 +42,11 @@ export interface ISprintState {
   words: ISprintWord[];
 }
 
-// export interface IUserWord {
-//   difficulty: string;
-//   id: string;
-// }
+export interface IUserStatistics {
+  userStatistics: IStatistics | null;
+}
 
-export interface IUserDiffWord {
-  difficulty: string;
-  id: string;
+export interface IUserWordsState {
+  diffSectionEmpty: boolean | null;
+  diffWords: IWord[];
 }

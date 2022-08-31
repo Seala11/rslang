@@ -51,9 +51,20 @@ export enum UserWordType {
   LEARNED = 'learned',
 }
 
-export enum IUserWordOptions {
+export enum UserWordOptions {
   DIFFICULT = 'difficult',
-  LEARNED = 'learned',
+  LEARNED = 'learned from textbook',
   SPRINT = 'sprint',
-  AUDIO = 'audio'
+  AUDIO = 'audio',
+}
+
+export enum StatisticsOption {
+  TEXTBOOK = 'textbook',
+  SPRINT = 'sprint',
+  AUDIO = 'audio',
+}
+
+export enum GameOptions {
+  CORRECT = 'correct answer',
+  WRONG = 'wrong answer',
 }

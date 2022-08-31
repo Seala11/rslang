@@ -66,8 +66,31 @@ export interface IUserWordResponse {
 // Statistics
 export interface IStatistics {
   learnedWords: number;
-  optional: object;
+  optional: IDayStatistic;
 }
+
+export interface IStatisticsResponse {
+  id: string;
+  learnedWords: number;
+  optional: IDayStatistic;
+}
+
+export interface IDayStatistic {
+  [key: string]: IGameStatistics;
+}
+
+export interface IGameStatistics {
+  audio: GameStatistics;
+  sprint: GameStatistics;
+  textbook: number;
+}
+
+export type GameStatistics = {
+  right: number;
+  wrong: number;
+  new: number;
+  strike: number;
+};
 
 // Settings
 export interface ISettings {

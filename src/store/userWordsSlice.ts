@@ -5,13 +5,19 @@ import createUserWordAPI from 'src/requests/userWords/createUserWordAPI';
 import getAllAggrWordsAPI from 'src/requests/aggregatedWords/getAllAggrWordsAPI';
 import updateUserWordAPI from 'src/requests/userWords/updateUserWordAPI';
 import getUserWordAPI from 'src/requests/userWords/getUserWordAPI';
-import { IOptions, IUserWordResponse } from 'src/requests/interfaceAPI';
-import { ErrorMessage, IUserWordOptions, ResponseStatus } from 'src/helpers/constRequestsAPI';
+import { IOptions, IUserWord, IUserWordResponse } from 'src/requests/interfaceAPI';
+import {
+  ErrorMessage,
+  GameOptions,
+  UserWordOptions,
+  ResponseStatus,
+} from 'src/helpers/constRequestsAPI';
+import createError from 'src/requests/createError';
 import type { AppDispatch, RootState } from '.';
-import { IUserDiffWord, IWord } from './types';
+import { IUserWordsState, IWord } from './types';
 import { addCurrentPageWords, removeLoading, setLoading } from './wordsSlice';
 
-const defaultUserWordOptions = {
+const DEFAULT_USER_WORD_OPTIONS = {
   difficulty: '0',
   optional: {
     difficult: false,
@@ -21,15 +27,8 @@ const defaultUserWordOptions = {
   },
 };
 
-interface IUserWordsState {
-  diffSectionEmpty: boolean | null;
-  diffWords: IWord[];
-  learnedWords: IUserDiffWord[];
-}
-
 const initialState: IUserWordsState = {
   diffWords: [],
-  learnedWords: [],
   diffSectionEmpty: null,
 };
 
@@ -39,10 +38,6 @@ const userWordsSlice = createSlice({
   reducers: {
     addDiffWord(state, action: PayloadAction<IWord[]>) {
       state.diffWords = action.payload;
-      state.diffSectionEmpty = false;
-    },
-    addOneDiffWord(state, action: PayloadAction<IWord>) {
-      state.diffWords = [...state.diffWords, action.payload];
       state.diffSectionEmpty = false;
     },
     setDiffSectionEmpty(state) {
@@ -55,10 +50,9 @@ const userWordsSlice = createSlice({
   },
 });
 
-export const { addDiffWord, removeDiffWord, addOneDiffWord, setDiffSectionEmpty } =
-  userWordsSlice.actions;
+export const { addDiffWord, removeDiffWord, setDiffSectionEmpty } = userWordsSlice.actions;
 
-export const fetchGetAllUserWords =
+export const fetchGetUserWords =
   (userId: string | null, token: string | null, group: string, page: string) =>
   async (dispatch: AppDispatch) => {
     if (!userId || !token) return;
@@ -72,12 +66,17 @@ export const fetchGetAllUserWords =
       if (response.ok) {
         const data = await response?.json();
         dispatch(addCurrentPageWords(data[0].paginatedResults));
-      } else {
-        const data: string = await response.text();
-        console.error(data, response.status);
+      }
+      if (response.status === ResponseStatus.MISSING_TOKEN) {
+        throw createError(new Error(ErrorMessage.MISSING_TOKEN), `${ResponseStatus.MISSING_TOKEN}`);
       }
     } catch (err) {
-      console.error(err);
+      const error = err as Error;
+      if (error.name === `${ResponseStatus.MISSING_TOKEN}`) {
+        // TODO: logout user
+        console.error(error);
+      }
+      console.error(error);
     } finally {
       dispatch(removeLoading());
     }
@@ -102,12 +101,17 @@ export const fetchGetAllDiffWords =
         } else {
           dispatch(addDiffWord(data[0].paginatedResults));
         }
-      } else {
-        const data: string = await response.text();
-        console.error(data, response.status);
+      }
+      if (response.status === ResponseStatus.MISSING_TOKEN) {
+        throw createError(new Error(ErrorMessage.MISSING_TOKEN), `${ResponseStatus.MISSING_TOKEN}`);
       }
     } catch (err) {
-      console.error(err);
+      const error = err as Error;
+      if (error.name === `${ResponseStatus.MISSING_TOKEN}`) {
+        // TODO: logout user
+        console.error(error);
+      }
+      console.error(error);
     } finally {
       dispatch(removeLoading());
     }
@@ -118,17 +122,11 @@ export const fetchUpdateUserWord =
     userId: string | null,
     wordId: string | undefined,
     token: string | null,
-    optional: IOptions,
-    option: IUserWordOptions,
-    difficulty?: string,
+    fetchDataBody: IUserWord,
     page?: string | undefined
   ) =>
   async (dispatch: AppDispatch) => {
-    if (!userId || !wordId || !token || !page || !difficulty || !optional) return;
-    const fetchDataBody = {
-      difficulty,
-      optional,
-    };
+    if (!userId || !wordId || !token) return;
 
     try {
       const response: Response | undefined = await updateUserWordAPI(
@@ -139,12 +137,11 @@ export const fetchUpdateUserWord =
       );
 
       if (response.ok) {
-        if (option === IUserWordOptions.DIFFICULT || option === IUserWordOptions.LEARNED) {
-          dispatch(fetchGetAllUserWords(userId, token, difficulty, page));
+        // If we are on a textbook page update words to rerender
+        if (page) {
+          dispatch(fetchGetUserWords(userId, token, fetchDataBody.difficulty, page));
           dispatch(fetchGetAllDiffWords(userId, token));
         }
-
-        console.log(response);
       } else {
         const data: string = await response.text();
         console.error(data, response.status);
@@ -154,14 +151,63 @@ export const fetchUpdateUserWord =
     }
   };
 
+const updateUserWordOptions = (
+  option: UserWordOptions,
+  userWordOptions: IOptions,
+  gameOption?: GameOptions
+) => {
+  const updatedOptions = { ...userWordOptions };
+
+  switch (option) {
+    case UserWordOptions.DIFFICULT: {
+      if (updatedOptions.difficult) {
+        updatedOptions.difficult = false;
+      } else {
+        updatedOptions.learned = false;
+        updatedOptions.difficult = true;
+      }
+      break;
+    }
+    case UserWordOptions.LEARNED:
+      updatedOptions.learned = true;
+      updatedOptions.difficult = false;
+      break;
+    case UserWordOptions.AUDIO: {
+      if (gameOption === GameOptions.CORRECT) {
+        updatedOptions.audio.right += 1;
+        updatedOptions.learned = true;
+        updatedOptions.difficult = false;
+      }
+      if (gameOption === GameOptions.WRONG) {
+        updatedOptions.audio.wrong += 1;
+        updatedOptions.learned = false;
+      }
+      break;
+    }
+    case UserWordOptions.SPRINT:
+      if (gameOption === GameOptions.CORRECT) {
+        updatedOptions.sprint.right += 1;
+        updatedOptions.learned = true;
+        updatedOptions.difficult = false;
+      }
+      if (gameOption === GameOptions.WRONG) {
+        updatedOptions.sprint.wrong += 1;
+        updatedOptions.learned = false;
+      }
+      break;
+    // no default
+  }
+  return updatedOptions;
+};
+
 export const fetchCreateUserWord =
   (
     userId: string | null,
     wordId: string | undefined,
     token: string | null,
     difficulty: string,
-    option: IUserWordOptions,
-    gameOption?: boolean,
+    wordOption: UserWordOptions,
+    gameOption?: GameOptions,
     page?: string | undefined
   ) =>
   async (dispatch: AppDispatch) => {
@@ -171,85 +217,51 @@ export const fetchCreateUserWord =
       const response: Response | undefined = await getUserWordAPI(userId, wordId, token);
 
       if (response.ok) {
+        // word already exists, update received from back data:
         const word: IUserWordResponse = await response.json();
-        console.log(word);
-        const { optional } = word;
-
-        switch (option) {
-          case IUserWordOptions.DIFFICULT: {
-            if (optional.difficult) {
-              optional.difficult = false;
-            } else {
-              optional.learned = false;
-              optional.difficult = true;
-            }
-            dispatch(
-              fetchUpdateUserWord(userId, wordId, token, optional, option, difficulty, page)
-            );
-            break;
-          }
-          case IUserWordOptions.LEARNED:
-            optional.learned = true;
-            optional.difficult = false;
-            dispatch(
-              fetchUpdateUserWord(userId, wordId, token, optional, option, difficulty, page)
-            );
-            break;
-          case IUserWordOptions.AUDIO:
-            break;
-          case IUserWordOptions.SPRINT:
-            break;
-          // no default
-        }
+        let { optional } = word;
+        optional = updateUserWordOptions(wordOption, optional, gameOption || undefined);
+        const fetchDataBody = {
+          difficulty,
+          optional,
+        };
+        dispatch(fetchUpdateUserWord(userId, wordId, token, fetchDataBody, page || undefined));
       } else {
-        switch (response.status) {
-          case ResponseStatus.MISSING_TOKEN:
-            // TODO: logout user then or refresh token
-            console.error(ErrorMessage.MISSING_TOKEN);
-            break;
-          case ResponseStatus.NOT_FOUND: {
-            const userWordOptions = { ...defaultUserWordOptions };
-            userWordOptions.difficulty = difficulty;
-            switch (option) {
-              case IUserWordOptions.DIFFICULT: {
-                userWordOptions.optional.difficult = true;
-                break;
-              }
-              case IUserWordOptions.LEARNED:
-                userWordOptions.optional.learned = true;
-                break;
-              case IUserWordOptions.AUDIO:
-                // TODO: depends on gameOption
-                userWordOptions.optional.audio.right = 1;
-                userWordOptions.optional.audio.wrong = 0;
-                break;
-              case IUserWordOptions.SPRINT:
-                userWordOptions.optional.sprint.right = 1;
-                userWordOptions.optional.sprint.wrong = 0;
-                break;
-              // no default
-            }
+        if (response.status === ResponseStatus.NOT_FOUND) {
+          // new word: we create default object than update it and send to back
+          const userWordOptions = { ...DEFAULT_USER_WORD_OPTIONS };
+          userWordOptions.optional = updateUserWordOptions(
+            wordOption,
+            userWordOptions.optional,
+            gameOption || undefined
+          );
+          userWordOptions.difficulty = difficulty;
+          await createUserWordAPI(userId, wordId, userWordOptions, token);
 
-            const res = await createUserWordAPI(userId, wordId, userWordOptions, token);
-            if (!page) return;
-            await dispatch(fetchGetAllUserWords(userId, token, difficulty, page));
+          // if we are on a textbook we need to update current page to rerender
+          if (page) {
+            await dispatch(fetchGetUserWords(userId, token, difficulty, page));
             await dispatch(fetchGetAllDiffWords(userId, token));
-            console.log(res);
-            console.log('word create');
-            break;
           }
-          default:
-            throw new Error(`${response.statusText}`);
+        }
+        if (response.status === ResponseStatus.MISSING_TOKEN) {
+          throw createError(
+            new Error(ErrorMessage.MISSING_TOKEN),
+            `${ResponseStatus.MISSING_TOKEN}`
+          );
         }
       }
     } catch (err) {
-      console.error(err);
-      throw err;
+      const error = err as Error;
+      if (error.name === `${ResponseStatus.MISSING_TOKEN}`) {
+        // TODO: logout user
+        console.error(error);
+      }
+      console.error(error);
     }
   };
 
 export const getDifficultWords = (state: RootState) => state.userWords.diffWords;
-export const getLearnedWords = (state: RootState) => state.userWords.learnedWords;
 export const difficultSectionIsEmpty = (state: RootState) => state.userWords.diffSectionEmpty;
 
 export default userWordsSlice.reducer;

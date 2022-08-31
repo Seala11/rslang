@@ -1,15 +1,18 @@
+import { IStatistics } from 'src/requests/interfaceAPI';
 import { Methods, UrlPath, Headers } from 'src/helpers/constRequestsAPI';
 
-const getStatisticsAPI = async (userId: string, token: string) => {
+const upsertStatisticsAPI = async (userId: string, token: string, statisticsData: IStatistics) => {
   try {
     const response = await fetch(
       `${UrlPath.BASE}/${UrlPath.USERS}/${userId}/${UrlPath.STATISTICS}`,
       {
-        method: `${Methods.GET}`,
+        method: `${Methods.PUT}`,
         headers: {
           Accept: `${Headers.TYPE}`,
+          'Content-Type': `${Headers.TYPE}`,
           Authorization: `Bearer ${token}`,
         },
+        body: JSON.stringify(statisticsData),
       }
     );
 
@@ -19,4 +22,4 @@ const getStatisticsAPI = async (userId: string, token: string) => {
   }
 };
 
-export default getStatisticsAPI;
+export default upsertStatisticsAPI;

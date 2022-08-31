@@ -2,7 +2,7 @@
 /* eslint-disable no-console */
 import React, { useEffect, useState } from 'react';
 import styles from 'src/containers/DifficultWords/DifficultWord/DifficultWord.module.scss';
-import { IUserWordOptions, UrlPath } from 'src/helpers/constRequestsAPI';
+import { UserWordOptions, UrlPath } from 'src/helpers/constRequestsAPI';
 import { getUserId, getUserToken } from 'src/helpers/storage';
 import { useAppDispatch } from 'src/store/hooks';
 import { fetchCreateUserWord } from 'src/store/userWordsSlice';
@@ -17,17 +17,7 @@ const DifficultWord: React.FC<IDifficultWordProps> = ({ word }) => {
   const removeWord = () => {
     console.log(word);
     setDisable(() => true);
-    // dispatch(
-    //   fetchUpdateDiffWord(
-    //     getUserId(),
-    //     word?._id,
-    //     `${word?.group}`,
-    //     `${word?.page}`,
-    //     getUserToken(),
-    //     false
-    //   )
-    // );
-    dispatch(fetchCreateUserWord(getUserId(), word?._id,  getUserToken(), `${word?.group}`, IUserWordOptions.DIFFICULT, undefined, `${word?.page}`))
+    dispatch(fetchCreateUserWord(getUserId(), word?._id,  getUserToken(), `${word?.group}`, UserWordOptions.DIFFICULT, undefined, `${word?.page}`))
   };
 
   return (

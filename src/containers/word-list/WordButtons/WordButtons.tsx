@@ -1,9 +1,10 @@
 /* eslint-disable no-console */
 /* eslint-disable no-underscore-dangle */
 import React, { useEffect, useState } from 'react';
-import { IUserWordOptions } from 'src/helpers/constRequestsAPI';
+import { StatisticsOption, UserWordOptions } from 'src/helpers/constRequestsAPI';
 import { getUserId, getUserToken } from 'src/helpers/storage';
 import { useAppDispatch, useAppSelector } from 'src/store/hooks';
+import { fetchGetUserStatistics } from 'src/store/statisticsSlice';
 import { fetchCreateUserWord } from 'src/store/userWordsSlice';
 import { selectWordDetails } from 'src/store/wordsSlice';
 import { IWordButtonsProps } from './IWordButtonsProps';
@@ -18,17 +19,17 @@ const WordButtons: React.FC<IWordButtonsProps> = ({ word }) => {
 
   const addDiffWord = () => {
     dispatch(
-      fetchCreateUserWord(getUserId(), word?._id,  getUserToken(), `${word?.group}`, IUserWordOptions.DIFFICULT, undefined, `${word?.page}`,)
+      fetchCreateUserWord(getUserId(), word?._id,  getUserToken(), `${word?.group}`, UserWordOptions.DIFFICULT, undefined, `${word?.page}`,)
     );
     setDiffWord(() => true);
     setLearnedWord(() => false);
   };
 
   const addLearnedWord = () => {
-    console.log('add to learned', word);
     dispatch(
-      fetchCreateUserWord(getUserId(), word?._id,  getUserToken(), `${word?.group}`, IUserWordOptions.LEARNED, undefined, `${word?.page}`,)
+      fetchCreateUserWord(getUserId(), word?._id,  getUserToken(), `${word?.group}`, UserWordOptions.LEARNED, undefined, `${word?.page}`,)
     );
+    dispatch(fetchGetUserStatistics(getUserId(), getUserToken(), StatisticsOption.TEXTBOOK));
     setDiffWord(() => false);
     setLearnedWord(() => true);
   };
