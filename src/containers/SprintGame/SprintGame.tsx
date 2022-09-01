@@ -5,7 +5,7 @@ import Result from 'src/containers/SprintGame/Result';
 import { ISprintWord } from 'src/store/types';
 import styles from './SprintGame.module.scss';
 
-const SECONDS = 60;
+const SECONDS = 600;
 const audioCorrect = new Audio('/audio/correct.mp3');
 const audioWrong = new Audio('/audio/wrong.mp3');
 
@@ -118,19 +118,23 @@ const SprintGame: React.FC<ISprintGameProps> = ({ onGameClose }) => {
 
   const GameProccess = (
     <div className={styles.proccess}>
-      <div className={styles.shape}>
-        <div className={styles.points}>
-          <span>Очки: {points.value}</span>
-          <span>Weight: x{points.weight}</span>
-          <span>Прогресс: {progress}</span>
+      <div className={styles.points}>
+        <span className={styles.value}>{points.value}</span>
+        <span className={styles.weight}>+ {points.weight * 10} очков</span>
+        <div className={styles.progress}>
+          <i className={`${progress > 0 ? styles.active : ''}`} />
+          <i className={`${progress > 1 ? styles.active : ''}`} />
+          <i className={`${progress > 2 ? styles.active : ''}`} />
         </div>
+      </div>
+      <div className={styles.shape}>
         <div className={styles.words}>
-          <span>{words[step]?.word}</span>
-          <span>
+          <span className={styles.word}>{words[step]?.word}</span>
+          <span className={styles.wordTranslate}>
             {words[step]?.choice ? words[step]?.wordTranslate : words[step]?.wrongTranslate}
           </span>
         </div>
-        <div>
+        <div className={styles.btnWrapper}>
           <button
             className={`${words[step]?.choice === 1 ? styles.active : ''} ${styles.btn}`}
             type='button'
@@ -139,7 +143,7 @@ const SprintGame: React.FC<ISprintGameProps> = ({ onGameClose }) => {
             верно
           </button>
           <button
-            className={`${words[step]?.choice === 0 ? styles.active : ''} ${styles.btn}`}
+            className={`${words[step]?.choice === 0 ? styles.active : ''} ${styles.btnWrong}`}
             type='button'
             onClick={() => handleAnswerClick(0)}
           >
@@ -154,28 +158,30 @@ const SprintGame: React.FC<ISprintGameProps> = ({ onGameClose }) => {
   );
 
   return (
-    <div>
-      <div className={styles.controlls}>
-        <button className={styles.btn} type='button' onClick={onGameClose}>
-          close
-        </button>
-        <button className={styles.btn} type='button' onClick={handleSoundToggle}>
-          sound
-        </button>
-        <button className={styles.btn} type='button' onClick={handleFullScreen}>
-          fullscreen
-        </button>
+    <div className={styles.bg}>
+      <div className={styles.container}>
+        <h1 className={styles.title}>Спринт</h1>
+        <div className={styles.controlls}>
+          <button className={styles.control} type='button' onClick={onGameClose}>
+            <img src='/assets/icons/close.png' alt='close' />
+          </button>
+          <button className={styles.control} type='button' onClick={handleSoundToggle}>
+            <img src='/assets/icons/unmute.png' alt='unmute' />
+          </button>
+          <button className={styles.control} type='button' onClick={handleFullScreen}>
+            <img src='/assets/icons/screen.png' alt='screen' />
+          </button>
+        </div>
+        {finishGame || step >= words.length ? (
+          <Result
+            rightAnswers={rightAnswers}
+            wrongAnswers={wrongAnswers}
+            onPlayAgain={handlePlayAgain}
+          />
+        ) : (
+          GameProccess
+        )}
       </div>
-
-      {finishGame || step >= words.length ? (
-        <Result
-          rightAnswers={rightAnswers}
-          wrongAnswers={wrongAnswers}
-          onPlayAgain={handlePlayAgain}
-        />
-      ) : (
-        GameProccess
-      )}
     </div>
   );
 };
