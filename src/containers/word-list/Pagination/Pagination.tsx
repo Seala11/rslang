@@ -19,8 +19,7 @@ const Pagination: React.FC<IPaginationProps> = ({ unit, onPageNavigate, onPagina
   const currPageLearned = useAppSelector(getCurrPageLearned);
   const userData = useAppSelector(getUserData);
 
-  useEffect(() => {
-  }, [currPageLearned]);
+  useEffect(() => {}, [currPageLearned]);
 
   if (unit <= 4) {
     pagination = [...UNITS.slice(0, 5), -1, UNITS_TOTAL];

@@ -66,7 +66,7 @@ export const fetchUpdateUserStatistics =
       if (error.name === `${ResponseStatus.MISSING_TOKEN}`) {
         dispatch(logoutUnathorizedUser());
       }
-      throw (error);
+      throw error;
     }
   };
 
@@ -179,11 +179,10 @@ export const fetchGetUserStatistics =
       if (error.name === `${ResponseStatus.MISSING_TOKEN}`) {
         dispatch(logoutUnathorizedUser());
       }
-      throw (error);
+      throw error;
     }
   };
 
 export const getStatistics = (state: RootState) => state.statistics.userStatistics;
 
 export default statisticsSlice.reducer;
-
