@@ -189,7 +189,12 @@ const AudioGame: React.FC<{ setPage: React.Dispatch<React.SetStateAction<string>
   }, [question]);
 
   return result ? (
-    <Result rightAnswers={rightAnswers} wrongAnswers={wrongAnswers} onPlayAgain={handlePlayAgain} />
+    <Result
+      rightAnswers={rightAnswers}
+      wrongAnswers={wrongAnswers}
+      strike={0}
+      onPlayAgain={handlePlayAgain}
+    />
   ) : (
     <div className={styles.wrapper}>
       <div className={styles.header}>

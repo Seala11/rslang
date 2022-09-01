@@ -23,6 +23,7 @@ const SprintGame: React.FC<ISprintGameProps> = ({ onGameClose }) => {
   const [wrongAnswers, setWrongAnswers] = useState<ISprintWord[]>([]);
   const [time, setTime] = useState(SECONDS);
   const [isMuted, setIsMuted] = useState(false);
+  const [strike, setStrike] = useState({ value: 0, temp: 0 });
 
   const handleAnswerClick = useCallback(
     (choice: number) => {
@@ -30,6 +31,8 @@ const SprintGame: React.FC<ISprintGameProps> = ({ onGameClose }) => {
         audioCorrect.pause();
         audioCorrect.currentTime = 0;
         audioCorrect.play().catch((error) => error);
+
+        setStrike((prev) => ({ ...prev, temp: prev.temp + 1 }));
 
         if (progress === 3) {
           setProgress(0);
@@ -45,6 +48,7 @@ const SprintGame: React.FC<ISprintGameProps> = ({ onGameClose }) => {
         audioWrong.currentTime = 0;
         audioWrong.play().catch((error) => error);
 
+        setStrike((prev) => ({ value: Math.max(prev.value, prev.temp), temp: 0 }));
         setProgress(0);
         setPoints((prev) => ({ ...prev, weight: 1 }));
         setWrongAnswers((prev) => [...prev, words[step]]);
@@ -117,6 +121,7 @@ const SprintGame: React.FC<ISprintGameProps> = ({ onGameClose }) => {
     setRightAnswers([]);
     setWrongAnswers([]);
     setTime(SECONDS);
+    setStrike({ value: 0, temp: 0 });
   };
 
   const GameProccess = (
@@ -198,6 +203,7 @@ const SprintGame: React.FC<ISprintGameProps> = ({ onGameClose }) => {
             rightAnswers={rightAnswers}
             wrongAnswers={wrongAnswers}
             onPlayAgain={handlePlayAgain}
+            strike={strike.value}
           />
         ) : (
           GameProccess

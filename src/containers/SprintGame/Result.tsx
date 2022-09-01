@@ -7,10 +7,11 @@ import styles from './Result.module.scss';
 export interface IResultProps {
   rightAnswers: ISprintWord[] | IWord[];
   wrongAnswers: ISprintWord[] | IWord[];
+  strike: number;
   onPlayAgain: () => void;
 }
 
-const Result: React.FC<IResultProps> = ({ rightAnswers, wrongAnswers, onPlayAgain }) => {
+const Result: React.FC<IResultProps> = ({ rightAnswers, wrongAnswers, strike, onPlayAgain }) => {
   const navigate = useNavigate();
   const audio = new Audio();
 
@@ -30,6 +31,7 @@ const Result: React.FC<IResultProps> = ({ rightAnswers, wrongAnswers, onPlayAgai
     <div className={styles.wrapper}>
       <h2 className={styles.title}>Результаты</h2>
       <div className={styles.result}>
+        <span className={styles.strike}>Подряд угаданных слов: {strike}</span>
         <div className={styles.right}>
           <h3 className={styles.caption}>
             Я знаю <span className={styles.amountRight}>{rightAnswers.length}</span>

@@ -9,6 +9,11 @@
   text-align: center;
 }
 
+.strike {
+  display: block;
+  margin-bottom: 3rem;
+}
+
 .result {
   width: 100%;
   max-width: 45rem;
@@ -49,10 +54,6 @@
   align-items: center;
   flex-wrap: wrap;
   margin-bottom: 1rem;
-}
-
-.word {
-  // margin-right: 1.5rem;
 }
 
 .amountRight,
