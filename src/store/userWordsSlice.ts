@@ -31,6 +31,7 @@ const DEFAULT_USER_WORD_OPTIONS = {
 const initialState: IUserWordsState = {
   diffWords: [],
   diffSectionEmpty: null,
+  currPageLearned: false,
 };
 
 const userWordsSlice = createSlice({
@@ -48,15 +49,28 @@ const userWordsSlice = createSlice({
       const newState = state.diffWords.filter((item) => item.id !== action.payload.id);
       state.diffWords = newState;
     },
+    setCurrPageLearned(state) {
+      state.currPageLearned = true;
+    },
+    removeCurrPageLearned(state) {
+      state.currPageLearned = false;
+    },
   },
 });
 
-export const { addDiffWord, removeDiffWord, setDiffSectionEmpty } = userWordsSlice.actions;
+export const {
+  addDiffWord,
+  removeDiffWord,
+  setDiffSectionEmpty,
+  removeCurrPageLearned,
+  setCurrPageLearned,
+} = userWordsSlice.actions;
 
 export const fetchGetUserWords =
   (userId: string | null, token: string | null, group: string, page: string) =>
   async (dispatch: AppDispatch) => {
     if (!userId || !token) return;
+    dispatch(removeCurrPageLearned());
     try {
       dispatch(setLoading());
       const response: Response | undefined = await getAllAggrWordsAPI(
@@ -66,7 +80,11 @@ export const fetchGetUserWords =
       );
       if (response.ok) {
         const data = await response?.json();
-        dispatch(addCurrentPageWords(data[0].paginatedResults));
+        const currPageWords: IWord[] = data[0].paginatedResults;
+        dispatch(addCurrentPageWords(currPageWords));
+
+        const pageIsLearned = currPageWords.every((word) => word.userWord?.optional.learned);
+        if (pageIsLearned) dispatch(setCurrPageLearned());
       }
       if (response.status === ResponseStatus.MISSING_TOKEN) {
         throw createError(new Error(ErrorMessage.MISSING_TOKEN), `${ResponseStatus.MISSING_TOKEN}`);
@@ -76,7 +94,7 @@ export const fetchGetUserWords =
       if (error.name === `${ResponseStatus.MISSING_TOKEN}`) {
         dispatch(logoutUnathorizedUser());
       }
-      throw (error);
+      throw error;
     } finally {
       dispatch(removeLoading());
     }
@@ -110,7 +128,7 @@ export const fetchGetAllDiffWords =
       if (error.name === `${ResponseStatus.MISSING_TOKEN}`) {
         dispatch(logoutUnathorizedUser());
       }
-      throw (error);
+      throw error;
     } finally {
       dispatch(removeLoading());
     }
@@ -255,11 +273,12 @@ export const fetchCreateUserWord =
       if (error.name === `${ResponseStatus.MISSING_TOKEN}`) {
         dispatch(logoutUnathorizedUser());
       }
-      throw (error);
+      throw error;
     }
   };
 
 export const getDifficultWords = (state: RootState) => state.userWords.diffWords;
 export const difficultSectionIsEmpty = (state: RootState) => state.userWords.diffSectionEmpty;
+export const getCurrPageLearned = (state: RootState) => state.userWords.currPageLearned;
 
 export default userWordsSlice.reducer;
