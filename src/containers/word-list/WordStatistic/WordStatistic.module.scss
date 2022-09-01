@@ -6,11 +6,23 @@
 }
 
 .title {
-  @include roboto($ff: var(--ff-roboto-bold), $fs: 2rem, $lh: 1.5, $color: var(--secundary-dark), $fw: 600);
+  @include roboto(
+    $ff: var(--ff-roboto-bold),
+    $fs: 2rem,
+    $lh: 1.5,
+    $color: var(--secundary-dark),
+    $fw: 600
+  );
 }
 
 .subtitle {
-    @include roboto($ff: var(--ff-roboto-bold), $fs: 2rem, $lh: 1.5, $color: var(--primary), $fw: 600);
+  @include roboto(
+    $ff: var(--ff-roboto-bold),
+    $fs: 2rem,
+    $lh: 1.5,
+    $color: var(--primary),
+    $fw: 600
+  );
 }
 
 .game {

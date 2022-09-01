@@ -126,7 +126,14 @@ const WordDetails = () => {
           <p className={styles.text} dangerouslySetInnerHTML={{ __html: word.textExample }} />
           <p className={styles.textTranslate}>{word.textExampleTranslate}</p>
         </div>
-        {userIsLogged(userData?.message) ? <><WordButtons word={word} /> < WordStatistic word={word}/></> : ''}
+        {userIsLogged(userData?.message) ? (
+          <>
+            <WordButtons word={word} />
+            <WordStatistic word={word} />
+          </>
+        ) : (
+          ''
+        )}
       </div>
     </div>
   ) : (

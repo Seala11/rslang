@@ -17,7 +17,17 @@ const DifficultWord: React.FC<IDifficultWordProps> = ({ word }) => {
   const removeWord = () => {
     console.log(word);
     setDisable(() => true);
-    dispatch(fetchCreateUserWord(getUserId(), word?._id,  getUserToken(), `${word?.group}`, UserWordOptions.DIFFICULT, undefined, `${word?.page}`))
+    dispatch(
+      fetchCreateUserWord(
+        getUserId(),
+        word?._id,
+        getUserToken(),
+        `${word?.group}`,
+        UserWordOptions.DIFFICULT,
+        undefined,
+        `${word?.page}`
+      )
+    );
   };
 
   return (

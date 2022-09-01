@@ -142,7 +142,9 @@ export const fetchGetUserStatistics =
         }
 
         if (currGameStatistics) {
-          dispatch(updateStatisticsData(userId, token, option, userStatistics, date, currGameStatistics));
+          dispatch(
+            updateStatisticsData(userId, token, option, userStatistics, date, currGameStatistics)
+          );
         } else {
           dispatch(updateStatisticsData(userId, token, option, userStatistics, date));
         }
@@ -154,7 +156,9 @@ export const fetchGetUserStatistics =
             newStatistics.optional = currDay;
 
             if (currGameStatistics) {
-              dispatch(updateStatisticsData(userId, token, option, newStatistics, date, currGameStatistics));
+              dispatch(
+                updateStatisticsData(userId, token, option, newStatistics, date, currGameStatistics)
+              );
             } else {
               dispatch(updateStatisticsData(userId, token, option, newStatistics, date));
             }
@@ -189,9 +193,9 @@ export default statisticsSlice.reducer;
 //   or StatisticsOption.SPRINT for sprint
 // 2. currGameStatistics => объект который содержит все данные по игре, интерфейс GameStatistics
 // {  right: number (число правильно угаданных слов);
-  // wrong: number (число неугаданных слов);
-  // new: (число новых, ранее не задействованных в играх слов, сморти wordsSlice.ts внизу пояснение);
-  // strike: number (максимальное кол-во угаданных слов подряд);}
+// wrong: number (число неугаданных слов);
+// new: (число новых, ранее не задействованных в играх слов, сморти wordsSlice.ts внизу пояснение);
+// strike: number (максимальное кол-во угаданных слов подряд);}
 
 // EXAPMLES:
 // 1. sprint
