@@ -13,6 +13,7 @@ import {
   ResponseStatus,
 } from 'src/helpers/constRequestsAPI';
 import createError from 'src/requests/createError';
+import { logoutUnathorizedUser } from './userSlice';
 import type { AppDispatch, RootState } from '.';
 import { IUserWordsState, IWord } from './types';
 import { addCurrentPageWords, removeLoading, setLoading } from './wordsSlice';
@@ -73,10 +74,9 @@ export const fetchGetUserWords =
     } catch (err) {
       const error = err as Error;
       if (error.name === `${ResponseStatus.MISSING_TOKEN}`) {
-        // TODO: logout user
-        console.error(error);
+        dispatch(logoutUnathorizedUser());
       }
-      console.error(error);
+      throw (error);
     } finally {
       dispatch(removeLoading());
     }
@@ -108,10 +108,9 @@ export const fetchGetAllDiffWords =
     } catch (err) {
       const error = err as Error;
       if (error.name === `${ResponseStatus.MISSING_TOKEN}`) {
-        // TODO: logout user
-        console.error(error);
+        dispatch(logoutUnathorizedUser());
       }
-      console.error(error);
+      throw (error);
     } finally {
       dispatch(removeLoading());
     }
@@ -254,10 +253,9 @@ export const fetchCreateUserWord =
     } catch (err) {
       const error = err as Error;
       if (error.name === `${ResponseStatus.MISSING_TOKEN}`) {
-        // TODO: logout user
-        console.error(error);
+        dispatch(logoutUnathorizedUser());
       }
-      console.error(error);
+      throw (error);
     }
   };
 
@@ -265,33 +263,3 @@ export const getDifficultWords = (state: RootState) => state.userWords.diffWords
 export const difficultSectionIsEmpty = (state: RootState) => state.userWords.diffSectionEmpty;
 
 export default userWordsSlice.reducer;
-
-// После игры КАЖДОЕ СЛОВО надо обновить:
-// 1.Use UserWordOptions.AUDIO for audio game
-//   or UserWordOptions.SPRINT for sprint
-// 2. Game options => угадано слово (= GameOptions.CORRECT) или нет (= GameOptions.WRONG)
-// 3. у зарегенных пользователей айдишник слова с подчеркиванием word?._id а не word.id
-
-// EXAPMLES:
-// 1. sprint wrong answer
-
-// fetchCreateUserWord(
-//   getUserId(),
-//   word?._id,
-//   getUserToken(),
-//   `${word?.group}`,
-//   UserWordOptions.SPRINT,
-//   GameOptions.WRONG,
-//   `${word?.page}`
-// )
-
-// 2. sprint right answer
-// fetchCreateUserWord(
-//   getUserId(),
-//   word?._id,
-//   getUserToken(),
-//   `${word?.group}`,
-//   UserWordOptions.SPRINT,
-//   GameOptions.CORRECT,
-//   `${word?.page}`
-// )

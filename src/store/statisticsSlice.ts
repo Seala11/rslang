@@ -14,6 +14,7 @@ import createError from 'src/requests/createError';
 import getStatisticsAPI from 'src/requests/statistics/getStatisticsAPI';
 import type { AppDispatch, RootState } from '.';
 import { IUserStatistics } from './types';
+import { logoutUnathorizedUser } from './userSlice';
 
 const DEFAULT_STATISTICS: IStatistics = {
   learnedWords: 0,
@@ -63,10 +64,9 @@ export const fetchUpdateUserStatistics =
     } catch (err) {
       const error = err as Error;
       if (error.name === `${ResponseStatus.MISSING_TOKEN}`) {
-        // TODO: logout user
-        console.error(error);
+        dispatch(logoutUnathorizedUser());
       }
-      console.error(error);
+      throw (error);
     }
   };
 
@@ -177,10 +177,9 @@ export const fetchGetUserStatistics =
     } catch (err) {
       const error = err as Error;
       if (error.name === `${ResponseStatus.MISSING_TOKEN}`) {
-        // TODO: logout user if missing token
-        console.error(error);
+        dispatch(logoutUnathorizedUser());
       }
-      console.error(error);
+      throw (error);
     }
   };
 
@@ -188,15 +187,3 @@ export const getStatistics = (state: RootState) => state.statistics.userStatisti
 
 export default statisticsSlice.reducer;
 
-// После игры ОДИН РАЗ надо обновить статистику:
-// 1.Use StatisticsOption.AUDIO for audio game
-//   or StatisticsOption.SPRINT for sprint
-// 2. currGameStatistics => объект который содержит все данные по игре, интерфейс GameStatistics
-// {  right: number (число правильно угаданных слов);
-// wrong: number (число неугаданных слов);
-// new: (число новых, ранее не задействованных в играх слов, сморти wordsSlice.ts внизу пояснение);
-// strike: number (максимальное кол-во угаданных слов подряд);}
-
-// EXAPMLES:
-// 1. sprint
-// dispatch(fetchGetUserStatistics(getUserId(), getUserToken(), StatisticsOption.SPRINT, {right: 10, wrong: 10, new: 20, strike: 5}));

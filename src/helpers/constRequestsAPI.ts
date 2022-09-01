@@ -34,6 +34,7 @@ export enum ErrorMessageRU {
   FAILED = 'Адрес электронной почты уже зарегистрирован',
   LOGIN_FAILED = 'Неправильный адрес электронной почты или пароль',
   UNKNOWN = 'Что-то пошло не так, попробуйте еще раз',
+  UNAUTHORIZED = 'Произошла ошибка. Необходима авторизация',
 }
 
 export enum ResponseStatus {
