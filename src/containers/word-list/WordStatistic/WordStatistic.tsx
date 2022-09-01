@@ -10,10 +10,7 @@ const WordStatistic: React.FC<IWordStatisticProps> = ({ word }) => {
   const [audioAnswers, setAudioAnswers] = useState({ right: 0, wrong: 0 });
   const [sprintAnswers, setSprintAnswers] = useState({ right: 0, wrong: 0 });
 
-  
-
   useEffect(() => {
-    // TODO: check if we need to refresh if word details changes
     if (word?.userWord?.optional.audio) {
       setAudioAnswers({
         right: word?.userWord?.optional.audio.right,
@@ -21,23 +18,21 @@ const WordStatistic: React.FC<IWordStatisticProps> = ({ word }) => {
       });
     }
     if (word?.userWord?.optional.sprint) {
-        setSprintAnswers({
-          right: word?.userWord?.optional.sprint.right,
-          wrong: word?.userWord?.optional.sprint.wrong,
-        });
-      }
-    // if (wordDetails?.userWord?.optional.audio) {
-    //     setAudioAnswers({
-    //       right: wordDetails?.userWord?.optional.audio.right,
-    //       wrong: wordDetails?.userWord?.optional.audio.wrong,
-    //     });
-    //   }
-    // if (wordDetails?.userWord?.optional.sprint) {
-    //     setSprintAnswers({
-    //       right: wordDetails?.userWord?.optional.sprint.right,
-    //       wrong: wordDetails?.userWord?.optional.sprint.wrong,
-    //     });
-    //   }
+      setSprintAnswers({
+        right: word?.userWord?.optional.sprint.right,
+        wrong: word?.userWord?.optional.sprint.wrong,
+      });
+    }
+    if (!word?.userWord) {
+      setSprintAnswers({
+        right: 0,
+        wrong: 0,
+      });
+      setAudioAnswers({
+        right: 0,
+        wrong: 0,
+      });
+    }
   }, [word, wordDetails]);
 
   return (

@@ -142,7 +142,7 @@ export const fetchGetUserStatistics =
         }
 
         if (currGameStatistics) {
-          updateStatisticsData(userId, token, option, userStatistics, date, currGameStatistics);
+          dispatch(updateStatisticsData(userId, token, option, userStatistics, date, currGameStatistics));
         } else {
           dispatch(updateStatisticsData(userId, token, option, userStatistics, date));
         }
@@ -154,7 +154,7 @@ export const fetchGetUserStatistics =
             newStatistics.optional = currDay;
 
             if (currGameStatistics) {
-              updateStatisticsData(userId, token, option, newStatistics, date, currGameStatistics);
+              dispatch(updateStatisticsData(userId, token, option, newStatistics, date, currGameStatistics));
             } else {
               dispatch(updateStatisticsData(userId, token, option, newStatistics, date));
             }
@@ -183,3 +183,16 @@ export const fetchGetUserStatistics =
 export const getStatistics = (state: RootState) => state.statistics.userStatistics;
 
 export default statisticsSlice.reducer;
+
+// После игры ОДИН РАЗ надо обновить статистику:
+// 1.Use StatisticsOption.AUDIO for audio game
+//   or StatisticsOption.SPRINT for sprint
+// 2. currGameStatistics => объект который содержит все данные по игре, интерфейс GameStatistics
+// {  right: number (число правильно угаданных слов);
+  // wrong: number (число неугаданных слов);
+  // new: (число новых, ранее не задействованных в играх слов, сморти wordsSlice.ts внизу пояснение);
+  // strike: number (максимальное кол-во угаданных слов подряд);}
+
+// EXAPMLES:
+// 1. sprint
+// dispatch(fetchGetUserStatistics(getUserId(), getUserToken(), StatisticsOption.SPRINT, {right: 10, wrong: 10, new: 20, strike: 5}));

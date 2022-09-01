@@ -6,7 +6,9 @@ import { getUserId, getUserToken } from 'src/helpers/storage';
 import { useAppDispatch, useAppSelector } from 'src/store/hooks';
 import { fetchGetUserStatistics } from 'src/store/statisticsSlice';
 import { fetchCreateUserWord } from 'src/store/userWordsSlice';
-import { selectWordDetails } from 'src/store/wordsSlice';
+import {
+  selectWordDetails,
+} from 'src/store/wordsSlice';
 import { IWordButtonsProps } from './IWordButtonsProps';
 import styles from './WordButtons.module.scss';
 
@@ -19,7 +21,15 @@ const WordButtons: React.FC<IWordButtonsProps> = ({ word }) => {
 
   const addDiffWord = () => {
     dispatch(
-      fetchCreateUserWord(getUserId(), word?._id,  getUserToken(), `${word?.group}`, UserWordOptions.DIFFICULT, undefined, `${word?.page}`,)
+      fetchCreateUserWord(
+        getUserId(),
+        word?._id,
+        getUserToken(),
+        `${word?.group}`,
+        UserWordOptions.DIFFICULT,
+        undefined,
+        `${word?.page}`
+      )
     );
     setDiffWord(() => true);
     setLearnedWord(() => false);
@@ -27,7 +37,15 @@ const WordButtons: React.FC<IWordButtonsProps> = ({ word }) => {
 
   const addLearnedWord = () => {
     dispatch(
-      fetchCreateUserWord(getUserId(), word?._id,  getUserToken(), `${word?.group}`, UserWordOptions.LEARNED, undefined, `${word?.page}`,)
+      fetchCreateUserWord(
+        getUserId(),
+        word?._id,
+        getUserToken(),
+        `${word?.group}`,
+        UserWordOptions.LEARNED,
+        undefined,
+        `${word?.page}`
+      )
     );
     dispatch(fetchGetUserStatistics(getUserId(), getUserToken(), StatisticsOption.TEXTBOOK));
     setDiffWord(() => false);
@@ -53,7 +71,12 @@ const WordButtons: React.FC<IWordButtonsProps> = ({ word }) => {
       <button type='button' onClick={addDiffWord} className={styles.wordButton} disabled={diffWord}>
         Сложное слово
       </button>
-      <button type='button' onClick={addLearnedWord} className={styles.wordButton} disabled={learnedWord}>
+      <button
+        type='button'
+        onClick={addLearnedWord}
+        className={styles.wordButton}
+        disabled={learnedWord}
+      >
         Изученное слово
       </button>
     </div>
