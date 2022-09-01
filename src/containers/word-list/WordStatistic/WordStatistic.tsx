@@ -37,28 +37,32 @@ const WordStatistic: React.FC<IWordStatisticProps> = ({ word }) => {
 
   return (
     <div className={styles.wrapper}>
-      <p className={styles.title}>Статистика</p>
+      <p className={styles.title}>Статистика по играм</p>
       <div className={styles.game}>
         <p className={styles.subtitle}>Аудиовызов</p>
         <div className={styles.statistic}>
-          <p className={styles.statistic_title}>Правильных ответов:</p>
-          <span>{audioAnswers.right}</span>
-        </div>
-        <div className={styles.statistic}>
-          <p className={styles.statistic_title}>Неправильных ответов:</p>
-          <span>{audioAnswers.wrong}</span>
+          <div className={`${styles.statistic_answer} ${styles.right}`}>
+            <div className={styles.point} />
+            <span>{audioAnswers.right}</span>
+          </div>
+          <div className={`${styles.statistic_answer} ${styles.wrong}`}>
+            <div className={styles.cross} />
+            <span>{audioAnswers.wrong}</span>
+          </div>
         </div>
       </div>
 
-      <div>
+      <div className={styles.game}>
         <p className={styles.subtitle}>Спринт</p>
         <div className={styles.statistic}>
-          <p className={styles.statistic_title}>Правильных ответов:</p>
-          <span>{sprintAnswers.right}</span>
-        </div>
-        <div className={styles.statistic}>
-          <p className={styles.statistic_title}>Неправильных ответов:</p>
-          <span>{sprintAnswers.wrong}</span>
+          <div className={`${styles.statistic_answer} ${styles.right}`}>
+            <div className={styles.point} />
+            <span>{sprintAnswers.right}</span>
+          </div>
+          <div className={`${styles.statistic_answer} ${styles.wrong}`}>
+            <div className={styles.cross} />
+            <span>{sprintAnswers.wrong}</span>
+          </div>
         </div>
       </div>
     </div>

@@ -128,8 +128,8 @@ const WordDetails = () => {
         </div>
         {userIsLogged(userData?.message) ? (
           <>
-            <WordButtons word={word} />
             <WordStatistic word={word} />
+            <WordButtons word={word} />
           </>
         ) : (
           ''

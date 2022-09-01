@@ -64,11 +64,11 @@
   transition: background-color 0.2s ease-in;
 
   &_difficult {
-    background-color: lightcoral;
+    background-color: var(--incorrect);
   }
 
   &_learned {
-    background-color: #acdbac;
+    background-color: var(--correct);
   }
 }
 
@@ -101,5 +101,5 @@
 }
 
 .page_learned {
-  box-shadow: 0px 2px 10px 3px #acdbac;
+  box-shadow: 0px 2px 10px 3px var(--correct);
 }
