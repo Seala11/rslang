@@ -16,9 +16,9 @@
   flex-direction: column;
   justify-content: center;
   width: 100%;
-  max-width: 1440px;
+  max-width: 144rem;
   margin: 0 auto;
-  padding: 3rem 6rem;
+  padding: 3rem 6.5rem;
 }
 
 .controlls {
@@ -45,6 +45,7 @@
 }
 
 .title {
+  margin-bottom: 1.5rem;
   font-size: 4rem;
   color: var(--primary);
 }
@@ -183,5 +184,9 @@
 
   .control {
     max-width: 2rem;
+  }
+
+  .shape {
+    padding: 2rem;
   }
 }

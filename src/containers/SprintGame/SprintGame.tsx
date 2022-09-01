@@ -5,7 +5,7 @@ import Result from 'src/containers/SprintGame/Result';
 import { ISprintWord } from 'src/store/types';
 import styles from './SprintGame.module.scss';
 
-const SECONDS = 600;
+const SECONDS = 3;
 const audioCorrect = new Audio('/audio/correct.mp3');
 const audioWrong = new Audio('/audio/wrong.mp3');
 
