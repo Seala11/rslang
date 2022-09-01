@@ -5,7 +5,7 @@ import Result from 'src/containers/SprintGame/Result';
 import { ISprintWord } from 'src/store/types';
 import styles from './SprintGame.module.scss';
 
-const SECONDS = 3;
+const SECONDS = 60;
 const audioCorrect = new Audio('/audio/correct.mp3');
 const audioWrong = new Audio('/audio/wrong.mp3');
 
@@ -22,6 +22,7 @@ const SprintGame: React.FC<ISprintGameProps> = ({ onGameClose }) => {
   const [rightAnswers, setRightAnswers] = useState<ISprintWord[]>([]);
   const [wrongAnswers, setWrongAnswers] = useState<ISprintWord[]>([]);
   const [time, setTime] = useState(SECONDS);
+  const [isMuted, setIsMuted] = useState(false);
 
   const handleAnswerClick = useCallback(
     (choice: number) => {
@@ -100,9 +101,11 @@ const SprintGame: React.FC<ISprintGameProps> = ({ onGameClose }) => {
     if (audioCorrect.muted) {
       audioCorrect.muted = false;
       audioWrong.muted = false;
+      setIsMuted(false);
     } else {
       audioCorrect.muted = true;
       audioWrong.muted = true;
+      setIsMuted(true);
     }
   };
 
@@ -166,7 +169,25 @@ const SprintGame: React.FC<ISprintGameProps> = ({ onGameClose }) => {
             <img src='/assets/icons/close.png' alt='close' />
           </button>
           <button className={styles.control} type='button' onClick={handleSoundToggle}>
-            <img src='/assets/icons/unmute.png' alt='unmute' />
+            {isMuted ? (
+              <svg viewBox='0 0 18 18' fill='none' xmlns='http://www.w3.org/2000/svg'>
+                <path
+                  fillRule='evenodd'
+                  clipRule='evenodd'
+                  d='M0.63 0.2925C0.24 0.6825 0.24 1.3125 0.63 1.7025L4.29 5.3625L4 5.6625H1C0.45 5.6625 0 6.1125 0 6.6625V10.6625C0 11.2125 0.45 11.6625 1 11.6625H4L7.29 14.9525C7.92 15.5825 9 15.1325 9 14.2425V10.0725L13.18 14.2525C12.69 14.6225 12.16 14.9325 11.58 15.1625C11.22 15.3125 11 15.6925 11 16.0825C11 16.8025 11.73 17.2625 12.39 16.9925C13.19 16.6625 13.94 16.2225 14.61 15.6825L15.95 17.0225C16.34 17.4125 16.97 17.4125 17.36 17.0225C17.75 16.6325 17.75 16.0025 17.36 15.6125L2.05 0.2925C1.66 -0.0975 1.03 -0.0975 0.63 0.2925ZM16 8.6625C16 9.4825 15.85 10.2725 15.59 11.0025L17.12 12.5325C17.68 11.3625 18 10.0525 18 8.6625C18 4.8325 15.6 1.5525 12.22 0.2625C11.63 0.0324998 11 0.4925 11 1.1225V1.3125C11 1.6925 11.25 2.0225 11.61 2.1625C14.18 3.2025 16 5.7225 16 8.6625ZM7.29 2.3725L7.12 2.5425L9 4.4225V3.0725C9 2.1825 7.92 1.7425 7.29 2.3725ZM13.5 8.6625C13.5 6.8925 12.48 5.3725 11 4.6325V6.4225L13.48 8.9025C13.49 8.8225 13.5 8.7425 13.5 8.6625Z'
+                  fill='#6A6D9E'
+                />
+              </svg>
+            ) : (
+              <svg viewBox='0 0 18 18' fill='none' xmlns='http://www.w3.org/2000/svg'>
+                <path
+                  fillRule='evenodd'
+                  clipRule='evenodd'
+                  d='M0 6.99996V11C0 11.55 0.45 12 1 12H4L7.29 15.29C7.92 15.92 9 15.47 9 14.58V3.40996C9 2.51996 7.92 2.06996 7.29 2.69996L4 5.99996H1C0.45 5.99996 0 6.44996 0 6.99996ZM13.5 8.99996C13.5 7.22996 12.48 5.70996 11 4.96996V13.02C12.48 12.29 13.5 10.77 13.5 8.99996ZM11 1.44996V1.64996C11 2.02996 11.25 2.35996 11.6 2.49996C14.18 3.52996 16 6.05996 16 8.99996C16 11.94 14.18 14.47 11.6 15.5C11.24 15.64 11 15.97 11 16.35V16.55C11 17.18 11.63 17.62 12.21 17.4C15.6 16.11 18 12.84 18 8.99996C18 5.15996 15.6 1.88996 12.21 0.599963C11.63 0.369963 11 0.819963 11 1.44996Z'
+                  fill='#6A6D9E'
+                />
+              </svg>
+            )}
           </button>
           <button className={styles.control} type='button' onClick={handleFullScreen}>
             <img src='/assets/icons/screen.png' alt='screen' />
