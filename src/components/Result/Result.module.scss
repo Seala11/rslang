@@ -22,7 +22,7 @@
   margin-bottom: 3rem;
   padding: 3rem;
   border-radius: 2rem;
-  background-color: #fff;
+  background-color: var(--light);
   font-size: 2.4rem;
   overflow: scroll;
 }
@@ -66,14 +66,14 @@
   width: 3.5rem;
   height: 3.5rem;
   border-radius: 100%;
-  background-color: #24dddd;
-  color: #fff;
+  background-color: var(--correct);
+  color: var(--light);
   line-height: 1;
   font-size: 2rem;
 }
 
 .amountWrong {
-  background-color: var(--accent);
+  background-color: var(--incorrect);
 }
 
 .btnWrapper {
@@ -88,7 +88,7 @@
   padding: 1.5rem 1rem;
   border-radius: 1rem;
   background-color: var(--accent);
-  color: #fff;
+  color: var(--light);
   font-family: var(--ff-roboto-regular);
   font-size: 2rem;
 }
