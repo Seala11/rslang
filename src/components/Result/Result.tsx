@@ -1,6 +1,8 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { UrlPath } from 'src/helpers/constRequestsAPI';
+import { useAppDispatch } from 'src/store/hooks';
+import { removeWords } from 'src/store/sprintSlice';
 import { ISprintWord, IWord } from 'src/store/types';
 import styles from './Result.module.scss';
 
@@ -12,6 +14,7 @@ export interface IResultProps {
 }
 
 const Result: React.FC<IResultProps> = ({ rightAnswers, wrongAnswers, strike, onPlayAgain }) => {
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const audio = new Audio();
 
@@ -24,6 +27,7 @@ const Result: React.FC<IResultProps> = ({ rightAnswers, wrongAnswers, strike, on
     if (document.fullscreenElement) {
       document.exitFullscreen().catch((err) => err);
     }
+    dispatch(removeWords());
     navigate('/textbook');
   };
 

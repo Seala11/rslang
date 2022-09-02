@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { useAppSelector } from 'src/store/hooks';
-import { selectWords } from 'src/store/sprintSlice';
-import Result from 'src/containers/SprintGame/Result';
+import { useAppDispatch, useAppSelector } from 'src/store/hooks';
+import { removeWords, selectWords } from 'src/store/sprintSlice';
+import Result from 'src/components/Result';
 import { ISprintWord } from 'src/store/types';
 import styles from './SprintGame.module.scss';
 
@@ -9,12 +9,9 @@ const SECONDS = 60;
 const audioCorrect = new Audio('/audio/correct.mp3');
 const audioWrong = new Audio('/audio/wrong.mp3');
 
-export interface ISprintGameProps {
-  onGameClose: () => void;
-}
-
-const SprintGame: React.FC<ISprintGameProps> = ({ onGameClose }) => {
+const SprintGame = () => {
   const words = useAppSelector(selectWords);
+  const dispatch = useAppDispatch();
   const [step, setStep] = useState(0);
   const [points, setPoints] = useState({ value: 0, weight: 1 });
   const [progress, setProgress] = useState(0);
@@ -113,6 +110,13 @@ const SprintGame: React.FC<ISprintGameProps> = ({ onGameClose }) => {
     }
   };
 
+  const handleGameClose = () => {
+    dispatch(removeWords());
+    if (document.fullscreenElement) {
+      document.exitFullscreen().catch((err) => err);
+    }
+  };
+
   const handlePlayAgain = () => {
     setStep(0);
     setPoints({ value: 0, weight: 1 });
@@ -170,7 +174,7 @@ const SprintGame: React.FC<ISprintGameProps> = ({ onGameClose }) => {
       <div className={styles.container}>
         <h1 className={styles.title}>Спринт</h1>
         <div className={styles.controlls}>
-          <button className={styles.control} type='button' onClick={onGameClose}>
+          <button className={styles.control} type='button' onClick={handleGameClose}>
             <img src='/assets/icons/close.png' alt='close' />
           </button>
           <button className={styles.control} type='button' onClick={handleSoundToggle}>
