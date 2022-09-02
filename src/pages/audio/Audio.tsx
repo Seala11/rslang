@@ -63,6 +63,7 @@ const AudioGame: React.FC<{ setPage: React.Dispatch<React.SetStateAction<string>
       targetElem.style.color = 'green';
       audioCorrect.muted = isMute;
       audioCorrect.play();
+      setRightAnswers((prev) => [...prev, wordsArr[question]]);
       setStrike((prev) => ({ ...prev, temp: prev.temp + 1 }));
     } else {
       targetElem.style.color = 'red';
