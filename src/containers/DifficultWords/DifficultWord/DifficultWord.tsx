@@ -2,10 +2,10 @@
 /* eslint-disable no-console */
 import React, { useEffect, useState } from 'react';
 import styles from 'src/containers/DifficultWords/DifficultWord/DifficultWord.module.scss';
-import { UrlPath } from 'src/helpers/constRequestsAPI';
+import { UserWordOptions, UrlPath } from 'src/helpers/constRequestsAPI';
 import { getUserId, getUserToken } from 'src/helpers/storage';
 import { useAppDispatch } from 'src/store/hooks';
-import { fetchUpdateDiffWord } from 'src/store/userWordsSlice';
+import { fetchCreateUserWord } from 'src/store/userWordsSlice';
 import { IDifficultWordProps } from './IDifficultWord.Props';
 
 const DifficultWord: React.FC<IDifficultWordProps> = ({ word }) => {
@@ -18,13 +18,14 @@ const DifficultWord: React.FC<IDifficultWordProps> = ({ word }) => {
     console.log(word);
     setDisable(() => true);
     dispatch(
-      fetchUpdateDiffWord(
+      fetchCreateUserWord(
         getUserId(),
         word?._id,
-        `${word?.group}`,
-        `${word?.page}`,
         getUserToken(),
-        false
+        `${word?.group}`,
+        UserWordOptions.DIFFICULT,
+        undefined,
+        `${word?.page}`
       )
     );
   };

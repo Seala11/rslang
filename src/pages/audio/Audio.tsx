@@ -14,7 +14,7 @@ import { useAppDispatch, useAppSelector } from 'src/store/hooks';
 import { UrlPath } from 'src/helpers/constRequestsAPI';
 import { NavLink } from 'react-router-dom';
 import { IWord } from 'src/store/types';
-import Result from 'src/containers/SprintGame/Result';
+import Result from 'src/components/Result';
 
 let audioCounter = 0;
 let player: HTMLAudioElement;

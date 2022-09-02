@@ -15,10 +15,6 @@ const getUserWordAPI = async (userId: string, wordId: string, token: string) => 
       }
     );
 
-    // const userWord: IUserWord = await response.json();
-
-    // return userWord;
-
     return response;
   } catch (error) {
     throw new Error();

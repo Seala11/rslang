@@ -4,6 +4,7 @@ import userReducer from './userSlice';
 import audioReducer from './audioSlice';
 import sprintReducer from './sprintSlice';
 import userWordsReducer from './userWordsSlice';
+import statisticsReducer from './statisticsSlice';
 
 export const store = configureStore({
   reducer: {
@@ -12,6 +13,7 @@ export const store = configureStore({
     audio: audioReducer,
     sprint: sprintReducer,
     userWords: userWordsReducer,
+    statistics: statisticsReducer,
   },
 });
 

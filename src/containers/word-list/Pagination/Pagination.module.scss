@@ -31,6 +31,11 @@
   &:hover {
     background-color: var(--group-color-light);
   }
+
+  &.page_learned {
+    background-color: var(--correct);
+    box-shadow: 0px 2px 10px 3px var(--correct);
+  }
 }
 
 .next,

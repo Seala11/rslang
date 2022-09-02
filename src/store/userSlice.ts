@@ -89,7 +89,7 @@ export const fetchCreateUser = (userData: IUser) => async (dispatch: AppDispatch
   } catch (err) {
     dispatch(addError(true));
     toast.error(ErrorMessageRU.UNKNOWN);
-    console.error(err);
+    throw err;
   }
 };
 
@@ -117,7 +117,7 @@ export const fetchSignInUser = (userData: IUserSignIn) => async (dispatch: AppDi
   } catch (err) {
     dispatch(addError(true));
     toast.error(ErrorMessageRU.UNKNOWN);
-    console.error(err);
+    throw err;
   }
 };
 
@@ -168,11 +168,17 @@ export const fetchGetUser =
       }
     } catch (err) {
       clearUserData();
-      console.error(err);
+      throw err;
     } finally {
       dispatch(removeUserLoading());
     }
   };
+
+export const logoutUnathorizedUser = () => async (dispatch: AppDispatch) => {
+  toast.error(ErrorMessageRU.UNAUTHORIZED);
+  dispatch(removeUserData());
+  clearUserData();
+};
 
 export const getErrors = (state: RootState) => state.user.loginError;
 export const getUserData = (state: RootState) => state.user.userData;

@@ -1,29 +1,13 @@
 import React from 'react';
 import SprintGame from 'src/containers/SprintGame';
-import { useAppDispatch, useAppSelector } from 'src/store/hooks';
-import { fetchWords, removeWords, selectWords } from 'src/store/sprintSlice';
-import Levels from './Levels';
+import { useAppSelector } from 'src/store/hooks';
+import { selectWords } from 'src/store/sprintSlice';
+import Levels from '../../containers/Levels';
 
 const Sprint = () => {
-  const dispatch = useAppDispatch();
   const words = useAppSelector(selectWords);
 
-  const handleStartClick = async (groupId: number) => {
-    dispatch(fetchWords(`${groupId}`, `${Math.floor(Math.random() * 30)}`));
-  };
-
-  const handleGameClose = () => {
-    dispatch(removeWords());
-    if (document.fullscreenElement) {
-      document.exitFullscreen().catch((err) => err);
-    }
-  };
-
-  return words.length ? (
-    <SprintGame onGameClose={handleGameClose} />
-  ) : (
-    <Levels onStartClick={handleStartClick} />
-  );
+  return words.length ? <SprintGame /> : <Levels />;
 };
 
 export default Sprint;

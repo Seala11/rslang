@@ -1,5 +1,9 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Navigate } from 'src/helpers/constants';
+import { useAppSelector } from 'src/store/hooks';
+import { getCurrPageLearned } from 'src/store/userWordsSlice';
+import { getUserData } from 'src/store/userSlice';
+import { userIsLogged } from 'src/helpers/storage';
 import styles from './Pagination.module.scss';
 import { IPaginationProps } from './IPaginationProps';
 
@@ -11,6 +15,11 @@ const UNITS = Array(UNITS_TOTAL)
 
 const Pagination: React.FC<IPaginationProps> = ({ unit, onPageNavigate, onPaginationClick }) => {
   let pagination: number[] = [];
+
+  const currPageLearned = useAppSelector(getCurrPageLearned);
+  const userData = useAppSelector(getUserData);
+
+  useEffect(() => {}, [currPageLearned]);
 
   if (unit <= 4) {
     pagination = [...UNITS.slice(0, 5), -1, UNITS_TOTAL];
@@ -45,7 +54,13 @@ const Pagination: React.FC<IPaginationProps> = ({ unit, onPageNavigate, onPagina
             <span className={styles.ellipsis}>...</span>
           ) : (
             <button
-              className={`${value === unit ? styles.active : ''} ${styles.btn}`}
+              className={`${
+                userIsLogged(userData?.message) && currPageLearned && value === unit
+                  ? styles.page_learned
+                  : ''
+              }
+              ${value === unit ? styles.active : ''} 
+              ${styles.btn}`}
               type='button'
               onClick={() => onPaginationClick(value)}
             >

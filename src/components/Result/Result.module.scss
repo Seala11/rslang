@@ -1,0 +1,94 @@
+.wrapper {
+  margin: auto 0;
+}
+
+.title {
+  margin-bottom: 1.5rem;
+  color: var(--primary);
+  font-size: 3rem;
+  text-align: center;
+}
+
+.strike {
+  display: block;
+  margin-bottom: 3rem;
+}
+
+.result {
+  width: 100%;
+  max-height: 500px;
+  max-width: 50rem;
+  margin: 0 auto;
+  margin-bottom: 3rem;
+  padding: 3rem;
+  border-radius: 2rem;
+  background-color: var(--light);
+  font-size: 2.4rem;
+  overflow: scroll;
+}
+
+.right {
+  margin-bottom: 3rem;
+}
+
+.btnSound {
+  margin-right: 1.5rem;
+  background-color: transparent;
+
+  svg {
+    width: 3rem;
+    fill: var(--secundary-light);
+  }
+
+  &:hover {
+    svg {
+      fill: var(--secundary-light-2);
+    }
+  }
+}
+
+.caption {
+  margin-bottom: 1.5rem;
+}
+
+.wordRow {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-bottom: 1rem;
+}
+
+.amountRight,
+.amountWrong {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  width: 3.5rem;
+  height: 3.5rem;
+  border-radius: 100%;
+  background-color: var(--correct);
+  color: var(--light);
+  line-height: 1;
+  font-size: 2rem;
+}
+
+.amountWrong {
+  background-color: var(--incorrect);
+}
+
+.btnWrapper {
+  display: flex;
+  justify-content: center;
+  column-gap: 1.5rem;
+}
+
+.btn {
+  width: 100%;
+  max-width: 200px;
+  padding: 1.5rem 1rem;
+  border-radius: 1rem;
+  background-color: var(--accent);
+  color: var(--light);
+  font-family: var(--ff-roboto-regular);
+  font-size: 2rem;
+}
