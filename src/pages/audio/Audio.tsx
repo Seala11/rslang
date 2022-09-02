@@ -1,4 +1,3 @@
-
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useCallback, useEffect, useState } from 'react';
 import styles from 'src/pages/audio/Audio.module.scss';
@@ -9,7 +8,7 @@ import {
   getAnswers,
   updateAnswers,
   getQuestion,
-  updateQuestion
+  updateQuestion,
 } from 'src/store/audioSlice';
 import { useAppDispatch, useAppSelector } from 'src/store/hooks';
 import { UrlPath } from 'src/helpers/constRequestsAPI';
@@ -41,8 +40,8 @@ const AudioGame: React.FC<{ setPage: React.Dispatch<React.SetStateAction<string>
   const [strike, setStrike] = useState({ value: 0, temp: 0 });
   const [screenStyles, setScreenStyles] = useState('unfull');
   const [questionTitle, setQuestionTitle] = useState('');
-  const [questionImg, setQuestionImg] = useState('')
-  const [imgSize, setImgSize] = useState<'50%'| 'cover'>('50%')
+  const [questionImg, setQuestionImg] = useState('');
+  const [imgSize, setImgSize] = useState<'50%' | 'cover'>('50%');
 
   function collectAnswers() {
     const set: Set<string> = new Set();
@@ -76,8 +75,8 @@ const AudioGame: React.FC<{ setPage: React.Dispatch<React.SetStateAction<string>
     }
     dispatch(addDis(true));
     setQuestionTitle(words[question]);
-    setQuestionImg(`url(${UrlPath.BASE}/${wordsArr[question].image})`)
-    setImgSize('cover')
+    setQuestionImg(`url(${UrlPath.BASE}/${wordsArr[question].image})`);
+    setImgSize('cover');
     setNextBtn('➤');
   }
 
@@ -89,9 +88,9 @@ const AudioGame: React.FC<{ setPage: React.Dispatch<React.SetStateAction<string>
         setNextBtn('Не знаю');
         dispatch(updateAnswers([]));
         dispatch(updateQuestion(question + 1));
-        setQuestionTitle('')
+        setQuestionTitle('');
         setQuestionImg('');
-        setImgSize('50%')
+        setImgSize('50%');
       } else {
         setAnswerStyle(styles.correct);
         audioWrong.muted = isMute;
@@ -100,8 +99,8 @@ const AudioGame: React.FC<{ setPage: React.Dispatch<React.SetStateAction<string>
         dispatch(addDis(true));
         setNextBtn('➤');
         setQuestionTitle(words[question]);
-        setQuestionImg(`url(${UrlPath.BASE}/${wordsArr[question].image})`)
-        setImgSize('cover')
+        setQuestionImg(`url(${UrlPath.BASE}/${wordsArr[question].image})`);
+        setImgSize('cover');
       }
     } else {
       setResult(true);
@@ -185,13 +184,13 @@ const AudioGame: React.FC<{ setPage: React.Dispatch<React.SetStateAction<string>
   useEffect(() => {
     const handleAnswerKeyup = (e: KeyboardEvent) => {
       const { code } = e;
-      if(code.startsWith('Digit') || code.startsWith('Numpad')){
-      const index = +code.slice(-1) - 1;
-      if (!Number.isNaN(index) && index >= 0 && index < 5) {
-        document.getElementById(`${index}`)?.click();
+      if (code.startsWith('Digit') || code.startsWith('Numpad')) {
+        const index = +code.slice(-1) - 1;
+        if (!Number.isNaN(index) && index >= 0 && index < 5) {
+          document.getElementById(`${index}`)?.click();
+        }
       }
-    }
-  };
+    };
     document.addEventListener('keyup', handleAnswerKeyup);
     return () => {
       document.removeEventListener('keyup', handleAnswerKeyup);
@@ -199,7 +198,12 @@ const AudioGame: React.FC<{ setPage: React.Dispatch<React.SetStateAction<string>
   }, [answers]);
 
   return result ? (
-    <Result rightAnswers={rightAnswers} wrongAnswers={wrongAnswers} onPlayAgain={handlePlayAgain} strike={strike.value}/>
+    <Result
+      rightAnswers={rightAnswers}
+      wrongAnswers={wrongAnswers}
+      onPlayAgain={handlePlayAgain}
+      strike={strike.value}
+    />
   ) : (
     <div className={styles.wrapper}>
       <div className={styles.header}>
@@ -241,7 +245,7 @@ const AudioGame: React.FC<{ setPage: React.Dispatch<React.SetStateAction<string>
           />
         </div>
       </div>
-      <div className={styles.field} >
+      <div className={styles.field}>
         <button
           aria-label='sound'
           type='button'
@@ -251,15 +255,20 @@ const AudioGame: React.FC<{ setPage: React.Dispatch<React.SetStateAction<string>
           style={{ backgroundImage: questionImg, backgroundSize: imgSize }}
         />
         <div className={styles.cards}>
-        <div className={styles.answerField}>
-            <button aria-label='sound' type='button' 
-            disabled={!disable} onClick={playClickHandler} className={disable ? styles.sound_small : ''}/>
+          <div className={styles.answerField}>
+            <button
+              aria-label='sound'
+              type='button'
+              disabled={!disable}
+              onClick={playClickHandler}
+              className={disable ? styles.sound_small : ''}
+            />
             <div className={styles.question_title}>{questionTitle}</div>
           </div>
           <div className={styles.answers}>
             {answers.map((value, i) => (
               <button
-              id={`${i}`}
+                id={`${i}`}
                 className={`${styles.btn} ${
                   value === wordsArr[question].wordTranslate ? answerStyle : ''
                 }`}
