@@ -18,7 +18,7 @@ import { useAppDispatch, useAppSelector } from 'src/store/hooks';
 import { UrlPath } from 'src/helpers/constRequestsAPI';
 import { NavLink } from 'react-router-dom';
 import { IWord } from 'src/store/types';
-import Result from 'src/containers/SprintGame/Result';
+import Result from 'src/components/Result';
 
 let audioCounter = 0;
 let player: HTMLAudioElement;
@@ -189,7 +189,12 @@ const AudioGame: React.FC<{ setPage: React.Dispatch<React.SetStateAction<string>
   }, [question]);
 
   return result ? (
-    <Result rightAnswers={rightAnswers} wrongAnswers={wrongAnswers} onPlayAgain={handlePlayAgain} />
+    <Result
+      rightAnswers={rightAnswers}
+      wrongAnswers={wrongAnswers}
+      strike={0}
+      onPlayAgain={handlePlayAgain}
+    />
   ) : (
     <div className={styles.wrapper}>
       <div className={styles.header}>

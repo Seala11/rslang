@@ -11,6 +11,7 @@
   --neutral-dark: #dce2f0;
 
   --secundary-light: #6a6d9e;
+  --secundary-light-2: #8a8cb2;
   --secundary-dark: #16194f;
 
   --light: #ffffff;
@@ -18,6 +19,8 @@
 
   --correct: #acdbac;
   --incorrect: #f08080;
+
+  --blue-light: #ccedff;
 
   // fonts
   --ff-roboto-regular: 'Roboto Regular', sans-serif;
@@ -40,6 +43,10 @@ body {
   @include roboto;
   font-size: 1.6rem;
   background-color: var(--neutral);
+}
+
+b {
+  font-family: var(--ff-roboto-bold);
 }
 
 .page {
