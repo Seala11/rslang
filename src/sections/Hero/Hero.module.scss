@@ -18,7 +18,7 @@
 
   &__title {
     @include roboto(
-      $ff: var(--ff-roboto-regular),
+      $ff: var(--ff-roboto-bold),
       $fs: 6rem,
       $fw: 600,
       $lh: 1.4,
