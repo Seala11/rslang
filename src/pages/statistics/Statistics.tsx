@@ -8,14 +8,16 @@ import { useAppSelector } from 'src/store/hooks';
 import { getUserData, getUserIsLoading } from 'src/store/userSlice';
 import { useNavigate } from 'react-router-dom';
 
+import TodayStatistics from 'src/containers/statistic-list/TodayStatistics/TodayStatistics';
+
 const Statistic: React.FC = () => {
   const userIsLoggedLoading = useAppSelector(getUserIsLoading);
   const userData = useAppSelector(getUserData);
   const navigate = useNavigate();
 
   const navigationHandler = () => {
-    navigate("../login", { replace: true });
-  }
+    navigate('../login', { replace: true });
+  };
 
   if (userIsLoggedLoading || (userIsInStorage() && !userData))
     return (
@@ -27,19 +29,15 @@ const Statistic: React.FC = () => {
   return (
     <LayoutMain>
       <h1 className={styles.title}>Статистика</h1>
-
       {userIsLogged(userData?.message) ? (
-        <>
-          <p>Сегодня</p>
-          <p>hhh</p>
-        </>
+        <TodayStatistics />
       ) : (
         <div className={styles.wrapper}>
           <p className={styles.subtitle}>
             Данный раздел доступен только авторизованным пользователям.
           </p>
           <p className={styles.subtitle}>
-            <button type="button" className={styles.link} onClick={navigationHandler}>
+            <button type='button' className={styles.link} onClick={navigationHandler}>
               Зарегистрируйся
             </button>{' '}
             и используй все возможности приложения!

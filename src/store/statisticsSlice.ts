@@ -22,8 +22,8 @@ const DEFAULT_STATISTICS: IStatistics = {
 };
 
 const DEFAULT_DAY_STATISTICS: IGameStatistics = {
-  audio: { right: 0, wrong: 0, new: 0, strike: 0 },
-  sprint: { right: 0, wrong: 0, new: 0, strike: 0 },
+  audio: { right: 0, wrong: 0, new: 0, strike: 0, learned: 0 },
+  sprint: { right: 0, wrong: 0, new: 0, strike: 0, learned: 0 },
   textbook: 0,
 };
 
@@ -93,6 +93,7 @@ export const updateStatisticsData =
         statistics.optional[date].sprint.wrong += currGameStatistics.wrong;
         statistics.optional[date].sprint.right += currGameStatistics.right;
         statistics.optional[date].sprint.new += currGameStatistics.new;
+        statistics.optional[date].sprint.learned += currGameStatistics.learned;
         statistics.optional[date].sprint.strike = Math.max(
           currGameStatistics.strike,
           statistics.optional[date].sprint.strike
@@ -105,6 +106,7 @@ export const updateStatisticsData =
         statistics.optional[date].audio.wrong += currGameStatistics.wrong;
         statistics.optional[date].audio.right += currGameStatistics.right;
         statistics.optional[date].audio.new += currGameStatistics.new;
+        statistics.optional[date].audio.learned += currGameStatistics.learned;
         statistics.optional[date].audio.strike = Math.max(
           currGameStatistics.strike,
           statistics.optional[date].audio.strike
@@ -163,6 +165,52 @@ export const fetchGetUserStatistics =
               dispatch(updateStatisticsData(userId, token, option, newStatistics, date));
             }
 
+            break;
+          }
+          case ResponseStatus.MISSING_TOKEN: {
+            throw createError(
+              new Error(ErrorMessage.MISSING_TOKEN),
+              `${ResponseStatus.MISSING_TOKEN}`
+            );
+          }
+          // no default
+        }
+      }
+    } catch (err) {
+      const error = err as Error;
+      if (error.name === `${ResponseStatus.MISSING_TOKEN}`) {
+        dispatch(logoutUnathorizedUser());
+      }
+      throw error;
+    }
+  };
+
+export const fetchGetTodayStatistics =
+  (userId: string | null, token: string | null) => async (dispatch: AppDispatch) => {
+    if (!userId || !token) return;
+    const currentDay = new Date();
+    const date: keyof IDayStatistic = new Intl.DateTimeFormat('en-GB').format(currentDay);
+
+    try {
+      const response: Response | undefined = await getStatisticsAPI(userId, token);
+
+      if (response.ok) {
+        const userStatisticsJson: IStatisticsResponse = await response.json();
+        const { id, ...userStatistics } = userStatisticsJson;
+
+        if (!userStatistics.optional[date]) {
+          const currDay: IDayStatistic = { [date]: DEFAULT_DAY_STATISTICS };
+          userStatistics.optional = { ...userStatistics.optional, ...currDay };
+        }
+
+        dispatch(fetchUpdateUserStatistics(userId, token, userStatistics));
+      } else {
+        switch (response.status) {
+          case ResponseStatus.NOT_FOUND: {
+            const newStatistics = { ...DEFAULT_STATISTICS };
+            const currDay: IDayStatistic = { [date]: DEFAULT_DAY_STATISTICS };
+            newStatistics.optional = currDay;
+            dispatch(fetchUpdateUserStatistics(userId, token, newStatistics));
             break;
           }
           case ResponseStatus.MISSING_TOKEN: {
