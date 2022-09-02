@@ -75,8 +75,8 @@
 }
 
 .caption {
+  @include roboto($ff: var(--ff-roboto-bold), $fs: 1.8rem, $lh: 1.5, $color: #404040, $fw: 600);
   margin-bottom: 15px;
-  font-size: 1.8rem;
 }
 
 .text {

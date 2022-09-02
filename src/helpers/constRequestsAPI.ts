@@ -34,6 +34,7 @@ export enum ErrorMessageRU {
   FAILED = 'Адрес электронной почты уже зарегистрирован',
   LOGIN_FAILED = 'Неправильный адрес электронной почты или пароль',
   UNKNOWN = 'Что-то пошло не так, попробуйте еще раз',
+  UNAUTHORIZED = 'Произошла ошибка. Необходима авторизация',
 }
 
 export enum ResponseStatus {
@@ -49,4 +50,22 @@ export enum ResponseStatus {
 export enum UserWordType {
   DIFFICULT = 'difficult',
   LEARNED = 'learned',
+}
+
+export enum UserWordOptions {
+  DIFFICULT = 'difficult',
+  LEARNED = 'learned from textbook',
+  SPRINT = 'sprint',
+  AUDIO = 'audio',
+}
+
+export enum StatisticsOption {
+  TEXTBOOK = 'textbook',
+  SPRINT = 'sprint',
+  AUDIO = 'audio',
+}
+
+export enum GameOptions {
+  CORRECT = 'correct answer',
+  WRONG = 'wrong answer',
 }
