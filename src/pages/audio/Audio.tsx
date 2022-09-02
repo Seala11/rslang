@@ -1,8 +1,5 @@
-/* eslint-disable consistent-return */
+
 /* eslint-disable react-hooks/exhaustive-deps */
-/* eslint-disable jsx-a11y/click-events-have-key-events */
-/* eslint-disable jsx-a11y/no-static-element-interactions */
-/* eslint-disable no-console */
 import React, { useCallback, useEffect, useState } from 'react';
 import styles from 'src/pages/audio/Audio.module.scss';
 import {
@@ -12,9 +9,7 @@ import {
   getAnswers,
   updateAnswers,
   getQuestion,
-  updateQuestion,
-  setStrike,
-  getStrike
+  updateQuestion
 } from 'src/store/audioSlice';
 import { useAppDispatch, useAppSelector } from 'src/store/hooks';
 import { UrlPath } from 'src/helpers/constRequestsAPI';
@@ -37,15 +32,17 @@ const AudioGame: React.FC<{ setPage: React.Dispatch<React.SetStateAction<string>
   const words = wordsArr.map((item) => item.wordTranslate);
   const question = useAppSelector(getQuestion);
   const [answerStyle, setAnswerStyle] = useState('');
-  const [nextBtn, setNextBtn] = useState<'Не знаю' | '->'>('Не знаю');
+  const [nextBtn, setNextBtn] = useState<'Не знаю' | '➤'>('Не знаю');
   const [result, setResult] = useState(false);
   const [isMute, setIsMute] = useState(false);
   const [rightAnswers, setRightAnswers] = useState<IWord[]>([]);
   const [wrongAnswers, setWrongAnswers] = useState<IWord[]>([]);
   const [muteStyles, setMuteStyles] = useState('unmute');
-  const strike = useAppSelector(getStrike);
-  const [strikeTemp, setStrikeTemp] = useState(0);
+  const [strike, setStrike] = useState({ value: 0, temp: 0 });
   const [screenStyles, setScreenStyles] = useState('unfull');
+  const [questionTitle, setQuestionTitle] = useState('');
+  const [questionImg, setQuestionImg] = useState('')
+  const [imgSize, setImgSize] = useState<'50%'| 'cover'>('50%')
 
   function collectAnswers() {
     const set: Set<string> = new Set();
@@ -59,7 +56,6 @@ const AudioGame: React.FC<{ setPage: React.Dispatch<React.SetStateAction<string>
       res.add(arr[Math.floor(Math.random() * 5)]);
     }
     dispatch(updateAnswers(Array.from(res)));
-    console.log(answers);
   }
 
   function displayCorrectAnswer(e: EventTarget) {
@@ -68,8 +64,7 @@ const AudioGame: React.FC<{ setPage: React.Dispatch<React.SetStateAction<string>
       targetElem.style.color = 'green';
       audioCorrect.muted = isMute;
       audioCorrect.play();
-      setRightAnswers((prev) => [...prev, wordsArr[question]]);
-      setStrikeTemp(strikeTemp + 1)
+      setStrike((prev) => ({ ...prev, temp: prev.temp + 1 }));
     } else {
       targetElem.style.color = 'red';
       targetElem.style.textDecoration = 'line-through';
@@ -77,36 +72,42 @@ const AudioGame: React.FC<{ setPage: React.Dispatch<React.SetStateAction<string>
       audioWrong.muted = isMute;
       audioWrong.play();
       setWrongAnswers((prev) => [...prev, wordsArr[question]]);
-      if(strikeTemp > strike) dispatch(setStrike(strikeTemp))
-      setStrikeTemp(0)
+      setStrike((prev) => ({ value: Math.max(prev.value, prev.temp), temp: 0 }));
     }
     dispatch(addDis(true));
-    setNextBtn('->');
+    setQuestionTitle(words[question]);
+    setQuestionImg(`url(${UrlPath.BASE}/${wordsArr[question].image})`)
+    setImgSize('cover')
+    setNextBtn('➤');
   }
 
   function nextQuestion() {
-    console.log(question + 1, wordsArr.length);
     if (question + 1 < wordsArr.length) {
-      if (nextBtn === '->') {
+      if (nextBtn === '➤') {
         dispatch(addDis(false));
         setAnswerStyle('');
         setNextBtn('Не знаю');
         dispatch(updateAnswers([]));
         dispatch(updateQuestion(question + 1));
+        setQuestionTitle('')
+        setQuestionImg('');
+        setImgSize('50%')
       } else {
         setAnswerStyle(styles.correct);
         audioWrong.muted = isMute;
         audioWrong.play();
         setWrongAnswers((prev) => [...prev, wordsArr[question]]);
         dispatch(addDis(true));
-        setNextBtn('->');
+        setNextBtn('➤');
+        setQuestionTitle(words[question]);
+        setQuestionImg(`url(${UrlPath.BASE}/${wordsArr[question].image})`)
+        setImgSize('cover')
       }
     } else {
       setResult(true);
       dispatch(addDis(false));
       setAnswerStyle('');
       setNextBtn('Не знаю');
-      console.log(result);
     }
   }
 
@@ -136,8 +137,6 @@ const AudioGame: React.FC<{ setPage: React.Dispatch<React.SetStateAction<string>
 
     if (audioCounter >= audioSources.length) {
       stopAudio();
-      // setDisabled(false);
-      // setStop(false);
       return;
     }
 
@@ -158,15 +157,11 @@ const AudioGame: React.FC<{ setPage: React.Dispatch<React.SetStateAction<string>
     return () => {
       player.removeEventListener('ended', playerHandler);
       stopAudio();
-      // setDisabled(false);
-      // setStop(false);
     };
   }, [playAudio, wordsArr[question]]);
 
   const playClickHandler = async () => {
-    // setDisabled(true);
     await playAudio();
-    // setStop(true);
   };
 
   const handlePlayAgain = () => {
@@ -177,6 +172,7 @@ const AudioGame: React.FC<{ setPage: React.Dispatch<React.SetStateAction<string>
     setRightAnswers([]);
     setWrongAnswers([]);
     playClickHandler();
+    setStrike({ value: 0, temp: 0 });
   };
 
   useEffect(() => {
@@ -203,7 +199,7 @@ const AudioGame: React.FC<{ setPage: React.Dispatch<React.SetStateAction<string>
   }, [answers]);
 
   return result ? (
-    <Result rightAnswers={rightAnswers} wrongAnswers={wrongAnswers} onPlayAgain={handlePlayAgain} strike={strike}/>
+    <Result rightAnswers={rightAnswers} wrongAnswers={wrongAnswers} onPlayAgain={handlePlayAgain} strike={strike.value}/>
   ) : (
     <div className={styles.wrapper}>
       <div className={styles.header}>
@@ -245,15 +241,21 @@ const AudioGame: React.FC<{ setPage: React.Dispatch<React.SetStateAction<string>
           />
         </div>
       </div>
-      <div className={styles.field}>
+      <div className={styles.field} >
         <button
           aria-label='sound'
           type='button'
           className={styles.sound}
           onClick={playClickHandler}
+          disabled={disable}
+          style={{ backgroundImage: questionImg, backgroundSize: imgSize }}
         />
         <div className={styles.cards}>
-          <div>{words[question]}</div>
+        <div className={styles.answerField}>
+            <button aria-label='sound' type='button' 
+            disabled={!disable} onClick={playClickHandler} className={disable ? styles.sound_small : ''}/>
+            <div className={styles.question_title}>{questionTitle}</div>
+          </div>
           <div className={styles.answers}>
             {answers.map((value, i) => (
               <button

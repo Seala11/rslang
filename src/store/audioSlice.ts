@@ -1,4 +1,4 @@
-/* eslint-disable no-console */
+
 import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
 import getWordsAPI from 'src/requests/words/getWordsAPI';
@@ -11,7 +11,6 @@ const initialState: IAudioState = {
   disable: false,
   answers: [],
   question: 0,
-  strike: 0,
 };
 
 const audioSlice = createSlice({
@@ -33,13 +32,10 @@ const audioSlice = createSlice({
     updateQuestion(state, action: PayloadAction<number>) {
       state.question = action.payload;
     },
-    setStrike(state, action: PayloadAction<number>) {
-      state.strike = action.payload;
-    },
   },
 });
 
-export const { addWordsArr, addLoading, addDis, updateAnswers, updateQuestion, setStrike } =
+export const { addWordsArr, addLoading, addDis, updateAnswers, updateQuestion } =
   audioSlice.actions;
 
 export const fetchWordsArr = (group: string, page: string) => async (dispatch: AppDispatch) => {
@@ -64,6 +60,5 @@ export const fetchisLoading = (state: RootState) => state.audio.loading;
 export const isDis = (state: RootState) => state.audio.disable;
 export const getAnswers = (state: RootState) => state.audio.answers;
 export const getQuestion = (state: RootState) => state.audio.question;
-export const getStrike = (state: RootState) => state.audio.strike;
 
 export default audioSlice.reducer;

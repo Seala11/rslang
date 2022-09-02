@@ -36,7 +36,6 @@ export interface IAudioState {
   disable: boolean;
   answers: string[];
   question: number;
-  strike: number;
 }
 
 export interface ISprintState {

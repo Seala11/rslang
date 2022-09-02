@@ -128,7 +128,7 @@
 
 .btn {
   width: 100%;
-  max-width: 20rem;
+  max-width: 25rem;
   padding: 1.5rem 0;
   border-radius: 5rem;
   color: #404040;
@@ -142,15 +142,6 @@
     $lh: 1.5,
     $color: var(--secundary-dark)
   );
-
-  // .wrong {
-  //   color: red;
-  //   text-decoration: line-through;
-  // }
-
-  // .correct {
-  //   color: rgb(35, 162, 35);
-  // }
 
   &:hover {
     background-color: #9792f5;
@@ -189,4 +180,31 @@
 
 .correct {
   color: rgb(35, 162, 35);
+}
+
+.sound_small {
+  width: 4rem;
+  height: 4rem;
+  border-radius: 10rem;
+  background-color: var(--stroke);
+  background-image: url('../../../public/assets/icons/sound.png');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 50%;
+}
+
+.answerField {
+  display: flex;
+  align-items: center;
+  column-gap: 3rem;
+}
+
+.question_title {
+  @include roboto(
+    $ff: var(--ff-roboto-regular),
+    $fs: 3rem,
+    $fw: 700,
+    $lh: 1.5,
+    $color: var(--secundary-dark)
+  );
 }
