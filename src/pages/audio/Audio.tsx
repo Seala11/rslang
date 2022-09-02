@@ -82,7 +82,6 @@ const AudioGame: React.FC<{ setPage: React.Dispatch<React.SetStateAction<string>
   }
 
   function nextQuestion() {
-    if (question + 1 < wordsArr.length) {
       if (nextBtn === '➤') {
         dispatch(addDis(false));
         setAnswerStyle('');
@@ -103,12 +102,6 @@ const AudioGame: React.FC<{ setPage: React.Dispatch<React.SetStateAction<string>
         setQuestionImg(`url(${UrlPath.BASE}/${wordsArr[question].image})`);
         setImgSize('cover');
       }
-    } else {
-      setResult(true);
-      dispatch(addDis(false));
-      setAnswerStyle('');
-      setNextBtn('Не знаю');
-    }
   }
 
   function changeScreen() {
@@ -176,9 +169,14 @@ const AudioGame: React.FC<{ setPage: React.Dispatch<React.SetStateAction<string>
   };
 
   useEffect(() => {
-    if (answers.length === 0) {
+    if (answers.length === 0 && wordsArr[question]) {
       collectAnswers();
       playClickHandler();
+    } else if(wordsArr[question] === undefined) {
+      setResult(true);
+      dispatch(addDis(false));
+      setAnswerStyle('');
+      setNextBtn('Не знаю');
     }
   }, [question]);
 
@@ -198,15 +196,7 @@ const AudioGame: React.FC<{ setPage: React.Dispatch<React.SetStateAction<string>
     };
   }, [answers]);
 
-  return result ? (
-    <Result
-      rightAnswers={rightAnswers}
-      wrongAnswers={wrongAnswers}
-      onPlayAgain={handlePlayAgain}
-      strike={strike.value}
-    />
-  ) : (
-    <div className={styles.wrapper}>
+    return (<div className={styles.wrapper}>
       <div className={styles.header}>
         <h2 className={styles.title}>Аудиовызов</h2>
         <div className={styles.controls}>
@@ -246,7 +236,13 @@ const AudioGame: React.FC<{ setPage: React.Dispatch<React.SetStateAction<string>
           />
         </div>
       </div>
-      <div className={styles.field}>
+      {result ? <Result
+      rightAnswers={rightAnswers}
+      wrongAnswers={wrongAnswers}
+      onPlayAgain={handlePlayAgain}
+      strike={strike.value}
+    />
+    : <div className={styles.field}>
         <button
           aria-label='sound'
           type='button'
@@ -287,7 +283,7 @@ const AudioGame: React.FC<{ setPage: React.Dispatch<React.SetStateAction<string>
             {nextBtn}
           </button>
         </div>
-      </div>
+      </div>}
     </div>
   );
 };
