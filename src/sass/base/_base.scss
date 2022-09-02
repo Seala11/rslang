@@ -45,6 +45,10 @@ body {
   background-color: var(--neutral);
 }
 
+b {
+  font-family: var(--ff-roboto-bold);
+}
+
 .page {
   display: flex;
   flex-direction: column;
