@@ -4,6 +4,7 @@ import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { GameOptions, UrlPath, UserWordOptions } from 'src/helpers/constRequestsAPI';
 import { getUserId, getUserToken } from 'src/helpers/storage';
+import { addDis, updateAnswers, updateQuestion } from 'src/store/audioSlice';
 import { useAppDispatch } from 'src/store/hooks';
 import { removeWords } from 'src/store/sprintSlice';
 import { IWord } from 'src/store/types';
@@ -62,6 +63,9 @@ const Result: React.FC<IResultProps> = ({ rightAnswers, wrongAnswers, strike, on
       document.exitFullscreen().catch((err) => err);
     }
     dispatch(removeWords());
+    dispatch(updateQuestion(0));
+    dispatch(updateAnswers([]));
+    dispatch(addDis(false));
     navigate('/textbook');
   };
 
