@@ -54,12 +54,8 @@ export const fetchUpdateUserStatistics =
       if (response.ok) {
         const userStatistics = await response.json();
         dispatch(addUserStatistics(userStatistics));
-        if (response.status === ResponseStatus.MISSING_TOKEN) {
-          throw createError(
-            new Error(ErrorMessage.MISSING_TOKEN),
-            `${ResponseStatus.MISSING_TOKEN}`
-          );
-        }
+      } else if (response.status === ResponseStatus.MISSING_TOKEN) {
+        throw createError(new Error(ErrorMessage.MISSING_TOKEN), `${ResponseStatus.MISSING_TOKEN}`);
       }
     } catch (err) {
       const error = err as Error;
