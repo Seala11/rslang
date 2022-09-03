@@ -1,8 +1,8 @@
 .wrapper {
   position: absolute;
-  left: 50%;
   top: 35vh;
-  // transform: translateX(-50%);
+  top: calc(50% - 4.2rem);
+  right: calc(50% - 4.2rem);
 }
 
 // https://loading.io/css/

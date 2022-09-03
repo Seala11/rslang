@@ -1,0 +1,17 @@
+@use 'src/sass/abstracts/mixins' as *;
+
+.statistics {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.today {
+  @include roboto($fs: 2rem, $ff: var(--ff-roboto-bold), $fw: 400, $color: var(--accent));
+}
+
+.number {
+  @include roboto($fs: 1.8rem, $ff: var(--ff-roboto-bold), $fw: 400, $color: var(--primary));
+  padding: 0 1rem;
+}
