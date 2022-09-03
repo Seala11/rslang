@@ -7,8 +7,7 @@ import styles from 'src/pages/statistics/Statistics.module.scss';
 import { useAppSelector } from 'src/store/hooks';
 import { getUserData, getUserIsLoading } from 'src/store/userSlice';
 import { useNavigate } from 'react-router-dom';
-
-import TodayStatistics from 'src/containers/statistic-list/TodayStatistics/TodayStatistics';
+import TodayStatistics from 'src/containers/statistic-list/TodayStatistics';
 
 const Statistic: React.FC = () => {
   const userIsLoggedLoading = useAppSelector(getUserIsLoading);

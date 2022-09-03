@@ -3,7 +3,7 @@
 .title {
   @include roboto($fs: 4rem, $ff: var(--ff-roboto-bold), $fw: 700);
   color: var(--primary);
-  padding: 1.5rem 0 3rem;
+  padding: 1.5rem 0 4rem;
   text-align: center;
 }
 

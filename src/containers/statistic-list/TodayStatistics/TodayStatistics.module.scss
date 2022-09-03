@@ -1,17 +1,66 @@
 @use 'src/sass/abstracts/mixins' as *;
 
+.wrapper {
+  margin: 0 auto;
+  max-width: 100rem;
+  width: 100%;
+}
+
+.general_wrapper {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  width: 100%;
+
+  background-color: var(--light);
+  border-radius: 5rem;
+  padding: 2rem 4rem;
+  border: solid var(--stroke) 0.04rem;
+  box-shadow: 0 2.5rem 5rem rgba(22, 25, 79, 0.05);
+  transition: all 0.2s;
+  margin-bottom: 2.5rem;
+}
+
+.game_wrapper {
+  width: 100%;
+  display: flex;
+  gap: 2rem;
+}
+
 .statistics {
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 10rem;
 }
 
 .today {
-  @include roboto($fs: 2rem, $ff: var(--ff-roboto-bold), $fw: 400, $color: var(--accent));
+  @include roboto($fs: 3rem, $ff: var(--ff-roboto-bold), $fw: 400, $color: var(--accent));
+  padding-bottom: 2rem;
 }
 
 .number {
-  @include roboto($fs: 1.8rem, $ff: var(--ff-roboto-bold), $fw: 400, $color: var(--primary));
-  padding: 0 1rem;
+  @include roboto($fs: 6rem, $ff: var(--ff-roboto-bold), $fw: 400, $color: var(--black));
+}
+
+.item {
+  width: 30%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  &_subtitle {
+    @include roboto(
+      $fs: 1.6rem,
+      $ff: var(--ff-roboto-regular),
+      $fw: 400,
+      $color: var(--secundary-light)
+    );
+    padding-bottom: 0.5rem;
+  }
+}
+
+.border {
+  border-left: 0.2rem solid var(--stroke);
+  border-right: 0.2rem solid var(--stroke);
 }
