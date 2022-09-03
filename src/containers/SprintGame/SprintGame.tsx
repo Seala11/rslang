@@ -80,8 +80,6 @@ const SprintGame = () => {
   }, [finishGame, handleAnswerClick, step, words.length]);
 
   useEffect(() => {
-    console.log('timer useeffect');
-
     const timeId = setTimeout(() => {
       if (time > 0) {
         setTime((prev) => prev - 1);

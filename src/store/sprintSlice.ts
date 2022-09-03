@@ -50,8 +50,6 @@ export const fetchUserWords =
       const sprintWords = adaptToLocalSprintWords(words);
 
       dispatch(addWords(shuffle(sprintWords)));
-
-      console.log(sprintWords);
     } else {
       // TODO: проверка ошибок ?
     }
