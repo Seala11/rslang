@@ -135,7 +135,7 @@ const AudioGame: React.FC<{ setPage: React.Dispatch<React.SetStateAction<string>
     }
 
     player.src = audioSources[audioCounter];
-    await player.play();
+    player.play().catch(err => err);
     audioCounter += 1;
   }, [wordsArr[question]]);
 
@@ -154,8 +154,8 @@ const AudioGame: React.FC<{ setPage: React.Dispatch<React.SetStateAction<string>
     };
   }, [playAudio, wordsArr[question]]);
 
-  const playClickHandler = async () => {
-    await playAudio();
+  const playClickHandler = () => {
+    playAudio().catch(err => err);;
   };
 
   const handlePlayAgain = () => {
@@ -267,6 +267,7 @@ const AudioGame: React.FC<{ setPage: React.Dispatch<React.SetStateAction<string>
             {answers.map((value, i) => (
               <button
                 id={`${i}`}
+                key={value}
                 className={`${styles.btn} ${
                   value === wordsArr[question].wordTranslate ? answerStyle : ''
                 }`}
