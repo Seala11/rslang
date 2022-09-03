@@ -82,27 +82,27 @@ const AudioGame: React.FC<{ setPage: React.Dispatch<React.SetStateAction<string>
   }
 
   function nextQuestion() {
-      if (nextBtn === '➤') {
-        dispatch(addDis(false));
-        setAnswerStyle('');
-        setNextBtn('Не знаю');
-        dispatch(updateAnswers([]));
-        dispatch(updateQuestion(question + 1));
-        setQuestionTitle('');
-        setQuestionImg('');
-        setImgSize('50%');
-      } else {
-        setAnswerStyle(styles.correct);
-        audioWrong.muted = isMute;
-        audioWrong.play();
-        setWrongAnswers((prev) => [...prev, wordsArr[question]]);
-        setStrike((prev) => ({ value: Math.max(prev.value, prev.temp), temp: 0 }));
-        dispatch(addDis(true));
-        setNextBtn('➤');
-        setQuestionTitle(words[question]);
-        setQuestionImg(`url(${UrlPath.BASE}/${wordsArr[question].image})`);
-        setImgSize('cover');
-      }
+    if (nextBtn === '➤') {
+      dispatch(addDis(false));
+      setAnswerStyle('');
+      setNextBtn('Не знаю');
+      dispatch(updateAnswers([]));
+      dispatch(updateQuestion(question + 1));
+      setQuestionTitle('');
+      setQuestionImg('');
+      setImgSize('50%');
+    } else {
+      setAnswerStyle(styles.correct);
+      audioWrong.muted = isMute;
+      audioWrong.play();
+      setWrongAnswers((prev) => [...prev, wordsArr[question]]);
+      setStrike((prev) => ({ value: Math.max(prev.value, prev.temp), temp: 0 }));
+      dispatch(addDis(true));
+      setNextBtn('➤');
+      setQuestionTitle(words[question]);
+      setQuestionImg(`url(${UrlPath.BASE}/${wordsArr[question].image})`);
+      setImgSize('cover');
+    }
   }
 
   function changeScreen() {
@@ -135,7 +135,7 @@ const AudioGame: React.FC<{ setPage: React.Dispatch<React.SetStateAction<string>
     }
 
     player.src = audioSources[audioCounter];
-    player.play().catch(err => err);
+    player.play().catch((err) => err);
     audioCounter += 1;
   }, [wordsArr[question]]);
 
@@ -155,7 +155,7 @@ const AudioGame: React.FC<{ setPage: React.Dispatch<React.SetStateAction<string>
   }, [playAudio, wordsArr[question]]);
 
   const playClickHandler = () => {
-    playAudio().catch(err => err);;
+    playAudio().catch((err) => err);
   };
 
   const handlePlayAgain = () => {
@@ -173,7 +173,7 @@ const AudioGame: React.FC<{ setPage: React.Dispatch<React.SetStateAction<string>
     if (answers.length === 0 && wordsArr[question]) {
       collectAnswers();
       playClickHandler();
-    } else if(wordsArr[question] === undefined) {
+    } else if (wordsArr[question] === undefined) {
       setResult(true);
       dispatch(addDis(false));
       setAnswerStyle('');
@@ -197,7 +197,8 @@ const AudioGame: React.FC<{ setPage: React.Dispatch<React.SetStateAction<string>
     };
   }, [answers]);
 
-    return (<div className={styles.wrapper}>
+  return (
+    <div className={styles.wrapper}>
       <div className={styles.header}>
         <h2 className={styles.title}>Аудиовызов</h2>
         <div className={styles.controls}>
@@ -237,55 +238,58 @@ const AudioGame: React.FC<{ setPage: React.Dispatch<React.SetStateAction<string>
           />
         </div>
       </div>
-      {result ? <Result
-      rightAnswers={rightAnswers}
-      wrongAnswers={wrongAnswers}
-      onPlayAgain={handlePlayAgain}
-      strike={strike.value}
-    />
-    : <div className={styles.field}>
-        <button
-          aria-label='sound'
-          type='button'
-          className={styles.sound}
-          onClick={playClickHandler}
-          disabled={disable}
-          style={{ backgroundImage: questionImg, backgroundSize: imgSize }}
+      {result ? (
+        <Result
+          rightAnswers={rightAnswers}
+          wrongAnswers={wrongAnswers}
+          onPlayAgain={handlePlayAgain}
+          strike={strike.value}
         />
-        <div className={styles.cards}>
-          <div className={styles.answerField}>
-            <button
-              aria-label='sound'
-              type='button'
-              disabled={!disable}
-              onClick={playClickHandler}
-              className={disable ? styles.sound_small : ''}
-            />
-            <div className={styles.question_title}>{questionTitle}</div>
-          </div>
-          <div className={styles.answers}>
-            {answers.map((value, i) => (
+      ) : (
+        <div className={styles.field}>
+          <button
+            aria-label='sound'
+            type='button'
+            className={styles.sound}
+            onClick={playClickHandler}
+            disabled={disable}
+            style={{ backgroundImage: questionImg, backgroundSize: imgSize }}
+          />
+          <div className={styles.cards}>
+            <div className={styles.answerField}>
               <button
-                id={`${i}`}
-                key={value}
-                className={`${styles.btn} ${
-                  value === wordsArr[question].wordTranslate ? answerStyle : ''
-                }`}
+                aria-label='sound'
                 type='button'
-                disabled={disable}
-                onClick={(event) => {
-                  displayCorrectAnswer(event.target);
-                }}
-              >
-                {value}
-              </button>
-            ))}
+                disabled={!disable}
+                onClick={playClickHandler}
+                className={disable ? styles.sound_small : ''}
+              />
+              <div className={styles.question_title}>{questionTitle}</div>
+            </div>
+            <div className={styles.answers}>
+              {answers.map((value, i) => (
+                <button
+                  id={`${i}`}
+                  key={value}
+                  className={`${styles.btn} ${
+                    value === wordsArr[question].wordTranslate ? answerStyle : ''
+                  }`}
+                  type='button'
+                  disabled={disable}
+                  onClick={(event) => {
+                    displayCorrectAnswer(event.target);
+                  }}
+                >
+                  {value}
+                </button>
+              ))}
+            </div>
+            <button className={styles.start} type='button' onClick={() => nextQuestion()}>
+              {nextBtn}
+            </button>
           </div>
-          <button className={styles.start} type='button' onClick={() => nextQuestion()}>
-            {nextBtn}
-          </button>
         </div>
-      </div>}
+      )}
     </div>
   );
 };
