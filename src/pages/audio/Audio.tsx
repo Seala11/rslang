@@ -1,8 +1,4 @@
-/* eslint-disable consistent-return */
 /* eslint-disable react-hooks/exhaustive-deps */
-/* eslint-disable jsx-a11y/click-events-have-key-events */
-/* eslint-disable jsx-a11y/no-static-element-interactions */
-/* eslint-disable no-console */
 import React, { useCallback, useEffect, useState } from 'react';
 import styles from 'src/pages/audio/Audio.module.scss';
 import {
@@ -35,13 +31,17 @@ const AudioGame: React.FC<{ setPage: React.Dispatch<React.SetStateAction<string>
   const words = wordsArr.map((item) => item.wordTranslate);
   const question = useAppSelector(getQuestion);
   const [answerStyle, setAnswerStyle] = useState('');
-  const [nextBtn, setNextBtn] = useState<'Не знаю' | '->'>('Не знаю');
+  const [nextBtn, setNextBtn] = useState<'Не знаю' | '➤'>('Не знаю');
   const [result, setResult] = useState(false);
   const [isMute, setIsMute] = useState(false);
-  const [key, setKey] = useState('');
   const [rightAnswers, setRightAnswers] = useState<IWord[]>([]);
   const [wrongAnswers, setWrongAnswers] = useState<IWord[]>([]);
   const [muteStyles, setMuteStyles] = useState('unmute');
+  const [strike, setStrike] = useState({ value: 0, temp: 0 });
+  const [screenStyles, setScreenStyles] = useState('unfull');
+  const [questionTitle, setQuestionTitle] = useState('');
+  const [questionImg, setQuestionImg] = useState('');
+  const [imgSize, setImgSize] = useState<'50%' | 'cover'>('50%');
 
   function collectAnswers() {
     const set: Set<string> = new Set();
@@ -55,7 +55,6 @@ const AudioGame: React.FC<{ setPage: React.Dispatch<React.SetStateAction<string>
       res.add(arr[Math.floor(Math.random() * 5)]);
     }
     dispatch(updateAnswers(Array.from(res)));
-    console.log(answers);
   }
 
   function displayCorrectAnswer(e: EventTarget) {
@@ -65,6 +64,7 @@ const AudioGame: React.FC<{ setPage: React.Dispatch<React.SetStateAction<string>
       audioCorrect.muted = isMute;
       audioCorrect.play();
       setRightAnswers((prev) => [...prev, wordsArr[question]]);
+      setStrike((prev) => ({ ...prev, temp: prev.temp + 1 }));
     } else {
       targetElem.style.color = 'red';
       targetElem.style.textDecoration = 'line-through';
@@ -72,34 +72,36 @@ const AudioGame: React.FC<{ setPage: React.Dispatch<React.SetStateAction<string>
       audioWrong.muted = isMute;
       audioWrong.play();
       setWrongAnswers((prev) => [...prev, wordsArr[question]]);
+      setStrike((prev) => ({ value: Math.max(prev.value, prev.temp), temp: 0 }));
     }
     dispatch(addDis(true));
-    setNextBtn('->');
+    setQuestionTitle(words[question]);
+    setQuestionImg(`url(${UrlPath.BASE}/${wordsArr[question].image})`);
+    setImgSize('cover');
+    setNextBtn('➤');
   }
 
   function nextQuestion() {
-    console.log(question + 1, wordsArr.length);
-    if (question + 1 < wordsArr.length) {
-      if (nextBtn === '->') {
-        dispatch(addDis(false));
-        setAnswerStyle('');
-        setNextBtn('Не знаю');
-        dispatch(updateAnswers([]));
-        dispatch(updateQuestion(question + 1));
-      } else {
-        setAnswerStyle(styles.correct);
-        audioWrong.muted = isMute;
-        audioWrong.play();
-        setWrongAnswers((prev) => [...prev, wordsArr[question]]);
-        dispatch(addDis(true));
-        setNextBtn('->');
-      }
-    } else {
-      setResult(true);
+    if (nextBtn === '➤') {
       dispatch(addDis(false));
       setAnswerStyle('');
       setNextBtn('Не знаю');
-      console.log(result);
+      dispatch(updateAnswers([]));
+      dispatch(updateQuestion(question + 1));
+      setQuestionTitle('');
+      setQuestionImg('');
+      setImgSize('50%');
+    } else {
+      setAnswerStyle(styles.correct);
+      audioWrong.muted = isMute;
+      audioWrong.play();
+      setWrongAnswers((prev) => [...prev, wordsArr[question]]);
+      setStrike((prev) => ({ value: Math.max(prev.value, prev.temp), temp: 0 }));
+      dispatch(addDis(true));
+      setNextBtn('➤');
+      setQuestionTitle(words[question]);
+      setQuestionImg(`url(${UrlPath.BASE}/${wordsArr[question].image})`);
+      setImgSize('cover');
     }
   }
 
@@ -129,13 +131,11 @@ const AudioGame: React.FC<{ setPage: React.Dispatch<React.SetStateAction<string>
 
     if (audioCounter >= audioSources.length) {
       stopAudio();
-      // setDisabled(false);
-      // setStop(false);
       return;
     }
 
     player.src = audioSources[audioCounter];
-    await player.play();
+    player.play().catch((err) => err);
     audioCounter += 1;
   }, [wordsArr[question]]);
 
@@ -151,15 +151,11 @@ const AudioGame: React.FC<{ setPage: React.Dispatch<React.SetStateAction<string>
     return () => {
       player.removeEventListener('ended', playerHandler);
       stopAudio();
-      // setDisabled(false);
-      // setStop(false);
     };
   }, [playAudio, wordsArr[question]]);
 
-  const playClickHandler = async () => {
-    // setDisabled(true);
-    await playAudio();
-    // setStop(true);
+  const playClickHandler = () => {
+    playAudio().catch((err) => err);
   };
 
   const handlePlayAgain = () => {
@@ -170,32 +166,38 @@ const AudioGame: React.FC<{ setPage: React.Dispatch<React.SetStateAction<string>
     setRightAnswers([]);
     setWrongAnswers([]);
     playClickHandler();
+    setStrike({ value: 0, temp: 0 });
   };
 
   useEffect(() => {
-    if (answers.length === 0) {
+    if (answers.length === 0 && wordsArr[question]) {
       collectAnswers();
       playClickHandler();
+    } else if (wordsArr[question] === undefined) {
+      setResult(true);
+      dispatch(addDis(false));
+      setAnswerStyle('');
+      setNextBtn('Не знаю');
     }
+  }, [question]);
+
+  useEffect(() => {
     const handleAnswerKeyup = (e: KeyboardEvent) => {
       const { code } = e;
-      setKey(code);
-      console.log(key);
+      if (code.startsWith('Digit') || code.startsWith('Numpad')) {
+        const index = +code.slice(-1) - 1;
+        if (!Number.isNaN(index) && index >= 0 && index < 5) {
+          document.getElementById(`${index}`)?.click();
+        }
+      }
     };
     document.addEventListener('keyup', handleAnswerKeyup);
     return () => {
       document.removeEventListener('keyup', handleAnswerKeyup);
     };
-  }, [question]);
+  }, [answers]);
 
-  return result ? (
-    <Result
-      rightAnswers={rightAnswers}
-      wrongAnswers={wrongAnswers}
-      strike={0}
-      onPlayAgain={handlePlayAgain}
-    />
-  ) : (
+  return (
     <div className={styles.wrapper}>
       <div className={styles.header}>
         <h2 className={styles.title}>Аудиовызов</h2>
@@ -224,41 +226,70 @@ const AudioGame: React.FC<{ setPage: React.Dispatch<React.SetStateAction<string>
           <button
             aria-label='screen'
             type='button'
-            className={styles.fullscreen}
-            onClick={() => changeScreen()}
+            className={screenStyles === 'full' ? styles.unfullscreen : styles.fullscreen}
+            onClick={() => {
+              changeScreen();
+              if (screenStyles === 'full') {
+                setScreenStyles('unfull');
+              } else {
+                setScreenStyles('full');
+              }
+            }}
           />
         </div>
       </div>
-      <div className={styles.field}>
-        <button
-          aria-label='sound'
-          type='button'
-          className={styles.sound}
-          onClick={playClickHandler}
+      {result ? (
+        <Result
+          rightAnswers={rightAnswers}
+          wrongAnswers={wrongAnswers}
+          onPlayAgain={handlePlayAgain}
+          strike={strike.value}
         />
-        <div className={styles.cards}>
-          <div>{words[question]}</div>
-          <div className={styles.answers}>
-            {answers.map((value) => (
+      ) : (
+        <div className={styles.field}>
+          <button
+            aria-label='sound'
+            type='button'
+            className={styles.sound}
+            onClick={playClickHandler}
+            disabled={disable}
+            style={{ backgroundImage: questionImg, backgroundSize: imgSize }}
+          />
+          <div className={styles.cards}>
+            <div className={styles.answerField}>
               <button
-                className={`${styles.btn} ${
-                  value === wordsArr[question].wordTranslate ? answerStyle : ''
-                }`}
+                aria-label='sound'
                 type='button'
-                disabled={disable}
-                onClick={(event) => {
-                  displayCorrectAnswer(event.target);
-                }}
-              >
-                {value}
-              </button>
-            ))}
+                disabled={!disable}
+                onClick={playClickHandler}
+                className={disable ? styles.sound_small : ''}
+              />
+              <div className={styles.question_title}>{questionTitle}</div>
+            </div>
+            <div className={styles.answers}>
+              {answers.map((value, i) => (
+                <button
+                  id={`${i}`}
+                  key={value}
+                  className={`${styles.btn} ${
+                    value === wordsArr[question].wordTranslate ? answerStyle : ''
+                  }`}
+                  type='button'
+                  disabled={disable}
+                  onClick={(event) => {
+                    displayCorrectAnswer(event.target);
+                  }}
+                >
+                  {value}
+                </button>
+              ))}
+            </div>
+            <button className={styles.start} type='button' onClick={() => nextQuestion()}>
+              {nextBtn}
+            </button>
           </div>
-          <button className={styles.start} type='button' onClick={() => nextQuestion()}>
-            {nextBtn}
-          </button>
         </div>
-      </div>
+      )}
     </div>
   );
 };
