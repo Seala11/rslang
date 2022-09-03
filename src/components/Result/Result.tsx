@@ -1,15 +1,18 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable no-underscore-dangle */
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { UrlPath } from 'src/helpers/constRequestsAPI';
+import { GameOptions, UrlPath, UserWordOptions } from 'src/helpers/constRequestsAPI';
+import { getUserId, getUserToken } from 'src/helpers/storage';
 import { useAppDispatch } from 'src/store/hooks';
 import { removeWords } from 'src/store/sprintSlice';
-import { ISprintWord, IWord } from 'src/store/types';
+import { IWord } from 'src/store/types';
+import { fetchCreateUserWord } from 'src/store/userWordsSlice';
 import styles from './Result.module.scss';
 
 export interface IResultProps {
-  rightAnswers: ISprintWord[] | IWord[];
-  wrongAnswers: ISprintWord[] | IWord[];
+  rightAnswers: IWord[];
+  wrongAnswers: IWord[];
   strike: number;
   onPlayAgain: () => void;
 }
@@ -18,6 +21,36 @@ const Result: React.FC<IResultProps> = ({ rightAnswers, wrongAnswers, strike, on
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const audio = new Audio();
+
+  useEffect(() => {
+    console.log('result useeffect');
+
+    rightAnswers.forEach((word) => {
+      dispatch(
+        fetchCreateUserWord(
+          getUserId(),
+          word?._id,
+          getUserToken(),
+          `${word?.group}`,
+          UserWordOptions.SPRINT,
+          GameOptions.CORRECT
+        )
+      );
+    });
+
+    wrongAnswers.forEach((word) => {
+      dispatch(
+        fetchCreateUserWord(
+          getUserId(),
+          word?._id,
+          getUserToken(),
+          `${word?.group}`,
+          UserWordOptions.SPRINT,
+          GameOptions.WRONG
+        )
+      );
+    });
+  }, [dispatch, rightAnswers, wrongAnswers]);
 
   const handlePlayClick = (src: string) => {
     audio.src = `${UrlPath.BASE}/${src}`;

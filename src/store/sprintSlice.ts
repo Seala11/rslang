@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
 import getWordsAPI from 'src/requests/words/getWordsAPI';
-import { shuffle } from 'src/helpers/utils';
+import { adaptToLocalSprintWords, shuffle } from 'src/helpers/utils';
 import getAllAggrWordsAPI from 'src/requests/aggregatedWords/getAllAggrWordsAPI';
 import type { AppDispatch, RootState } from '.';
 import { IWord, ISprintState, ISprintWord } from './types';
@@ -25,16 +25,9 @@ const sprintSlice = createSlice({
 
 export const { addWords, removeWords } = sprintSlice.actions;
 
-const convertToSprintWords = (words: IWord[]) =>
-  words.map((word, i) => ({
-    ...word,
-    wrongTranslate: words[(i + 1) % words.length].wordTranslate,
-    choice: Math.round(Math.random()),
-  }));
-
 export const fetchWords = (group: string, page: string) => async (dispatch: AppDispatch) => {
   const words = await getWordsAPI(group, page);
-  const sprintWords = convertToSprintWords(words);
+  const sprintWords = adaptToLocalSprintWords(words);
 
   dispatch(addWords(shuffle(sprintWords)));
 };
@@ -54,7 +47,7 @@ export const fetchUserWords =
       const data = await response.json();
       const words: IWord[] = data[0].paginatedResults;
 
-      const sprintWords = convertToSprintWords(words);
+      const sprintWords = adaptToLocalSprintWords(words);
 
       dispatch(addWords(shuffle(sprintWords)));
 

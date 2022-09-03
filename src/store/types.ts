@@ -26,8 +26,8 @@ export interface IWordsState {
 }
 
 export interface ISprintWord extends IWord {
-  wrongTranslate: string;
-  choice: number;
+  wrongTranslate?: string;
+  choice?: number;
 }
 
 export interface IAudioState {

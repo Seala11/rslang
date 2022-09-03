@@ -1,4 +1,4 @@
-/* eslint-disable import/prefer-default-export */
+import { ISprintWord, IWord } from 'src/store/types';
 
 export const shuffle = <T>(arr: T[]) => {
   const array = arr;
@@ -10,3 +10,39 @@ export const shuffle = <T>(arr: T[]) => {
 
   return array;
 };
+
+export const adaptToLocalSprintWords = (words: IWord[]) =>
+  words.map((word, i) => ({
+    ...word,
+    wrongTranslate: words[(i + 1) % words.length].wordTranslate,
+    choice: Math.round(Math.random()),
+  }));
+
+export const adaptToServerSprintWords = (words: ISprintWord[]) => {
+  const newWords = [];
+
+  // console.log(111);
+
+  for (let i = 0; i < words.length; i += 1) {
+    const newWord = { ...words[i] };
+    delete newWord.wrongTranslate;
+    delete newWord.choice;
+
+    newWords.push(newWord);
+  }
+
+  // console.log(newWords);
+
+  return newWords;
+};
+
+// words.map((word) => {
+//   const sprintWord = { ...word };
+
+//   console.log(sprintWord);
+
+//   delete sprintWord.wrongTranslate;
+//   delete sprintWord.choice;
+
+//   return sprintWord;
+// });

@@ -1,8 +1,9 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { useAppDispatch, useAppSelector } from 'src/store/hooks';
 import { removeWords, selectWords } from 'src/store/sprintSlice';
 import Result from 'src/components/Result';
 import { ISprintWord } from 'src/store/types';
+import { adaptToServerSprintWords } from 'src/helpers/utils';
 import styles from './SprintGame.module.scss';
 
 const SECONDS = 60;
@@ -79,6 +80,8 @@ const SprintGame = () => {
   }, [finishGame, handleAnswerClick, step, words.length]);
 
   useEffect(() => {
+    console.log('timer useeffect');
+
     const timeId = setTimeout(() => {
       if (time > 0) {
         setTime((prev) => prev - 1);
@@ -169,6 +172,18 @@ const SprintGame = () => {
     </div>
   );
 
+  const GameResult = useMemo(
+    () => (
+      <Result
+        rightAnswers={adaptToServerSprintWords(rightAnswers)}
+        wrongAnswers={adaptToServerSprintWords(wrongAnswers)}
+        onPlayAgain={handlePlayAgain}
+        strike={strike.value}
+      />
+    ),
+    [rightAnswers, strike.value, wrongAnswers]
+  );
+
   return (
     <div className={styles.bg}>
       <div className={styles.container}>
@@ -202,16 +217,7 @@ const SprintGame = () => {
             <img src='/assets/icons/screen.png' alt='screen' />
           </button>
         </div>
-        {finishGame || step >= words.length ? (
-          <Result
-            rightAnswers={rightAnswers}
-            wrongAnswers={wrongAnswers}
-            onPlayAgain={handlePlayAgain}
-            strike={strike.value}
-          />
-        ) : (
-          GameProccess
-        )}
+        {finishGame || step >= words.length ? GameResult : GameProccess}
       </div>
     </div>
   );
