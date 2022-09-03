@@ -90,6 +90,7 @@ export type GameStatistics = {
   wrong: number;
   new: number;
   strike: number;
+  learned: number;
 };
 
 // Settings
