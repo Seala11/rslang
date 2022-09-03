@@ -2,6 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
 import getWordsAPI from 'src/requests/words/getWordsAPI';
 import { shuffle } from 'src/helpers/utils';
+import getAllAggrWordsAPI from 'src/requests/aggregatedWords/getAllAggrWordsAPI';
 import type { AppDispatch, RootState } from '.';
 import { IWord, ISprintState, ISprintWord } from './types';
 
@@ -37,6 +38,31 @@ export const fetchWords = (group: string, page: string) => async (dispatch: AppD
 
   dispatch(addWords(shuffle(sprintWords)));
 };
+
+export const fetchUserWords =
+  (userId: string | null, token: string | null, group: string, page: string) =>
+  async (dispatch: AppDispatch) => {
+    if (!userId || !token) return;
+
+    const response = await getAllAggrWordsAPI(
+      userId,
+      token,
+      `{"$and":[{"group": ${group}, "page": ${page}}]}`
+    );
+
+    if (response.ok) {
+      const data = await response.json();
+      const words: IWord[] = data[0].paginatedResults;
+
+      const sprintWords = convertToSprintWords(words);
+
+      dispatch(addWords(shuffle(sprintWords)));
+
+      console.log(sprintWords);
+    } else {
+      // TODO: проверка ошибок ?
+    }
+  };
 
 export const selectWords = (state: RootState) => state.sprint.words;
 

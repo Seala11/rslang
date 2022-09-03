@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { UrlPath } from 'src/helpers/constRequestsAPI';
@@ -41,7 +42,7 @@ const Result: React.FC<IResultProps> = ({ rightAnswers, wrongAnswers, strike, on
             Я знаю <span className={styles.amountRight}>{rightAnswers.length}</span>
           </h3>
           {rightAnswers.map((word) => (
-            <div className={styles.wordRow} key={word.id}>
+            <div className={styles.wordRow} key={word.id || word._id}>
               <button
                 className={styles.btnSound}
                 type='button'
@@ -61,7 +62,7 @@ const Result: React.FC<IResultProps> = ({ rightAnswers, wrongAnswers, strike, on
             Я не знаю <span className={styles.amountWrong}>{wrongAnswers.length}</span>
           </h3>
           {wrongAnswers.map((word) => (
-            <div className={styles.wordRow} key={word.id}>
+            <div className={styles.wordRow} key={word.id || word._id}>
               <button
                 className={styles.btnSound}
                 type='button'

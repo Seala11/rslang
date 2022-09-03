@@ -2,14 +2,17 @@ import React, { useState } from 'react';
 import Loading from 'src/components/Loading';
 import LayoutMain from 'src/containers/LayoutMain';
 import GROUPS from 'src/data/groups';
-import { useAppDispatch } from 'src/store/hooks';
-import { fetchWords } from 'src/store/sprintSlice';
+import { getUserId, getUserToken, userIsLogged } from 'src/helpers/storage';
+import { useAppDispatch, useAppSelector } from 'src/store/hooks';
+import { fetchUserWords, fetchWords } from 'src/store/sprintSlice';
+import { getUserData } from 'src/store/userSlice';
 import styles from './Levels.module.scss';
 
 const Levels = () => {
   const [groupId, setGroupId] = useState(0);
   const [loading, setLoading] = useState(false);
   const dispatch = useAppDispatch();
+  const userData = useAppSelector(getUserData);
 
   const handleGroupClick = (id: number) => {
     setGroupId(id);
@@ -17,7 +20,13 @@ const Levels = () => {
 
   const handleStartClick = async (id: number) => {
     setLoading(true);
-    await dispatch(fetchWords(`${id}`, `${Math.floor(Math.random() * 30)}`));
+    if (userIsLogged(userData?.message)) {
+      await dispatch(
+        fetchUserWords(getUserId(), getUserToken(), `${id}`, `${Math.floor(Math.random() * 30)}`)
+      );
+    } else {
+      await dispatch(fetchWords(`${id}`, `${Math.floor(Math.random() * 30)}`));
+    }
     setLoading(false);
   };
 
