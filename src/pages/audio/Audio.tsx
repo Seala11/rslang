@@ -96,6 +96,7 @@ const AudioGame: React.FC<{ setPage: React.Dispatch<React.SetStateAction<string>
         audioWrong.muted = isMute;
         audioWrong.play();
         setWrongAnswers((prev) => [...prev, wordsArr[question]]);
+        setStrike((prev) => ({ value: Math.max(prev.value, prev.temp), temp: 0 }));
         dispatch(addDis(true));
         setNextBtn('➤');
         setQuestionTitle(words[question]);
