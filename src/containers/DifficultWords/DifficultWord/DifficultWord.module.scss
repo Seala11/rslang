@@ -101,12 +101,12 @@
 }
 
 .descrTitle {
-  @include roboto($ff: var(--ff-roboto-regular), $fw: 600,$fs: 1.8rem, $lh: 1.5, $color: #404040);
+  @include roboto($ff: var(--ff-roboto-regular), $fw: 600, $fs: 1.8rem, $lh: 1.5, $color: #404040);
   margin-bottom: 1rem;
 }
 
 .descrText {
-  @include roboto($ff: var(--ff-roboto-regular), $fw: 400,$fs: 1.8rem, $lh: 1.5, $color: #404040);
+  @include roboto($ff: var(--ff-roboto-regular), $fw: 400, $fs: 1.8rem, $lh: 1.5, $color: #404040);
 }
 
 .descrSecond {

@@ -166,11 +166,23 @@ const DifficultWord: React.FC<IDifficultWordProps> = ({ word }) => {
         </div>
         <div>
           <h5 className={styles.descrTitle}>Значение</h5>
-          <p className={styles.descrText} dangerouslySetInnerHTML={{ __html: (word?.textMeaning as string) }} />
-          <p className={`${styles.descrText} ${styles.descrSecond}`} dangerouslySetInnerHTML={{ __html: (word?.textMeaningTranslate as string) }}/>
+          <p
+            className={styles.descrText}
+            dangerouslySetInnerHTML={{ __html: word?.textMeaning as string }}
+          />
+          <p
+            className={`${styles.descrText} ${styles.descrSecond}`}
+            dangerouslySetInnerHTML={{ __html: word?.textMeaningTranslate as string }}
+          />
           <h5 className={styles.descrTitle}>Пример</h5>
-          <p className={styles.descrText} dangerouslySetInnerHTML={{ __html: (word?.textExample as string) }} />
-          <p className={styles.descrText} dangerouslySetInnerHTML={{ __html: (word?.textExampleTranslate as string) }} />
+          <p
+            className={styles.descrText}
+            dangerouslySetInnerHTML={{ __html: word?.textExample as string }}
+          />
+          <p
+            className={styles.descrText}
+            dangerouslySetInnerHTML={{ __html: word?.textExampleTranslate as string }}
+          />
         </div>
       </div>
       <button type='button' onClick={removeWord} className={styles.button} disabled={disable}>
