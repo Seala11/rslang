@@ -15,7 +15,6 @@ import DifficultWord from './DifficultWord/DifficultWord';
 import DiffPagination from './DiffPagination';
 import { IPaginationProps } from '../word-list/Pagination/IPaginationProps';
 
-
 const DifficultWords: React.FC<IPaginationProps> = ({
   unit,
   onPaginationClick,

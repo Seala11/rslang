@@ -4,7 +4,12 @@ import styles from 'src/containers/DifficultWords/DiffPagination/DiffPagination.
 import { Navigate } from 'src/helpers/constants';
 import { IDiffPaginationProps } from './IDiffPaginationProps';
 
-const DiffPagination: React.FC<IDiffPaginationProps> = ({ unit, onClick, onPageNavigate, words }) => {
+const DiffPagination: React.FC<IDiffPaginationProps> = ({
+  unit,
+  onClick,
+  onPageNavigate,
+  words,
+}) => {
   console.log(unit, words.length);
   return (
     <div className={styles.wrapper}>

@@ -146,7 +146,6 @@ const DifficultWord: React.FC<IDifficultWordProps> = ({ word, audio }) => {
             dangerouslySetInnerHTML={{ __html: word?.textExampleTranslate || '' }}
           />
         </div>
-
       </div>
     </div>
   );
