@@ -15,6 +15,11 @@
   transition: all 0.2s;
   cursor: pointer;
 
+  @include media-mobile {
+    width: 25rem;
+    height: 55rem;
+  }
+
   &:hover {
     transform: scale(1.1);
   }

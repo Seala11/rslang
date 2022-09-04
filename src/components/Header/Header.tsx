@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { NavLink, useLocation, useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from 'src/store/hooks';
 import {
@@ -18,6 +18,7 @@ const Header: React.FC = () => {
   const userData = useAppSelector(getUserData);
   const navigate = useNavigate();
   const location = useLocation();
+  const [isOpen, setIsOpen] = useState(false);
 
   const userLogoutHandler = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     if (userIsLogged(userData?.message)) {
@@ -33,12 +34,16 @@ const Header: React.FC = () => {
     }
   };
 
+function toggleMenu() {
+  setIsOpen(!isOpen)
+}
+
   return (
     <header className={styles.header}>
       <div className={styles.header__wrapper}>
-        <Image {...{ altImg: 'Logo', srcImg: '/assets/icons/logo.png', className: styles.logo }} />
+        <NavLink to="/"><Image {...{ altImg: 'Logo', srcImg: '/assets/icons/logo.png', className: styles.logo }} /></NavLink>
         <nav className={styles.nav}>
-          <ul className={styles.nav__list}>
+          <ul className={`${styles.nav__list} ${isOpen ? styles.nav__list_open : ''}`}>
             {NAV_LIST.map((item) => (
               <li key={item.name} className={styles.nav__item}>
                 <NavLink
@@ -51,14 +56,15 @@ const Header: React.FC = () => {
                 </NavLink>
               </li>
             ))}
-            <li className={styles.nav__item}>
+          </ul>
+          <button onClick={()=>toggleMenu()} className={`${styles.hamburger} ${isOpen ? styles.hamburger_active : ''}`} type="button">
+               <span className={styles.line} />
+          </button>
               <NavLink to='/login'>
                 <button className={styles.logBtn} type='button' onClick={userLogoutHandler}>
                   {userIsLogged(userData?.message) ? 'Выйти' : 'Войти'}
                 </button>
               </NavLink>
-            </li>
-          </ul>
         </nav>
       </div>
     </header>
