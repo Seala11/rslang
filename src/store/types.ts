@@ -48,6 +48,7 @@ export interface IUserStatistics {
 
 export interface IUserWordsState {
   diffSectionEmpty: boolean | null;
-  diffWords: IWord[];
+  diffWords: IWord[][];
   currPageLearned: boolean;
+  audioPlay: string | undefined;
 }
