@@ -39,16 +39,12 @@ const userWordsSlice = createSlice({
   name: 'userWords',
   initialState,
   reducers: {
-    addDiffWord(state, action: PayloadAction<IWord[]>) {
+    addDiffWord(state, action: PayloadAction<IWord[][]>) {
       state.diffWords = action.payload;
       state.diffSectionEmpty = false;
     },
     setDiffSectionEmpty(state) {
       state.diffSectionEmpty = true;
-    },
-    removeDiffWord(state, action: PayloadAction<IWord>) {
-      const newState = state.diffWords.filter((item) => item.id !== action.payload.id);
-      state.diffWords = newState;
     },
     setCurrPageLearned(state) {
       state.currPageLearned = true;
@@ -67,7 +63,6 @@ const userWordsSlice = createSlice({
 
 export const {
   addDiffWord,
-  removeDiffWord,
   setDiffSectionEmpty,
   removeCurrPageLearned,
   setCurrPageLearned,
@@ -126,7 +121,9 @@ export const fetchGetAllDiffWords =
         if (arr.length === 0) {
           dispatch(setDiffSectionEmpty());
         } else {
-          dispatch(addDiffWord(data[0].paginatedResults));
+          const paginatedRes = []
+          for(let i = 0; i < arr.length; i += 5) paginatedRes.push(arr.slice(i, i + 5))
+          dispatch(addDiffWord(paginatedRes));
         }
       }
       if (response.status === ResponseStatus.MISSING_TOKEN) {

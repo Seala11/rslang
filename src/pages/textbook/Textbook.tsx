@@ -170,7 +170,11 @@ const Textbook = () => {
             <h2 className={styles.title}>Игры</h2>
           </>
         ) : (
-          <DifficultWords />
+          <DifficultWords
+            unit={unit}
+            onPageNavigate={handlePageNavigate}
+            onPaginationClick={handlePaginationClick}
+          />
         )}
       </div>
     </LayoutMain>
