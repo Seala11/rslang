@@ -1,4 +1,4 @@
-/* eslint-disable import/prefer-default-export */
+import { ISprintWord, IWord } from 'src/store/types';
 
 export const shuffle = <T>(arr: T[]) => {
   const array = arr;
@@ -10,3 +10,43 @@ export const shuffle = <T>(arr: T[]) => {
 
   return array;
 };
+
+export const adaptToLocalSprintWords = (words: IWord[]) =>
+  words.map((word, i) => ({
+    ...word,
+    wrongTranslate: words[(i + 1) % words.length].wordTranslate,
+    choice: Math.round(Math.random()),
+  }));
+
+export const adaptToServerSprintWords = (words: ISprintWord[]) => {
+  const newWords = [];
+
+  for (let i = 0; i < words.length; i += 1) {
+    const newWord = { ...words[i] };
+    delete newWord.wrongTranslate;
+    delete newWord.choice;
+
+    newWords.push(newWord);
+  }
+
+  return newWords;
+};
+
+const isNewWord = (word: IWord) => {
+  if (!word.userWord) return true;
+
+  return (
+    word.userWord?.optional.sprint.right === 0 &&
+    word.userWord?.optional.sprint.wrong === 0 &&
+    word.userWord?.optional.audio.right === 0 &&
+    word.userWord?.optional.audio.wrong === 0
+  );
+};
+
+export const getNumberOfNewWords = (words: IWord[]) =>
+  words.filter((word) => isNewWord(word)).length;
+
+const isLearnedWord = (word: IWord) => !word.userWord || !word.userWord.optional.learned;
+
+export const getNumberOfLearnedWords = (words: IWord[]) =>
+  words.filter((word) => isLearnedWord(word)).length;

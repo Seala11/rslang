@@ -1,12 +1,14 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
 import getWordsAPI from 'src/requests/words/getWordsAPI';
-import { shuffle } from 'src/helpers/utils';
+import { adaptToLocalSprintWords, shuffle } from 'src/helpers/utils';
+import getAllAggrWordsAPI from 'src/requests/aggregatedWords/getAllAggrWordsAPI';
 import type { AppDispatch, RootState } from '.';
 import { IWord, ISprintState, ISprintWord } from './types';
 
 const initialState: ISprintState = {
   words: [],
+  group: 0,
 };
 
 const sprintSlice = createSlice({
@@ -16,27 +18,46 @@ const sprintSlice = createSlice({
     addWords(state, action: PayloadAction<ISprintWord[]>) {
       state.words = action.payload;
     },
+    updateGroup(state, action: PayloadAction<number>) {
+      state.group = action.payload;
+    },
     removeWords(state) {
       state.words = [];
     },
   },
 });
 
-export const { addWords, removeWords } = sprintSlice.actions;
-
-const convertToSprintWords = (words: IWord[]) =>
-  words.map((word, i) => ({
-    ...word,
-    wrongTranslate: words[(i + 1) % words.length].wordTranslate,
-    choice: Math.round(Math.random()),
-  }));
+export const { addWords, removeWords, updateGroup } = sprintSlice.actions;
 
 export const fetchWords = (group: string, page: string) => async (dispatch: AppDispatch) => {
   const words = await getWordsAPI(group, page);
-  const sprintWords = convertToSprintWords(words);
+  const sprintWords = adaptToLocalSprintWords(words);
 
   dispatch(addWords(shuffle(sprintWords)));
 };
+
+export const fetchUserWords =
+  (userId: string | null, token: string | null, group: string, page: string) =>
+  async (dispatch: AppDispatch) => {
+    if (!userId || !token) return;
+
+    const response = await getAllAggrWordsAPI(
+      userId,
+      token,
+      `{"$and":[{"group": ${group}, "page": ${page}}]}`
+    );
+
+    if (response.ok) {
+      const data = await response.json();
+      const words: IWord[] = data[0].paginatedResults;
+
+      const sprintWords = adaptToLocalSprintWords(words);
+
+      dispatch(addWords(shuffle(sprintWords)));
+    } else {
+      // TODO: проверка ошибок ?
+    }
+  };
 
 export const selectWords = (state: RootState) => state.sprint.words;
 

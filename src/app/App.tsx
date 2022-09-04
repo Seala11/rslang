@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { Route, Routes } from 'react-router-dom';
-import { Home, Textbook, Statistics, Games, Registration, Levels, Sprint } from 'src/pages';
+import { Home, Textbook, Statistics, Games, Registration, Sprint, Audio } from 'src/pages';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { getUserId, getUserToken, userIsInStorage } from 'src/helpers/storage';
@@ -26,7 +26,7 @@ const App: React.FC = () => {
         <Route path='/textbook' element={<Textbook />} />
         <Route path='/games' element={<Games />} />
         <Route path='/games/sprint' element={<Sprint />} />
-        <Route path='/games/audio' element={<Levels />} />
+        <Route path='/games/audio' element={<Audio />} />
         <Route path='/statistics' element={<Statistics />} />
         <Route path='/login' element={<Registration />} />
       </Routes>

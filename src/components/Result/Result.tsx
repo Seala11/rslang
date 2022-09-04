@@ -1,23 +1,93 @@
-import React from 'react';
+/* eslint-disable no-underscore-dangle */
+import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { UrlPath } from 'src/helpers/constRequestsAPI';
+import {
+  GameOptions,
+  StatisticsOption,
+  UrlPath,
+  UserWordOptions,
+} from 'src/helpers/constRequestsAPI';
+import { getUserId, getUserToken } from 'src/helpers/storage';
+import { getNumberOfLearnedWords, getNumberOfNewWords } from 'src/helpers/utils';
 import { addDis, updateAnswers, updateQuestion } from 'src/store/audioSlice';
 import { useAppDispatch } from 'src/store/hooks';
 import { removeWords } from 'src/store/sprintSlice';
-import { ISprintWord, IWord } from 'src/store/types';
+import { fetchGetUserStatistics } from 'src/store/statisticsSlice';
+import { IWord } from 'src/store/types';
+import { fetchCreateUserWord } from 'src/store/userWordsSlice';
 import styles from './Result.module.scss';
 
-export interface IResultProps {
-  rightAnswers: ISprintWord[] | IWord[];
-  wrongAnswers: ISprintWord[] | IWord[];
+interface IResultProps {
+  rightAnswers: IWord[];
+  wrongAnswers: IWord[];
   strike: number;
+  gameType: StatisticsOption;
   onPlayAgain: () => void;
 }
 
-const Result: React.FC<IResultProps> = ({ rightAnswers, wrongAnswers, strike, onPlayAgain }) => {
+const Result: React.FC<IResultProps> = ({
+  rightAnswers,
+  wrongAnswers,
+  strike,
+  gameType,
+  onPlayAgain,
+}) => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const audio = new Audio();
+
+  useEffect(() => {
+    let option: UserWordOptions;
+
+    switch (gameType) {
+      case StatisticsOption.SPRINT:
+        option = UserWordOptions.SPRINT;
+        break;
+
+      case StatisticsOption.AUDIO:
+        option = UserWordOptions.AUDIO;
+        break;
+
+      default:
+        break;
+    }
+
+    const stata = {
+      right: rightAnswers.length,
+      wrong: wrongAnswers.length,
+      strike,
+      new: getNumberOfNewWords(rightAnswers) + getNumberOfNewWords(wrongAnswers),
+      learned: getNumberOfLearnedWords(rightAnswers),
+    };
+
+    dispatch(fetchGetUserStatistics(getUserId(), getUserToken(), gameType, stata));
+
+    rightAnswers.forEach((word) => {
+      dispatch(
+        fetchCreateUserWord(
+          getUserId(),
+          word?._id,
+          getUserToken(),
+          `${word?.group}`,
+          option,
+          GameOptions.CORRECT
+        )
+      );
+    });
+
+    wrongAnswers.forEach((word) => {
+      dispatch(
+        fetchCreateUserWord(
+          getUserId(),
+          word?._id,
+          getUserToken(),
+          `${word?.group}`,
+          option,
+          GameOptions.WRONG
+        )
+      );
+    });
+  }, [dispatch, gameType, rightAnswers, strike, wrongAnswers]);
 
   const handlePlayClick = (src: string) => {
     audio.src = `${UrlPath.BASE}/${src}`;
@@ -45,7 +115,7 @@ const Result: React.FC<IResultProps> = ({ rightAnswers, wrongAnswers, strike, on
             Я знаю <span className={styles.amountRight}>{rightAnswers.length}</span>
           </h3>
           {rightAnswers.map((word) => (
-            <div className={styles.wordRow} key={word.id}>
+            <div className={styles.wordRow} key={word.id || word._id}>
               <button
                 className={styles.btnSound}
                 type='button'
@@ -65,7 +135,7 @@ const Result: React.FC<IResultProps> = ({ rightAnswers, wrongAnswers, strike, on
             Я не знаю <span className={styles.amountWrong}>{wrongAnswers.length}</span>
           </h3>
           {wrongAnswers.map((word) => (
-            <div className={styles.wordRow} key={word.id}>
+            <div className={styles.wordRow} key={word.id || word._id}>
               <button
                 className={styles.btnSound}
                 type='button'

@@ -18,16 +18,6 @@ import type { AppDispatch, RootState } from '.';
 import { IUserWordsState, IWord } from './types';
 import { addCurrentPageWords, removeLoading, setLoading } from './wordsSlice';
 
-const DEFAULT_USER_WORD_OPTIONS = {
-  difficulty: '0',
-  optional: {
-    difficult: false,
-    learned: false,
-    sprint: { right: 0, wrong: 0 },
-    audio: { right: 0, wrong: 0 },
-  },
-};
-
 const initialState: IUserWordsState = {
   diffWords: [],
   diffSectionEmpty: null,
@@ -256,6 +246,17 @@ export const fetchCreateUserWord =
       } else {
         if (response.status === ResponseStatus.NOT_FOUND) {
           // new word: we create default object than update it and send to back
+
+          const DEFAULT_USER_WORD_OPTIONS = {
+            difficulty: '0',
+            optional: {
+              difficult: false,
+              learned: false,
+              sprint: { right: 0, wrong: 0 },
+              audio: { right: 0, wrong: 0 },
+            },
+          };
+
           const userWordOptions = { ...DEFAULT_USER_WORD_OPTIONS };
           userWordOptions.optional = updateUserWordOptions(
             wordOption,
