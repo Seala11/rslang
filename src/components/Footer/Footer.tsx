@@ -17,8 +17,14 @@ const Footer: React.FC = () => (
       </ul>
       <div className={styles.schoolLink}>
         <span>2022</span>
-        <a target="_blank" className={styles.rsLink} href='https://rs.school/js/' rel="noreferrer">
-          <Image {...{ altImg: 'RsLogo', srcImg: '/assets/icons/rs_school_js.svg', className: styles.rslogo }}/>
+        <a target='_blank' className={styles.rsLink} href='https://rs.school/js/' rel='noreferrer'>
+          <Image
+            {...{
+              altImg: 'RsLogo',
+              srcImg: '/assets/icons/rs_school_js.svg',
+              className: styles.rslogo,
+            }}
+          />
         </a>
       </div>
     </div>
