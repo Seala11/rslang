@@ -21,7 +21,7 @@
 .general_wrapper {
   display: flex;
   justify-content: space-around;
-  align-items:flex-end;
+  align-items: flex-end;
   width: 100%;
   background-color: var(--light);
   border-radius: 5rem;
@@ -94,7 +94,6 @@
     );
     padding-bottom: 0.5rem;
     text-align: center;
-
 
     @include media-mobile {
       font-size: 1.4rem;
