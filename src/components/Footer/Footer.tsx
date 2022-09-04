@@ -1,6 +1,7 @@
 import React from 'react';
 import styles from 'src/components/Footer/Footer.module.scss';
 import DEVELOPERS_LIST from 'src/data/developers';
+import Image from '../Image';
 
 const Footer: React.FC = () => (
   <footer className={styles.footer}>
@@ -16,8 +17,8 @@ const Footer: React.FC = () => (
       </ul>
       <div className={styles.schoolLink}>
         <span>2022</span>
-        <a className={styles.rsLink} href='https://rs.school/js/'>
-          RS School
+        <a target="_blank" className={styles.rsLink} href='https://rs.school/js/' rel="noreferrer">
+          <Image {...{ altImg: 'RsLogo', srcImg: '/assets/icons/rs_school_js.svg', className: styles.rslogo }}/>
         </a>
       </div>
     </div>
