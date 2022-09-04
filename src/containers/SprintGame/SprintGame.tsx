@@ -184,7 +184,12 @@ const SprintGame: React.FC<ISprintGameProps> = ({ onStartClick }) => {
         <h1 className={styles.title}>Спринт</h1>
         <div className={styles.controlls}>
           <button className={styles.control} type='button' onClick={handleGameClose}>
-            <img src='/assets/icons/close.png' alt='close' />
+            <svg viewBox='0 0 18 18' fill='none' xmlns='http://www.w3.org/2000/svg'>
+              <path
+                d='M17.5958 15.6391L10.9523 8.98177L17.5598 2.36084C18.0987 1.82061 18.0987 0.944885 17.5598 0.404951C17.0207 -0.134984 16.147 -0.134984 15.6079 0.404951L9.00039 7.02588L2.39318 0.404951C1.85405 -0.134984 0.980392 -0.134984 0.441258 0.404951C-0.0978769 0.945181 -0.0978769 1.82091 0.441258 2.36084L7.04846 8.98177L0.404351 15.6391C-0.134784 16.1793 -0.134784 17.0547 0.404351 17.595C0.673918 17.8651 1.02704 18 1.38046 18C1.73388 18 2.08701 17.8651 2.35657 17.595L9.00039 10.9377L15.6439 17.595C15.9135 17.8651 16.2666 18 16.62 18C16.9734 18 17.3266 17.8651 17.5961 17.595C18.1347 17.055 18.1347 16.1793 17.5958 15.6391Z'
+                fill='#6A6D9E'
+              />
+            </svg>
           </button>
           <button className={styles.control} type='button' onClick={handleSoundToggle}>
             {isMuted ? (
@@ -208,7 +213,14 @@ const SprintGame: React.FC<ISprintGameProps> = ({ onStartClick }) => {
             )}
           </button>
           <button className={styles.control} type='button' onClick={handleFullScreen}>
-            <img src='/assets/icons/screen.png' alt='screen' />
+            <svg viewBox='0 0 14 14' fill='none' xmlns='http://www.w3.org/2000/svg'>
+              <path
+                fillRule='evenodd'
+                clipRule='evenodd'
+                d='M1 9C0.45 9 0 9.45 0 10V13C0 13.55 0.45 14 1 14H4C4.55 14 5 13.55 5 13C5 12.45 4.55 12 4 12H2V10C2 9.45 1.55 9 1 9ZM1 5C1.55 5 2 4.55 2 4V2H4C4.55 2 5 1.55 5 1C5 0.45 4.55 0 4 0H1C0.45 0 0 0.45 0 1V4C0 4.55 0.45 5 1 5ZM12 12H10C9.45 12 9 12.45 9 13C9 13.55 9.45 14 10 14H13C13.55 14 14 13.55 14 13V10C14 9.45 13.55 9 13 9C12.45 9 12 9.45 12 10V12ZM9 1C9 1.55 9.45 2 10 2H12V4C12 4.55 12.45 5 13 5C13.55 5 14 4.55 14 4V1C14 0.45 13.55 0 13 0H10C9.45 0 9 0.45 9 1Z'
+                fill='#6A6D9E'
+              />
+            </svg>
           </button>
         </div>
         {finishGame || step >= words.length ? GameResult : GameProccess}
