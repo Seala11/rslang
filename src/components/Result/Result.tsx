@@ -1,5 +1,3 @@
-/* eslint-disable no-console */
-/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable no-underscore-dangle */
 import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -25,8 +23,6 @@ const Result: React.FC<IResultProps> = ({ rightAnswers, wrongAnswers, strike, on
   const audio = new Audio();
 
   useEffect(() => {
-    console.log('result useeffect');
-
     rightAnswers.forEach((word) => {
       dispatch(
         fetchCreateUserWord(
