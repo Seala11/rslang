@@ -20,6 +20,9 @@ const wordsSlice = createSlice({
     addWordDetails(state, action: PayloadAction<IWord | null>) {
       state.wordDetails = action.payload;
     },
+    removeWordDetails(state) {
+      state.wordDetails = null;
+    },
     setLoading(state) {
       state.loading = true;
     },
@@ -29,7 +32,7 @@ const wordsSlice = createSlice({
   },
 });
 
-export const { addCurrentPageWords, addWordDetails, setLoading, removeLoading } =
+export const { addCurrentPageWords, addWordDetails, removeWordDetails, setLoading, removeLoading } =
   wordsSlice.actions;
 
 export const fetchCurrentPageWords =
