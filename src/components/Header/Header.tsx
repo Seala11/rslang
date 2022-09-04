@@ -11,6 +11,7 @@ import { clearUserData, userIsLogged } from 'src/helpers/storage';
 import styles from 'src/components/Header/Header.module.scss';
 import NAV_LIST from 'src/data/navigation';
 import Image from 'src/components/Image';
+import { removeUserStatistic } from 'src/store/statisticsSlice';
 
 const Header: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -24,6 +25,7 @@ const Header: React.FC = () => {
 
       dispatch(setUserLoading());
       dispatch(removeUserData());
+      dispatch(removeUserStatistic());
       clearUserData();
       dispatch(removeUserLoading());
 

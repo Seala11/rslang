@@ -38,10 +38,13 @@ const statisticsSlice = createSlice({
     addUserStatistics(state, action: PayloadAction<IStatistics>) {
       state.userStatistics = action.payload;
     },
+    removeUserStatistic(state) {
+      state.userStatistics = null;
+    },
   },
 });
 
-export const { addUserStatistics } = statisticsSlice.actions;
+export const { addUserStatistics, removeUserStatistic } = statisticsSlice.actions;
 
 export const fetchUpdateUserStatistics =
   (userId: string, token: string, statisticsData: IStatistics) => async (dispatch: AppDispatch) => {
