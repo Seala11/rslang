@@ -57,7 +57,7 @@ const userWordsSlice = createSlice({
     },
     removeAudioPlay(state) {
       state.audioPlay = undefined;
-    }
+    },
   },
 });
 
@@ -77,6 +77,7 @@ export const fetchGetUserWords =
     dispatch(removeCurrPageLearned());
     try {
       dispatch(setLoading());
+      dispatch(removeCurrPageLearned());
       const response: Response | undefined = await getAllAggrWordsAPI(
         userId,
         token,
@@ -87,8 +88,11 @@ export const fetchGetUserWords =
         const currPageWords: IWord[] = data[0].paginatedResults;
         dispatch(addCurrentPageWords(currPageWords));
 
-        const pageIsLearned = currPageWords.every((word) => word.userWord?.optional.learned);
-        if (pageIsLearned) dispatch(setCurrPageLearned());
+        const pageIsLearned = currPageWords.every(
+          (word) => word.userWord?.optional.learned === true
+        );
+
+        if (currPageWords.length > 0 && pageIsLearned) dispatch(setCurrPageLearned());
       }
       if (response.status === ResponseStatus.MISSING_TOKEN) {
         throw createError(new Error(ErrorMessage.MISSING_TOKEN), `${ResponseStatus.MISSING_TOKEN}`);
@@ -121,8 +125,8 @@ export const fetchGetAllDiffWords =
         if (arr.length === 0) {
           dispatch(setDiffSectionEmpty());
         } else {
-          const paginatedRes = []
-          for(let i = 0; i < arr.length; i += 5) paginatedRes.push(arr.slice(i, i + 5))
+          const paginatedRes = [];
+          for (let i = 0; i < arr.length; i += 5) paginatedRes.push(arr.slice(i, i + 5));
           dispatch(addDiffWord(paginatedRes));
         }
       }
