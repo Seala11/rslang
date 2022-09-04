@@ -26,8 +26,8 @@ export interface IWordsState {
 }
 
 export interface ISprintWord extends IWord {
-  wrongTranslate: string;
-  choice: number;
+  wrongTranslate?: string;
+  choice?: number;
 }
 
 export interface IAudioState {
@@ -36,10 +36,12 @@ export interface IAudioState {
   disable: boolean;
   answers: string[];
   question: number;
+  group: number;
 }
 
 export interface ISprintState {
   words: ISprintWord[];
+  group: number;
 }
 
 export interface IUserStatistics {
@@ -48,6 +50,7 @@ export interface IUserStatistics {
 
 export interface IUserWordsState {
   diffSectionEmpty: boolean | null;
-  diffWords: IWord[];
+  diffWords: IWord[][];
   currPageLearned: boolean;
+  audioPlay: string | undefined;
 }

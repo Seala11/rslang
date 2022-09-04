@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from 'src/store/hooks';
 import {
+  addCurrentPageWords,
   addWordDetails,
   fetchCurrentPageWords,
   getLoading,
+  removeWordDetails,
   selectCurrentPageWords,
   selectWordDetails,
 } from 'src/store/wordsSlice';
@@ -42,7 +44,10 @@ const Textbook = () => {
   const [sectionDisplay, setSectionDisplay] = useState(TextbookSections.TEXTBOOK);
 
   useEffect(() => {
-    if (currentPageWords.length === 0 || userIsLoggedLoading) return;
+    if (currentPageWords.length === 0 || userIsLoggedLoading) {
+      dispatch(removeWordDetails());
+      return;
+    }
     if (wordDetails?.group !== group - 1 || wordDetails?.page !== unit - 1) {
       dispatch(addWordDetails(currentPageWords[0]));
     }
@@ -105,6 +110,7 @@ const Textbook = () => {
         break;
       case TextbookSections.DIFF_WORDS:
         // TODO: ask Marsel for the better solution)
+        dispatch(addCurrentPageWords([]));
         setSectionDisplay(() => TextbookSections.DIFF_WORDS);
         setSearchParams({ group: `${7}`, unit: `${1}` });
         break;
@@ -112,12 +118,7 @@ const Textbook = () => {
     }
   };
 
-  if (userIsLoggedLoading || (userIsInStorage() && !userData))
-    return (
-      <LayoutMain>
-        <Loading />
-      </LayoutMain>
-    );
+  if (userIsLoggedLoading || (userIsInStorage() && !userData)) return <Loading />;
 
   return (
     <LayoutMain>
@@ -170,7 +171,11 @@ const Textbook = () => {
             <h2 className={styles.title}>Игры</h2>
           </>
         ) : (
-          <DifficultWords />
+          <DifficultWords
+            unit={unit}
+            onPageNavigate={handlePageNavigate}
+            onPaginationClick={handlePaginationClick}
+          />
         )}
       </div>
     </LayoutMain>

@@ -5,6 +5,7 @@ import { userIsLogged } from 'src/helpers/storage';
 import { useAppSelector } from 'src/store/hooks';
 import { getUserData } from 'src/store/userSlice';
 import { selectWordDetails } from 'src/store/wordsSlice';
+import Loading from 'src/components/Loading';
 import styles from './WordDetails.module.scss';
 import WordButtons from '../WordButtons';
 import WordStatistic from '../WordStatistic';
@@ -137,7 +138,7 @@ const WordDetails = () => {
       </div>
     </div>
   ) : (
-    <div>LOADING...</div>
+    <Loading />
   );
 };
 

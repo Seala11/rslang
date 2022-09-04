@@ -18,36 +18,23 @@ import type { AppDispatch, RootState } from '.';
 import { IUserWordsState, IWord } from './types';
 import { addCurrentPageWords, removeLoading, setLoading } from './wordsSlice';
 
-const DEFAULT_USER_WORD_OPTIONS = {
-  difficulty: '0',
-  optional: {
-    difficult: false,
-    learned: false,
-    sprint: { right: 0, wrong: 0 },
-    audio: { right: 0, wrong: 0 },
-  },
-};
-
 const initialState: IUserWordsState = {
   diffWords: [],
   diffSectionEmpty: null,
   currPageLearned: false,
+  audioPlay: undefined,
 };
 
 const userWordsSlice = createSlice({
   name: 'userWords',
   initialState,
   reducers: {
-    addDiffWord(state, action: PayloadAction<IWord[]>) {
+    addDiffWord(state, action: PayloadAction<IWord[][]>) {
       state.diffWords = action.payload;
       state.diffSectionEmpty = false;
     },
     setDiffSectionEmpty(state) {
       state.diffSectionEmpty = true;
-    },
-    removeDiffWord(state, action: PayloadAction<IWord>) {
-      const newState = state.diffWords.filter((item) => item.id !== action.payload.id);
-      state.diffWords = newState;
     },
     setCurrPageLearned(state) {
       state.currPageLearned = true;
@@ -55,15 +42,22 @@ const userWordsSlice = createSlice({
     removeCurrPageLearned(state) {
       state.currPageLearned = false;
     },
+    setAudioPlay(state, action: PayloadAction<string | undefined>) {
+      state.audioPlay = action.payload;
+    },
+    removeAudioPlay(state) {
+      state.audioPlay = undefined;
+    },
   },
 });
 
 export const {
   addDiffWord,
-  removeDiffWord,
   setDiffSectionEmpty,
   removeCurrPageLearned,
   setCurrPageLearned,
+  setAudioPlay,
+  removeAudioPlay,
 } = userWordsSlice.actions;
 
 export const fetchGetUserWords =
@@ -73,6 +67,7 @@ export const fetchGetUserWords =
     dispatch(removeCurrPageLearned());
     try {
       dispatch(setLoading());
+      dispatch(removeCurrPageLearned());
       const response: Response | undefined = await getAllAggrWordsAPI(
         userId,
         token,
@@ -83,8 +78,11 @@ export const fetchGetUserWords =
         const currPageWords: IWord[] = data[0].paginatedResults;
         dispatch(addCurrentPageWords(currPageWords));
 
-        const pageIsLearned = currPageWords.every((word) => word.userWord?.optional.learned);
-        if (pageIsLearned) dispatch(setCurrPageLearned());
+        const pageIsLearned = currPageWords.every(
+          (word) => word.userWord?.optional.learned === true
+        );
+
+        if (currPageWords.length > 0 && pageIsLearned) dispatch(setCurrPageLearned());
       }
       if (response.status === ResponseStatus.MISSING_TOKEN) {
         throw createError(new Error(ErrorMessage.MISSING_TOKEN), `${ResponseStatus.MISSING_TOKEN}`);
@@ -117,7 +115,9 @@ export const fetchGetAllDiffWords =
         if (arr.length === 0) {
           dispatch(setDiffSectionEmpty());
         } else {
-          dispatch(addDiffWord(data[0].paginatedResults));
+          const paginatedRes = [];
+          for (let i = 0; i < arr.length; i += 5) paginatedRes.push(arr.slice(i, i + 5));
+          dispatch(addDiffWord(paginatedRes));
         }
       }
       if (response.status === ResponseStatus.MISSING_TOKEN) {
@@ -246,6 +246,17 @@ export const fetchCreateUserWord =
       } else {
         if (response.status === ResponseStatus.NOT_FOUND) {
           // new word: we create default object than update it and send to back
+
+          const DEFAULT_USER_WORD_OPTIONS = {
+            difficulty: '0',
+            optional: {
+              difficult: false,
+              learned: false,
+              sprint: { right: 0, wrong: 0 },
+              audio: { right: 0, wrong: 0 },
+            },
+          };
+
           const userWordOptions = { ...DEFAULT_USER_WORD_OPTIONS };
           userWordOptions.optional = updateUserWordOptions(
             wordOption,
@@ -280,5 +291,6 @@ export const fetchCreateUserWord =
 export const getDifficultWords = (state: RootState) => state.userWords.diffWords;
 export const difficultSectionIsEmpty = (state: RootState) => state.userWords.diffSectionEmpty;
 export const getCurrPageLearned = (state: RootState) => state.userWords.currPageLearned;
+export const getAudioPlay = (state: RootState) => state.userWords.audioPlay;
 
 export default userWordsSlice.reducer;
