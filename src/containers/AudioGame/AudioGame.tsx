@@ -21,13 +21,15 @@ let player: HTMLAudioElement;
 const audioCorrect = new Audio('/audio/correct.mp3');
 const audioWrong = new Audio('/audio/wrong.mp3');
 
-const AudioGame: React.FC<{ setPage: React.Dispatch<React.SetStateAction<string>> }> = ({
-  setPage,
-}) => {
+const AudioGame: React.FC<{
+  setPage: React.Dispatch<React.SetStateAction<string>>;
+  onStartClick: (id: number) => void;
+}> = ({ setPage, onStartClick }) => {
   const dispatch = useAppDispatch();
   const disable = useAppSelector(isDis);
   const answers = useAppSelector(getAnswers);
   const wordsArr = useAppSelector(selectwordsArr);
+  const group = useAppSelector((state) => state.audio.group);
   const words = wordsArr.map((item) => item.wordTranslate);
   const question = useAppSelector(getQuestion);
   const [answerStyle, setAnswerStyle] = useState('');
@@ -42,6 +44,11 @@ const AudioGame: React.FC<{ setPage: React.Dispatch<React.SetStateAction<string>
   const [questionTitle, setQuestionTitle] = useState('');
   const [questionImg, setQuestionImg] = useState('');
   const [imgSize, setImgSize] = useState<'50%' | 'cover'>('50%');
+
+  console.log(result);
+  console.log(wordsArr);
+  console.log(question);
+  console.log(wordsArr[question]);
 
   function collectAnswers() {
     const set: Set<string> = new Set();
@@ -158,17 +165,6 @@ const AudioGame: React.FC<{ setPage: React.Dispatch<React.SetStateAction<string>
     playAudio().catch((err) => err);
   };
 
-  const handlePlayAgain = () => {
-    dispatch(updateQuestion(0));
-    dispatch(updateAnswers([]));
-    dispatch(addDis(false));
-    setResult(false);
-    setRightAnswers([]);
-    setWrongAnswers([]);
-    playClickHandler();
-    setStrike({ value: 0, temp: 0 });
-  };
-
   useEffect(() => {
     if (answers.length === 0 && wordsArr[question]) {
       collectAnswers();
@@ -196,6 +192,13 @@ const AudioGame: React.FC<{ setPage: React.Dispatch<React.SetStateAction<string>
       document.removeEventListener('keyup', handleAnswerKeyup);
     };
   }, [answers]);
+
+  const handlePlayAgain = () => {
+    dispatch(updateQuestion(0));
+    dispatch(updateAnswers([]));
+    dispatch(addDis(false));
+    onStartClick(group);
+  };
 
   return (
     <div className={styles.wrapper}>
