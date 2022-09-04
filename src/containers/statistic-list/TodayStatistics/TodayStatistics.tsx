@@ -53,14 +53,20 @@ const TodayStatistics = () => {
           <div className={styles.item}>
             <p className={styles.item_subtitle}>Правильных ответов</p>
             <p className={styles.number}>
-              {Math.floor(
-                ((todayStatistic.audio.right + todayStatistic.sprint.right) /
-                  (todayStatistic.audio.right +
-                    todayStatistic.sprint.right +
-                    todayStatistic.sprint.wrong +
-                    todayStatistic.audio.wrong)) *
-                  100
-              )}
+              {todayStatistic.audio.right +
+                todayStatistic.sprint.right +
+                todayStatistic.sprint.wrong +
+                todayStatistic.audio.wrong ===
+              0
+                ? 0
+                : Math.floor(
+                    ((todayStatistic.audio.right + todayStatistic.sprint.right) /
+                      (todayStatistic.audio.right +
+                        todayStatistic.sprint.right +
+                        todayStatistic.sprint.wrong +
+                        todayStatistic.audio.wrong)) *
+                      100
+                  )}
               %
             </p>
           </div>
@@ -70,22 +76,30 @@ const TodayStatistics = () => {
           <GameStatistics
             name='Спринт'
             newWords={todayStatistic.sprint.new}
-            rigthAnswers={Math.floor(
-              (todayStatistic.sprint.right /
-                (todayStatistic.sprint.right + todayStatistic.sprint.wrong)) *
-                100
-            )}
+            rigthAnswers={
+              todayStatistic.sprint.right + todayStatistic.sprint.wrong === 0
+                ? 0
+                : Math.floor(
+                    (todayStatistic.sprint.right /
+                      (todayStatistic.sprint.right + todayStatistic.sprint.wrong)) *
+                      100
+                  )
+            }
             strike={todayStatistic.sprint.strike}
           />
 
           <GameStatistics
             name='Аудиовызов'
             newWords={todayStatistic.audio.new}
-            rigthAnswers={Math.floor(
-              (todayStatistic.audio.right /
-                (todayStatistic.audio.right + todayStatistic.audio.wrong)) *
-                100
-            )}
+            rigthAnswers={
+              todayStatistic.audio.right + todayStatistic.audio.wrong === 0
+                ? 0
+                : Math.floor(
+                    (todayStatistic.audio.right /
+                      (todayStatistic.audio.right + todayStatistic.audio.wrong)) *
+                      100
+                  )
+            }
             strike={todayStatistic.audio.strike}
           />
         </div>
