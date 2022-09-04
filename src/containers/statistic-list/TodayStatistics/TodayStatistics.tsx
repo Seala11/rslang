@@ -6,6 +6,7 @@ import { IDayStatistic, IGameStatistics } from 'src/requests/interfaceAPI';
 import { getUserId, getUserToken } from 'src/helpers/storage';
 import styles from 'src/containers/statistic-list/TodayStatistics/TodayStatistics.module.scss';
 import Loading from 'src/components/Loading';
+import GameStatistics from '../GameStatistics';
 
 const TodayStatistics = () => {
   const dispatch = useAppDispatch();
@@ -31,84 +32,78 @@ const TodayStatistics = () => {
   }
 
   return (
-    <div className={styles.statistics}>
+    <div className={styles.wrapper}>
       <p className={styles.today}>Сегодня</p>
-      <p className={styles.today}>1. в краткосрочной статистике по словам указываются:</p>
+      <div className={styles.statistics}>
+        <div className={styles.general_wrapper}>
+          <div className={styles.item}>
+            <p className={styles.item_subtitle}>Изучено слов</p>
+            <p className={styles.number}>
+              {todayStatistic.audio.learned +
+                todayStatistic.sprint.learned +
+                todayStatistic.textbook}
+            </p>
+          </div>
 
-      <p>
-        1.1. количество новых слов за день
-        <span className={styles.number}>
-          {todayStatistic.audio.new + todayStatistic.sprint.new}
-        </span>
-      </p>
+          <div className={`${styles.item} ${styles.border}`}>
+            <p className={styles.item_subtitle}>Новых слов</p>
+            <p className={styles.number}>{todayStatistic.audio.new + todayStatistic.sprint.new}</p>
+          </div>
 
-      <p>
-        1.2. количество изученных слов за день
-        <span className={styles.number}>
-          {todayStatistic.audio.learned + todayStatistic.sprint.learned + todayStatistic.textbook}
-        </span>
-      </p>
-
-      <p>
-        1.3. процент правильных ответов за день
-        <span className={styles.number}>
-          {Math.floor(
-            ((todayStatistic.audio.right + todayStatistic.sprint.right) /
-              (todayStatistic.audio.right +
+          <div className={styles.item}>
+            <p className={styles.item_subtitle}>Правильных ответов</p>
+            <p className={styles.number}>
+              {todayStatistic.audio.right +
                 todayStatistic.sprint.right +
                 todayStatistic.sprint.wrong +
-                todayStatistic.audio.wrong)) *
-              100
-          )}
-          %
-        </span>
-      </p>
+                todayStatistic.audio.wrong ===
+              0
+                ? 0
+                : Math.floor(
+                    ((todayStatistic.audio.right + todayStatistic.sprint.right) /
+                      (todayStatistic.audio.right +
+                        todayStatistic.sprint.right +
+                        todayStatistic.sprint.wrong +
+                        todayStatistic.audio.wrong)) *
+                      100
+                  )}
+              %
+            </p>
+          </div>
+        </div>
 
-      <p className={styles.today}>2. Sprint</p>
-      <p>
-        2.1. количество новых слов за день
-        <span className={styles.number}>{todayStatistic.sprint.new}</span>
-      </p>
+        <div className={styles.game_wrapper}>
+          <GameStatistics
+            name='Спринт'
+            newWords={todayStatistic.sprint.new}
+            rigthAnswers={
+              todayStatistic.sprint.right + todayStatistic.sprint.wrong === 0
+                ? 0
+                : Math.floor(
+                    (todayStatistic.sprint.right /
+                      (todayStatistic.sprint.right + todayStatistic.sprint.wrong)) *
+                      100
+                  )
+            }
+            strike={todayStatistic.sprint.strike}
+          />
 
-      <p>
-        2.2. процент правильных ответов
-        <span className={styles.number}>
-          {Math.floor(
-            (todayStatistic.sprint.right /
-              (todayStatistic.sprint.right + todayStatistic.sprint.wrong)) *
-              100
-          )}
-          %
-        </span>
-      </p>
-
-      <p>
-        2.3. самая длинная серия правильных ответов
-        <span className={styles.number}>{todayStatistic.sprint.strike}</span>
-      </p>
-
-      <p className={styles.today}>3. Audio</p>
-      <p>
-        3.1. количество новых слов за день
-        <span className={styles.number}>{todayStatistic.audio.new}</span>
-      </p>
-
-      <p>
-        3.2. процент правильных ответов
-        <span className={styles.number}>
-          {Math.floor(
-            (todayStatistic.audio.right /
-              (todayStatistic.audio.right + todayStatistic.audio.wrong)) *
-              100
-          )}
-          %
-        </span>
-      </p>
-
-      <p>
-        3.3. самая длинная серия правильных ответов
-        <span className={styles.number}>{todayStatistic.audio.strike}</span>
-      </p>
+          <GameStatistics
+            name='Аудиовызов'
+            newWords={todayStatistic.audio.new}
+            rigthAnswers={
+              todayStatistic.audio.right + todayStatistic.audio.wrong === 0
+                ? 0
+                : Math.floor(
+                    (todayStatistic.audio.right /
+                      (todayStatistic.audio.right + todayStatistic.audio.wrong)) *
+                      100
+                  )
+            }
+            strike={todayStatistic.audio.strike}
+          />
+        </div>
+      </div>
     </div>
   );
 };
