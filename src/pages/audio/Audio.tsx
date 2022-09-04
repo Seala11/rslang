@@ -1,5 +1,4 @@
 /* eslint-disable no-nested-ternary */
-/* eslint-disable no-console */
 import React, { useState } from 'react';
 import { useAppDispatch, useAppSelector } from 'src/store/hooks';
 import {

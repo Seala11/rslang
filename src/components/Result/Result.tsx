@@ -36,19 +36,7 @@ const Result: React.FC<IResultProps> = ({
   const navigate = useNavigate();
   const audio = new Audio();
 
-  // TODO: добавить флаг СПРИНТ или АУДИО
   useEffect(() => {
-    const stata = {
-      right: rightAnswers.length,
-      wrong: wrongAnswers.length,
-      strike,
-      new: getNumberOfNewWords(rightAnswers) + getNumberOfNewWords(wrongAnswers),
-      learned: getNumberOfLearnedWords(rightAnswers),
-    };
-
-    console.log('useeffect result');
-    console.log(stata);
-
     let option: UserWordOptions;
 
     switch (gameType) {
@@ -63,6 +51,14 @@ const Result: React.FC<IResultProps> = ({
       default:
         break;
     }
+
+    const stata = {
+      right: rightAnswers.length,
+      wrong: wrongAnswers.length,
+      strike,
+      new: getNumberOfNewWords(rightAnswers) + getNumberOfNewWords(wrongAnswers),
+      learned: getNumberOfLearnedWords(rightAnswers),
+    };
 
     dispatch(fetchGetUserStatistics(getUserId(), getUserToken(), gameType, stata));
 

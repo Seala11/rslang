@@ -45,11 +45,6 @@ const AudioGame: React.FC<{
   const [questionImg, setQuestionImg] = useState('');
   const [imgSize, setImgSize] = useState<'50%' | 'cover'>('50%');
 
-  console.log(result);
-  console.log(wordsArr);
-  console.log(question);
-  console.log(wordsArr[question]);
-
   function collectAnswers() {
     const set: Set<string> = new Set();
     set.add(words[question]);
