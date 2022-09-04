@@ -32,7 +32,7 @@ const Sprint = () => {
   const Game = words.length ? (
     <SprintGame onStartClick={handleStartClick} />
   ) : (
-    <Levels onStartClick={handleStartClick} />
+    <Levels onStartClick={handleStartClick} title='Спринт' />
   );
 
   return loading ? <Loading /> : Game;
