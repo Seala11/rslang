@@ -1,10 +1,14 @@
 @use 'src/sass/abstracts/mixins' as *;
 
 .title {
-  @include roboto($fs: 4rem, $ff: var(--ff-roboto-bold), $fw: 700);
-  color: var(--primary);
-  padding: 1.5rem 0 3rem;
+  @include roboto($fs: 4rem, $ff: var(--ff-roboto-bold), $fw: 700, $color: var(--primary));
+  padding: 1.5rem 0 4rem;
   text-align: center;
+
+  @include media-tablet {
+    font-size: 3rem;
+    padding: 1.5rem 0 2rem;
+  }
 }
 
 .subtitle {
