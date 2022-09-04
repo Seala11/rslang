@@ -21,7 +21,7 @@
       padding: 6rem 3rem;
     }
     @include media-mobile {
-      padding: 6rem 1rem;
+      padding: 3rem 1rem;
     }
   }
 }
@@ -30,6 +30,11 @@
   width: 6rem;
   height: 6.5rem;
   cursor: pointer;
+
+  @include media-mobile {
+    height: 5.6rem;
+    width: auto;
+  }
 }
 
 .nav {
