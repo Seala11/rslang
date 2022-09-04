@@ -52,7 +52,7 @@
     gap: 5rem;
 
     @include media-tablet-large {
-      gap:3rem;
+      gap: 3rem;
     }
 
     @include media-tablet {
@@ -73,7 +73,7 @@
       &.nav__list_open {
         right: 0;
         transition: 1s;
-        box-shadow: 0px 0px 2000px 1000px rgba(0,0,0,0.8);
+        box-shadow: 0px 0px 2000px 1000px rgba(0, 0, 0, 0.8);
       }
     }
   }
@@ -127,7 +127,7 @@
 
   &::after,
   &::before {
-    content: "";
+    content: '';
   }
 
   & .line,

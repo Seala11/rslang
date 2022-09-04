@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import { NavLink, useLocation, useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from 'src/store/hooks';
 import {
@@ -34,14 +34,18 @@ const Header: React.FC = () => {
     }
   };
 
-function toggleMenu() {
-  setIsOpen(!isOpen)
-}
+  function toggleMenu() {
+    setIsOpen(!isOpen);
+  }
 
   return (
     <header className={styles.header}>
       <div className={styles.header__wrapper}>
-        <NavLink to="/"><Image {...{ altImg: 'Logo', srcImg: '/assets/icons/logo.png', className: styles.logo }} /></NavLink>
+        <NavLink to='/'>
+          <Image
+            {...{ altImg: 'Logo', srcImg: '/assets/icons/logo.png', className: styles.logo }}
+          />
+        </NavLink>
         <nav className={styles.nav}>
           <ul className={`${styles.nav__list} ${isOpen ? styles.nav__list_open : ''}`}>
             {NAV_LIST.map((item) => (
@@ -57,14 +61,18 @@ function toggleMenu() {
               </li>
             ))}
           </ul>
-          <button onClick={()=>toggleMenu()} className={`${styles.hamburger} ${isOpen ? styles.hamburger_active : ''}`} type="button">
-               <span className={styles.line} />
+          <button
+            onClick={() => toggleMenu()}
+            className={`${styles.hamburger} ${isOpen ? styles.hamburger_active : ''}`}
+            type='button'
+          >
+            <span className={styles.line} />
           </button>
-              <NavLink to='/login'>
-                <button className={styles.logBtn} type='button' onClick={userLogoutHandler}>
-                  {userIsLogged(userData?.message) ? 'Выйти' : 'Войти'}
-                </button>
-              </NavLink>
+          <NavLink to='/login'>
+            <button className={styles.logBtn} type='button' onClick={userLogoutHandler}>
+              {userIsLogged(userData?.message) ? 'Выйти' : 'Войти'}
+            </button>
+          </NavLink>
         </nav>
       </div>
     </header>
