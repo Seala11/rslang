@@ -4,6 +4,7 @@ import { removeWords, selectWords } from 'src/store/sprintSlice';
 import Result from 'src/components/Result';
 import { ISprintWord } from 'src/store/types';
 import { adaptToServerSprintWords } from 'src/helpers/utils';
+import { StatisticsOption } from 'src/helpers/constRequestsAPI';
 import styles from './SprintGame.module.scss';
 
 const SECONDS = 60;
@@ -171,6 +172,7 @@ const SprintGame: React.FC<ISprintGameProps> = ({ onStartClick }) => {
         wrongAnswers={adaptToServerSprintWords(wrongAnswers)}
         onPlayAgain={() => onStartClick(group)}
         strike={strike.value}
+        gameType={StatisticsOption.SPRINT}
       />
     ),
     [group, onStartClick, rightAnswers, strike.value, wrongAnswers]

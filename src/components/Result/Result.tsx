@@ -21,18 +21,23 @@ interface IResultProps {
   rightAnswers: IWord[];
   wrongAnswers: IWord[];
   strike: number;
+  gameType: StatisticsOption;
   onPlayAgain: () => void;
 }
 
-const Result: React.FC<IResultProps> = ({ rightAnswers, wrongAnswers, strike, onPlayAgain }) => {
+const Result: React.FC<IResultProps> = ({
+  rightAnswers,
+  wrongAnswers,
+  strike,
+  gameType,
+  onPlayAgain,
+}) => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const audio = new Audio();
 
   // TODO: добавить флаг СПРИНТ или АУДИО
   useEffect(() => {
-    console.log('useeffect result');
-
     const stata = {
       right: rightAnswers.length,
       wrong: wrongAnswers.length,
@@ -41,9 +46,25 @@ const Result: React.FC<IResultProps> = ({ rightAnswers, wrongAnswers, strike, on
       learned: getNumberOfLearnedWords(rightAnswers),
     };
 
+    console.log('useeffect result');
     console.log(stata);
 
-    dispatch(fetchGetUserStatistics(getUserId(), getUserToken(), StatisticsOption.SPRINT, stata));
+    let option: UserWordOptions;
+
+    switch (gameType) {
+      case StatisticsOption.SPRINT:
+        option = UserWordOptions.SPRINT;
+        break;
+
+      case StatisticsOption.AUDIO:
+        option = UserWordOptions.AUDIO;
+        break;
+
+      default:
+        break;
+    }
+
+    dispatch(fetchGetUserStatistics(getUserId(), getUserToken(), gameType, stata));
 
     rightAnswers.forEach((word) => {
       dispatch(
@@ -52,7 +73,7 @@ const Result: React.FC<IResultProps> = ({ rightAnswers, wrongAnswers, strike, on
           word?._id,
           getUserToken(),
           `${word?.group}`,
-          UserWordOptions.SPRINT,
+          option,
           GameOptions.CORRECT
         )
       );
@@ -65,12 +86,12 @@ const Result: React.FC<IResultProps> = ({ rightAnswers, wrongAnswers, strike, on
           word?._id,
           getUserToken(),
           `${word?.group}`,
-          UserWordOptions.SPRINT,
+          option,
           GameOptions.WRONG
         )
       );
     });
-  }, [dispatch, rightAnswers, strike, wrongAnswers]);
+  }, [dispatch, gameType, rightAnswers, strike, wrongAnswers]);
 
   const handlePlayClick = (src: string) => {
     audio.src = `${UrlPath.BASE}/${src}`;

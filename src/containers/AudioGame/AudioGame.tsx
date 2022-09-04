@@ -10,7 +10,7 @@ import {
   updateQuestion,
 } from 'src/store/audioSlice';
 import { useAppDispatch, useAppSelector } from 'src/store/hooks';
-import { UrlPath } from 'src/helpers/constRequestsAPI';
+import { StatisticsOption, UrlPath } from 'src/helpers/constRequestsAPI';
 import { NavLink } from 'react-router-dom';
 import { IWord } from 'src/store/types';
 import Result from 'src/components/Result';
@@ -247,6 +247,7 @@ const AudioGame: React.FC<{
           wrongAnswers={wrongAnswers}
           onPlayAgain={handlePlayAgain}
           strike={strike.value}
+          gameType={StatisticsOption.AUDIO}
         />
       ) : (
         <div className={styles.field}>
