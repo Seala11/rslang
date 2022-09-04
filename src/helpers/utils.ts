@@ -21,8 +21,6 @@ export const adaptToLocalSprintWords = (words: IWord[]) =>
 export const adaptToServerSprintWords = (words: ISprintWord[]) => {
   const newWords = [];
 
-  // console.log(111);
-
   for (let i = 0; i < words.length; i += 1) {
     const newWord = { ...words[i] };
     delete newWord.wrongTranslate;
@@ -31,18 +29,24 @@ export const adaptToServerSprintWords = (words: ISprintWord[]) => {
     newWords.push(newWord);
   }
 
-  // console.log(newWords);
-
   return newWords;
 };
 
-// words.map((word) => {
-//   const sprintWord = { ...word };
+const isNewWord = (word: IWord) => {
+  if (!word.userWord) return true;
 
-//   console.log(sprintWord);
+  return (
+    word.userWord?.optional.sprint.right === 0 &&
+    word.userWord?.optional.sprint.wrong === 0 &&
+    word.userWord?.optional.audio.right === 0 &&
+    word.userWord?.optional.audio.wrong === 0
+  );
+};
 
-//   delete sprintWord.wrongTranslate;
-//   delete sprintWord.choice;
+export const getNumberOfNewWords = (words: IWord[]) =>
+  words.filter((word) => isNewWord(word)).length;
 
-//   return sprintWord;
-// });
+const isLearnedWord = (word: IWord) => !word.userWord || !word.userWord.optional.learned;
+
+export const getNumberOfLearnedWords = (words: IWord[]) =>
+  words.filter((word) => isLearnedWord(word)).length;

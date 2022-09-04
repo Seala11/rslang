@@ -8,6 +8,7 @@ import { IWord, ISprintState, ISprintWord } from './types';
 
 const initialState: ISprintState = {
   words: [],
+  group: 0,
 };
 
 const sprintSlice = createSlice({
@@ -17,13 +18,16 @@ const sprintSlice = createSlice({
     addWords(state, action: PayloadAction<ISprintWord[]>) {
       state.words = action.payload;
     },
+    updateGroup(state, action: PayloadAction<number>) {
+      state.group = action.payload;
+    },
     removeWords(state) {
       state.words = [];
     },
   },
 });
 
-export const { addWords, removeWords } = sprintSlice.actions;
+export const { addWords, removeWords, updateGroup } = sprintSlice.actions;
 
 export const fetchWords = (group: string, page: string) => async (dispatch: AppDispatch) => {
   const words = await getWordsAPI(group, page);

@@ -236,7 +236,6 @@ export const fetchCreateUserWord =
       } else {
         if (response.status === ResponseStatus.NOT_FOUND) {
           // new word: we create default object than update it and send to back
-          console.log('создаем новое слово');
 
           const DEFAULT_USER_WORD_OPTIONS = {
             difficulty: '0',

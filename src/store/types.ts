@@ -40,6 +40,7 @@ export interface IAudioState {
 
 export interface ISprintState {
   words: ISprintWord[];
+  group: number;
 }
 
 export interface IUserStatistics {

@@ -1,16 +1,23 @@
 /* eslint-disable no-underscore-dangle */
 import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { GameOptions, UrlPath, UserWordOptions } from 'src/helpers/constRequestsAPI';
+import {
+  GameOptions,
+  StatisticsOption,
+  UrlPath,
+  UserWordOptions,
+} from 'src/helpers/constRequestsAPI';
 import { getUserId, getUserToken } from 'src/helpers/storage';
+import { getNumberOfLearnedWords, getNumberOfNewWords } from 'src/helpers/utils';
 import { addDis, updateAnswers, updateQuestion } from 'src/store/audioSlice';
 import { useAppDispatch } from 'src/store/hooks';
 import { removeWords } from 'src/store/sprintSlice';
+import { fetchGetUserStatistics } from 'src/store/statisticsSlice';
 import { IWord } from 'src/store/types';
 import { fetchCreateUserWord } from 'src/store/userWordsSlice';
 import styles from './Result.module.scss';
 
-export interface IResultProps {
+interface IResultProps {
   rightAnswers: IWord[];
   wrongAnswers: IWord[];
   strike: number;
@@ -22,7 +29,22 @@ const Result: React.FC<IResultProps> = ({ rightAnswers, wrongAnswers, strike, on
   const navigate = useNavigate();
   const audio = new Audio();
 
+  // TODO: добавить флаг СПРИНТ или АУДИО
   useEffect(() => {
+    console.log('useeffect result');
+
+    const stata = {
+      right: rightAnswers.length,
+      wrong: wrongAnswers.length,
+      strike,
+      new: getNumberOfNewWords(rightAnswers) + getNumberOfNewWords(wrongAnswers),
+      learned: getNumberOfLearnedWords(rightAnswers),
+    };
+
+    console.log(stata);
+
+    dispatch(fetchGetUserStatistics(getUserId(), getUserToken(), StatisticsOption.SPRINT, stata));
+
     rightAnswers.forEach((word) => {
       dispatch(
         fetchCreateUserWord(
@@ -48,7 +70,7 @@ const Result: React.FC<IResultProps> = ({ rightAnswers, wrongAnswers, strike, on
         )
       );
     });
-  }, [dispatch, rightAnswers, wrongAnswers]);
+  }, [dispatch, rightAnswers, strike, wrongAnswers]);
 
   const handlePlayClick = (src: string) => {
     audio.src = `${UrlPath.BASE}/${src}`;

@@ -16,16 +16,16 @@ import type { AppDispatch, RootState } from '.';
 import { IUserStatistics } from './types';
 import { logoutUnathorizedUser } from './userSlice';
 
-const DEFAULT_STATISTICS: IStatistics = {
-  learnedWords: 0,
-  optional: {},
-};
+// const DEFAULT_STATISTICS: IStatistics = {
+//   learnedWords: 0,
+//   optional: {},
+// };
 
-const DEFAULT_DAY_STATISTICS: IGameStatistics = {
-  audio: { right: 0, wrong: 0, new: 0, strike: 0, learned: 0 },
-  sprint: { right: 0, wrong: 0, new: 0, strike: 0, learned: 0 },
-  textbook: 0,
-};
+// const DEFAULT_DAY_STATISTICS: IGameStatistics = {
+//   audio: { right: 0, wrong: 0, new: 0, strike: 0, learned: 0 },
+//   sprint: { right: 0, wrong: 0, new: 0, strike: 0, learned: 0 },
+//   textbook: 0,
+// };
 
 const initialState: IUserStatistics = {
   userStatistics: null,
@@ -85,7 +85,7 @@ export const updateStatisticsData =
       }
       case StatisticsOption.SPRINT: {
         if (!currGameStatistics) return;
-        statistics.learnedWords += currGameStatistics.right;
+        statistics.learnedWords += currGameStatistics.learned;
         statistics.optional[date].sprint.wrong += currGameStatistics.wrong;
         statistics.optional[date].sprint.right += currGameStatistics.right;
         statistics.optional[date].sprint.new += currGameStatistics.new;
@@ -98,7 +98,7 @@ export const updateStatisticsData =
       }
       case StatisticsOption.AUDIO: {
         if (!currGameStatistics) return;
-        statistics.learnedWords += currGameStatistics.right;
+        statistics.learnedWords += currGameStatistics.learned;
         statistics.optional[date].audio.wrong += currGameStatistics.wrong;
         statistics.optional[date].audio.right += currGameStatistics.right;
         statistics.optional[date].audio.new += currGameStatistics.new;
@@ -135,6 +135,11 @@ export const fetchGetUserStatistics =
         const { id, ...userStatistics } = userStatisticsJson;
 
         if (!userStatistics.optional[date]) {
+          const DEFAULT_DAY_STATISTICS: IGameStatistics = {
+            audio: { right: 0, wrong: 0, new: 0, strike: 0, learned: 0 },
+            sprint: { right: 0, wrong: 0, new: 0, strike: 0, learned: 0 },
+            textbook: 0,
+          };
           const currDay: IDayStatistic = { [date]: DEFAULT_DAY_STATISTICS };
           userStatistics.optional = { ...userStatistics.optional, ...currDay };
         }
@@ -149,6 +154,15 @@ export const fetchGetUserStatistics =
       } else {
         switch (response.status) {
           case ResponseStatus.NOT_FOUND: {
+            const DEFAULT_STATISTICS: IStatistics = {
+              learnedWords: 0,
+              optional: {},
+            };
+            const DEFAULT_DAY_STATISTICS: IGameStatistics = {
+              audio: { right: 0, wrong: 0, new: 0, strike: 0, learned: 0 },
+              sprint: { right: 0, wrong: 0, new: 0, strike: 0, learned: 0 },
+              textbook: 0,
+            };
             const newStatistics = { ...DEFAULT_STATISTICS };
             const currDay: IDayStatistic = { [date]: DEFAULT_DAY_STATISTICS };
             newStatistics.optional = currDay;
@@ -195,6 +209,11 @@ export const fetchGetTodayStatistics =
         const { id, ...userStatistics } = userStatisticsJson;
 
         if (!userStatistics.optional[date]) {
+          const DEFAULT_DAY_STATISTICS: IGameStatistics = {
+            audio: { right: 0, wrong: 0, new: 0, strike: 0, learned: 0 },
+            sprint: { right: 0, wrong: 0, new: 0, strike: 0, learned: 0 },
+            textbook: 0,
+          };
           const currDay: IDayStatistic = { [date]: DEFAULT_DAY_STATISTICS };
           userStatistics.optional = { ...userStatistics.optional, ...currDay };
         }
@@ -203,6 +222,15 @@ export const fetchGetTodayStatistics =
       } else {
         switch (response.status) {
           case ResponseStatus.NOT_FOUND: {
+            const DEFAULT_STATISTICS: IStatistics = {
+              learnedWords: 0,
+              optional: {},
+            };
+            const DEFAULT_DAY_STATISTICS: IGameStatistics = {
+              audio: { right: 0, wrong: 0, new: 0, strike: 0, learned: 0 },
+              sprint: { right: 0, wrong: 0, new: 0, strike: 0, learned: 0 },
+              textbook: 0,
+            };
             const newStatistics = { ...DEFAULT_STATISTICS };
             const currDay: IDayStatistic = { [date]: DEFAULT_DAY_STATISTICS };
             newStatistics.optional = currDay;

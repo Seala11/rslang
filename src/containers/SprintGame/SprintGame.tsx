@@ -10,8 +10,13 @@ const SECONDS = 60;
 const audioCorrect = new Audio('/audio/correct.mp3');
 const audioWrong = new Audio('/audio/wrong.mp3');
 
-const SprintGame = () => {
+interface ISprintGameProps {
+  onStartClick: (id: number) => void;
+}
+
+const SprintGame: React.FC<ISprintGameProps> = ({ onStartClick }) => {
   const words = useAppSelector(selectWords);
+  const group = useAppSelector((state) => state.sprint.group);
   const dispatch = useAppDispatch();
   const [step, setStep] = useState(0);
   const [points, setPoints] = useState({ value: 0, weight: 1 });
@@ -118,17 +123,6 @@ const SprintGame = () => {
     }
   };
 
-  const handlePlayAgain = () => {
-    setStep(0);
-    setPoints({ value: 0, weight: 1 });
-    setProgress(0);
-    setFinishGame(false);
-    setRightAnswers([]);
-    setWrongAnswers([]);
-    setTime(SECONDS);
-    setStrike({ value: 0, temp: 0 });
-  };
-
   const GameProccess = (
     <div className={styles.proccess}>
       <div className={styles.points}>
@@ -175,11 +169,11 @@ const SprintGame = () => {
       <Result
         rightAnswers={adaptToServerSprintWords(rightAnswers)}
         wrongAnswers={adaptToServerSprintWords(wrongAnswers)}
-        onPlayAgain={handlePlayAgain}
+        onPlayAgain={() => onStartClick(group)}
         strike={strike.value}
       />
     ),
-    [rightAnswers, strike.value, wrongAnswers]
+    [group, onStartClick, rightAnswers, strike.value, wrongAnswers]
   );
 
   return (
