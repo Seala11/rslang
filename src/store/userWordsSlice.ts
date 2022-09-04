@@ -32,6 +32,7 @@ const initialState: IUserWordsState = {
   diffWords: [],
   diffSectionEmpty: null,
   currPageLearned: false,
+  audioPlay: false,
 };
 
 const userWordsSlice = createSlice({
@@ -55,6 +56,12 @@ const userWordsSlice = createSlice({
     removeCurrPageLearned(state) {
       state.currPageLearned = false;
     },
+    setAudioPlay(state) {
+      state.audioPlay = true;
+    },
+    removeAudioPlay(state) {
+      state.audioPlay = false;
+    }
   },
 });
 
@@ -64,6 +71,8 @@ export const {
   setDiffSectionEmpty,
   removeCurrPageLearned,
   setCurrPageLearned,
+  setAudioPlay,
+  removeAudioPlay,
 } = userWordsSlice.actions;
 
 export const fetchGetUserWords =
@@ -280,5 +289,6 @@ export const fetchCreateUserWord =
 export const getDifficultWords = (state: RootState) => state.userWords.diffWords;
 export const difficultSectionIsEmpty = (state: RootState) => state.userWords.diffSectionEmpty;
 export const getCurrPageLearned = (state: RootState) => state.userWords.currPageLearned;
+export const getAudioPlay = (state: RootState) => state.userWords.audioPlay;
 
 export default userWordsSlice.reducer;

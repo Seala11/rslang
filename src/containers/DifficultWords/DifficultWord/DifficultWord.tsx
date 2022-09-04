@@ -5,51 +5,28 @@ import React, { useEffect, useState, useCallback } from 'react';
 import styles from 'src/containers/DifficultWords/DifficultWord/DifficultWord.module.scss';
 import { UserWordOptions, UrlPath } from 'src/helpers/constRequestsAPI';
 import { getUserId, getUserToken } from 'src/helpers/storage';
-import { useAppDispatch } from 'src/store/hooks';
-import { fetchCreateUserWord } from 'src/store/userWordsSlice';
+import { useAppDispatch, useAppSelector } from 'src/store/hooks';
+import { fetchCreateUserWord, getAudioPlay, removeAudioPlay, setAudioPlay } from 'src/store/userWordsSlice';
 import { IDifficultWordProps } from './IDifficultWord.Props';
-
-// id: string;
-//   _id?: string;
-//   group: number;
-//   page: number;
-//   word: string;
-//   image: string;
-//   audio: string;
-//   audioMeaning: string;
-//   audioExample: string;
-//   textMeaning: string;
-//   textExample: string;
-//   transcription: string;
-//   wordTranslate: string;
-//   textMeaningTranslate: string;
-//   textExampleTranslate: string;
-//   userWord?: IUserWord;
-
-// Значение
-// Alcohol is a type of drink that can make people drunk.
-
-// Алкоголь - это тип напитка, который может сделать людей пьяными
-
-// Пример
-// A person should not drive a car after he or she has been drinking alcohol.
-
-// Человек не должен водить машину после того, как он выпил алкоголь
 
 let audioCounter = 0;
 let player: HTMLAudioElement;
 
 const DifficultWord: React.FC<IDifficultWordProps> = ({ word }) => {
   const dispatch = useAppDispatch();
-  const [disable, setDisable] = useState(false);
-  const [stop, setStop] = useState(false);
-  const [disabled, setDisabled] = useState(false);
+  const audioPlay = useAppSelector(getAudioPlay);
 
-  useEffect(() => {}, [disable]);
+  const [disableButton, setDisableButton] = useState(false);
+  const [stop, setStop] = useState(false);
+  const [disableAudio, setDisableAudio] = useState(false);
+
+  useEffect(() => {
+  }, [disableButton]);
 
   const removeWord = () => {
     console.log(word);
-    setDisable(() => true);
+    dispatch(removeAudioPlay());
+    setDisableButton(() => true);
     dispatch(
       fetchCreateUserWord(
         getUserId(),
@@ -75,9 +52,12 @@ const DifficultWord: React.FC<IDifficultWordProps> = ({ word }) => {
       `${UrlPath.BASE}/${word?.audioExample}`,
     ];
 
+    console.log(audioSources);
+
     if (audioCounter >= audioSources.length) {
       stopAudio();
-      setDisabled(false);
+      dispatch(removeAudioPlay());
+      setDisableAudio(false);
       setStop(false);
       return;
     }
@@ -85,7 +65,7 @@ const DifficultWord: React.FC<IDifficultWordProps> = ({ word }) => {
     player.src = audioSources[audioCounter];
     await player.play();
     audioCounter += 1;
-  }, [word]);
+  }, [word, dispatch]);
 
   useEffect(() => {
     player = new Audio();
@@ -99,20 +79,27 @@ const DifficultWord: React.FC<IDifficultWordProps> = ({ word }) => {
     return () => {
       player.removeEventListener('ended', playerHandler);
       stopAudio();
-      setDisabled(false);
+      dispatch(removeAudioPlay());
+      setDisableAudio(false);
       setStop(false);
     };
-  }, [playAudio, word]);
+  }, [playAudio, word, dispatch]);
 
   const playClickHandler = async () => {
-    setDisabled(true);
+    if (audioPlay) {
+      console.log('already play')
+      return;
+    }
+    setDisableAudio(true);
+    dispatch(setAudioPlay());
     await playAudio();
     setStop(true);
   };
 
   const stopClickHandler = () => {
     stopAudio();
-    setDisabled(false);
+    setDisableAudio(false);
+    dispatch(removeAudioPlay());
     setStop(false);
   };
 
@@ -147,7 +134,7 @@ const DifficultWord: React.FC<IDifficultWordProps> = ({ word }) => {
                 className={styles.btn}
                 type='button'
                 onClick={playClickHandler}
-                disabled={disabled}
+                disabled={disableAudio}
               >
                 <svg
                   focusable='false'
@@ -168,24 +155,24 @@ const DifficultWord: React.FC<IDifficultWordProps> = ({ word }) => {
           <h5 className={styles.descrTitle}>Значение</h5>
           <p
             className={styles.descrText}
-            dangerouslySetInnerHTML={{ __html: word?.textMeaning as string }}
+            dangerouslySetInnerHTML={{ __html: word?.textMeaning || '' }}
           />
           <p
             className={`${styles.descrText} ${styles.descrSecond}`}
-            dangerouslySetInnerHTML={{ __html: word?.textMeaningTranslate as string }}
+            dangerouslySetInnerHTML={{ __html: word?.textMeaningTranslate || '' }}
           />
           <h5 className={styles.descrTitle}>Пример</h5>
           <p
             className={styles.descrText}
-            dangerouslySetInnerHTML={{ __html: word?.textExample as string }}
+            dangerouslySetInnerHTML={{ __html: word?.textExample || '' }}
           />
           <p
             className={styles.descrText}
-            dangerouslySetInnerHTML={{ __html: word?.textExampleTranslate as string }}
+            dangerouslySetInnerHTML={{ __html: word?.textExampleTranslate || '' }}
           />
         </div>
       </div>
-      <button type='button' onClick={removeWord} className={styles.button} disabled={disable}>
+      <button type='button' onClick={removeWord} className={styles.button} disabled={disableButton}>
         Удалить из списка
       </button>
     </div>

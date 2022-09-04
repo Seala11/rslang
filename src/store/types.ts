@@ -50,4 +50,5 @@ export interface IUserWordsState {
   diffSectionEmpty: boolean | null;
   diffWords: IWord[];
   currPageLearned: boolean;
+  audioPlay: boolean;
 }
