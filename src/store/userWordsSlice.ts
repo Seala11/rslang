@@ -32,7 +32,7 @@ const initialState: IUserWordsState = {
   diffWords: [],
   diffSectionEmpty: null,
   currPageLearned: false,
-  audioPlay: false,
+  audioPlay: undefined,
 };
 
 const userWordsSlice = createSlice({
@@ -56,11 +56,11 @@ const userWordsSlice = createSlice({
     removeCurrPageLearned(state) {
       state.currPageLearned = false;
     },
-    setAudioPlay(state) {
-      state.audioPlay = true;
+    setAudioPlay(state, action: PayloadAction<string | undefined>) {
+      state.audioPlay = action.payload;
     },
     removeAudioPlay(state) {
-      state.audioPlay = false;
+      state.audioPlay = undefined;
     }
   },
 });

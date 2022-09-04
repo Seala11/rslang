@@ -1,5 +1,5 @@
 /* eslint-disable no-underscore-dangle */
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { getUserId, getUserToken } from 'src/helpers/storage';
 import { useAppDispatch, useAppSelector } from 'src/store/hooks';
 import Loading from 'src/components/Loading';
@@ -18,6 +18,8 @@ const DifficultWords = () => {
   const difficultWords = useAppSelector(getDifficultWords);
   const empty = useAppSelector(difficultSectionIsEmpty);
 
+  const audio = useRef(new Audio());
+
   useEffect(() => {
     if (loading || empty) return;
     if (difficultWords.length === 0) dispatch(fetchGetAllDiffWords(getUserId(), getUserToken()));
@@ -30,7 +32,7 @@ const DifficultWords = () => {
       {loading && difficultWords.length === 0 ? (
         <Loading />
       ) : (
-        difficultWords.map((word) => <DifficultWord key={word._id} word={word} />)
+        difficultWords.map((word) => <DifficultWord key={word._id} word={word} audio={audio} />)
       )}
     </div>
   );

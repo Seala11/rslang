@@ -1,32 +1,62 @@
 /* eslint-disable react/no-danger */
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable no-console */
-import React, { useEffect, useState, useCallback } from 'react';
+// import React, { useEffect, useState, useCallback, useRef } from 'react';
+import React, { useEffect, useState } from 'react';
 import styles from 'src/containers/DifficultWords/DifficultWord/DifficultWord.module.scss';
 import { UserWordOptions, UrlPath } from 'src/helpers/constRequestsAPI';
 import { getUserId, getUserToken } from 'src/helpers/storage';
 import { useAppDispatch, useAppSelector } from 'src/store/hooks';
-import { fetchCreateUserWord, getAudioPlay, removeAudioPlay, setAudioPlay } from 'src/store/userWordsSlice';
+import {
+  fetchCreateUserWord,
+  getAudioPlay,
+  removeAudioPlay,
+  setAudioPlay,
+} from 'src/store/userWordsSlice';
 import { IDifficultWordProps } from './IDifficultWord.Props';
 
-let audioCounter = 0;
-let player: HTMLAudioElement;
-
-const DifficultWord: React.FC<IDifficultWordProps> = ({ word }) => {
+const DifficultWord: React.FC<IDifficultWordProps> = ({ word, audio }) => {
   const dispatch = useAppDispatch();
   const audioPlay = useAppSelector(getAudioPlay);
+  const player = audio.current;
 
   const [disableButton, setDisableButton] = useState(false);
-  const [stop, setStop] = useState(false);
-  const [disableAudio, setDisableAudio] = useState(false);
 
-  useEffect(() => {
-  }, [disableButton]);
+  useEffect(() => {}, [disableButton]);
+
+  const playClickHandler = async () => {
+    dispatch(setAudioPlay(word?._id));
+    let currSrc = 0;
+
+    const audioSources = [
+      `${UrlPath.BASE}/${word?.audio}`,
+      `${UrlPath.BASE}/${word?.audioMeaning}`,
+      `${UrlPath.BASE}/${word?.audioExample}`,
+    ];
+
+    player.src = audioSources[currSrc];
+    player.play().catch((err) => err);
+    currSrc += 1;
+
+    player.onended = () => {
+      if (currSrc < audioSources.length) {
+        player.src = audioSources[currSrc];
+        player.play();
+        currSrc += 1;
+      } else {
+        dispatch(removeAudioPlay());
+      }
+    };
+  };
+
+  const stopClickHandler = () => {
+    player.pause()
+    dispatch(removeAudioPlay());
+  };
 
   const removeWord = () => {
-    console.log(word);
-    dispatch(removeAudioPlay());
     setDisableButton(() => true);
+    stopClickHandler();
     dispatch(
       fetchCreateUserWord(
         getUserId(),
@@ -38,69 +68,6 @@ const DifficultWord: React.FC<IDifficultWordProps> = ({ word }) => {
         `${word?.page}`
       )
     );
-  };
-
-  const stopAudio = () => {
-    player.pause();
-    audioCounter = 0;
-  };
-
-  const playAudio = useCallback(async () => {
-    const audioSources = [
-      `${UrlPath.BASE}/${word?.audio}`,
-      `${UrlPath.BASE}/${word?.audioMeaning}`,
-      `${UrlPath.BASE}/${word?.audioExample}`,
-    ];
-
-    console.log(audioSources);
-
-    if (audioCounter >= audioSources.length) {
-      stopAudio();
-      dispatch(removeAudioPlay());
-      setDisableAudio(false);
-      setStop(false);
-      return;
-    }
-
-    player.src = audioSources[audioCounter];
-    await player.play();
-    audioCounter += 1;
-  }, [word, dispatch]);
-
-  useEffect(() => {
-    player = new Audio();
-
-    const playerHandler = () => {
-      playAudio();
-    };
-
-    player.addEventListener('ended', playerHandler);
-
-    return () => {
-      player.removeEventListener('ended', playerHandler);
-      stopAudio();
-      dispatch(removeAudioPlay());
-      setDisableAudio(false);
-      setStop(false);
-    };
-  }, [playAudio, word, dispatch]);
-
-  const playClickHandler = async () => {
-    if (audioPlay) {
-      console.log('already play')
-      return;
-    }
-    setDisableAudio(true);
-    dispatch(setAudioPlay());
-    await playAudio();
-    setStop(true);
-  };
-
-  const stopClickHandler = () => {
-    stopAudio();
-    setDisableAudio(false);
-    dispatch(removeAudioPlay());
-    setStop(false);
   };
 
   return (
@@ -115,7 +82,7 @@ const DifficultWord: React.FC<IDifficultWordProps> = ({ word }) => {
           <span className={styles.wordTranslate}>{word?.wordTranslate}</span>
           <div className={styles.audioWrapper}>
             <span className={styles.transcription}>{word?.transcription}</span>
-            {stop ? (
+            {audioPlay === word?._id ? (
               <button className={styles.btn} type='button' onClick={stopClickHandler}>
                 <svg
                   focusable='false'
@@ -130,12 +97,7 @@ const DifficultWord: React.FC<IDifficultWordProps> = ({ word }) => {
                 </svg>
               </button>
             ) : (
-              <button
-                className={styles.btn}
-                type='button'
-                onClick={playClickHandler}
-                disabled={disableAudio}
-              >
+              <button className={styles.btn} type='button' onClick={playClickHandler}>
                 <svg
                   focusable='false'
                   aria-hidden='true'
