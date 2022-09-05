@@ -37,11 +37,21 @@ const audioSlice = createSlice({
     updateGroup(state, action: PayloadAction<number>) {
       state.group = action.payload;
     },
+    clearWords(state) {
+      state.wordsArr = [];
+    },
   },
 });
 
-export const { addWordsArr, addLoading, addDis, updateAnswers, updateQuestion, updateGroup } =
-  audioSlice.actions;
+export const {
+  addWordsArr,
+  addLoading,
+  addDis,
+  updateAnswers,
+  updateQuestion,
+  updateGroup,
+  clearWords,
+} = audioSlice.actions;
 
 export const fetchWordsArr = (group: string, page: string) => async (dispatch: AppDispatch) => {
   dispatch(addLoading(true));

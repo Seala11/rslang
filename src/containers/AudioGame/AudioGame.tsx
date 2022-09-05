@@ -8,6 +8,7 @@ import {
   updateAnswers,
   getQuestion,
   updateQuestion,
+  clearWords,
 } from 'src/store/audioSlice';
 import { useAppDispatch, useAppSelector } from 'src/store/hooks';
 import { StatisticsOption, UrlPath } from 'src/helpers/constRequestsAPI';
@@ -22,9 +23,8 @@ const audioCorrect = new Audio('/audio/correct.mp3');
 const audioWrong = new Audio('/audio/wrong.mp3');
 
 const AudioGame: React.FC<{
-  setPage: React.Dispatch<React.SetStateAction<string>>;
   onStartClick: (id: number) => void;
-}> = ({ setPage, onStartClick }) => {
+}> = ({ onStartClick }) => {
   const dispatch = useAppDispatch();
   const disable = useAppSelector(isDis);
   const answers = useAppSelector(getAnswers);
@@ -119,8 +119,8 @@ const AudioGame: React.FC<{
     dispatch(updateQuestion(0));
     dispatch(updateAnswers([]));
     dispatch(addDis(false));
+    dispatch(clearWords());
     if (document.fullscreenElement) document.exitFullscreen();
-    setPage('main');
   }
 
   const stopAudio = () => {

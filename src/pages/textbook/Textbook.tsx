@@ -20,6 +20,7 @@ import { getUserData, getUserIsLoading } from 'src/store/userSlice';
 import { getUserId, getUserToken, userIsInStorage, userIsLogged } from 'src/helpers/storage';
 import { fetchGetUserWords } from 'src/store/userWordsSlice';
 import Loading from 'src/components/Loading';
+import GameList from 'src/containers/GameList';
 import styles from './Textbook.module.scss';
 
 enum TextbookSections {
@@ -169,6 +170,7 @@ const Textbook = () => {
               onPaginationClick={handlePaginationClick}
             />
             <h2 className={styles.title}>Игры</h2>
+            <GameList />
           </>
         ) : (
           <DifficultWords
