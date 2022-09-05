@@ -13,7 +13,7 @@ const Registration: React.FC = () => {
 
   return (
     <LayoutMain>
-      <main className={styles.main}>
+      <div className={styles.main}>
         <div className={styles.formCard}>
           <div className={`${styles.slider} ${showSignIn ? styles.signin : styles.login}`}>
             <div className={styles.wrapper}>
@@ -34,7 +34,7 @@ const Registration: React.FC = () => {
             </div>
           </div>
         </div>
-      </main>
+      </div>
     </LayoutMain>
   );
 };
