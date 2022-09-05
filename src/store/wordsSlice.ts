@@ -17,6 +17,9 @@ const wordsSlice = createSlice({
     addCurrentPageWords(state, action: PayloadAction<IWord[]>) {
       state.currentPage = action.payload;
     },
+    removeCurrentPageWords(state) {
+      state.currentPage = [];
+    },
     addWordDetails(state, action: PayloadAction<IWord | null>) {
       state.wordDetails = action.payload;
     },
@@ -32,8 +35,14 @@ const wordsSlice = createSlice({
   },
 });
 
-export const { addCurrentPageWords, addWordDetails, removeWordDetails, setLoading, removeLoading } =
-  wordsSlice.actions;
+export const {
+  addCurrentPageWords,
+  addWordDetails,
+  removeWordDetails,
+  setLoading,
+  removeLoading,
+  removeCurrentPageWords,
+} = wordsSlice.actions;
 
 export const fetchCurrentPageWords =
   (group: string, page: string) => async (dispatch: AppDispatch) => {

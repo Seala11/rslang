@@ -10,7 +10,11 @@ import { addWords, fetchFilteredWords } from 'src/store/sprintSlice';
 import { IWord } from 'src/store/types';
 import { getUserData } from 'src/store/userSlice';
 import { getCurrPageLearned } from 'src/store/userWordsSlice';
-import { selectCurrentPageWords } from 'src/store/wordsSlice';
+import {
+  removeCurrentPageWords,
+  removeWordDetails,
+  selectCurrentPageWords,
+} from 'src/store/wordsSlice';
 import styles from './GameList.module.scss';
 
 interface IGameListProps {
@@ -43,6 +47,9 @@ const GameList: React.FC<IGameListProps> = ({ group, page }) => {
         dispatch(addWordsArr(res));
       }
 
+      dispatch(removeCurrentPageWords());
+      dispatch(removeWordDetails());
+
       navigate('/games/audio');
     } else {
       if (userIsLogged(userData?.message)) {
@@ -53,6 +60,9 @@ const GameList: React.FC<IGameListProps> = ({ group, page }) => {
         const sprintWords = adaptToLocalSprintWords(currentPageWords);
         dispatch(addWords(shuffle(sprintWords)));
       }
+
+      dispatch(removeCurrentPageWords());
+      dispatch(removeWordDetails());
 
       navigate('/games/sprint');
     }
