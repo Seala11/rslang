@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Loading from 'src/components/Loading';
@@ -63,30 +62,25 @@ const GameList: React.FC<IGameListProps> = ({ group, page }) => {
 
   return (
     <div className={styles.gameList}>
-      {loading ? (
-        <div>ЗАГРУЖАЕТСЯ</div>
-      ) : (
-        <>
-          {GAMES_LIST.map((item) => {
-            const { title, altImg, srcImg, id } = item;
+      {loading && <Loading />}
+      {GAMES_LIST.map((item) => {
+        const { title, altImg, srcImg, id } = item;
 
-            return (
-              <button
-                key={id}
-                className={styles.card}
-                type='button'
-                onClick={() => handleGameClick(id)}
-                disabled={currPageLearned}
-              >
-                <div className={styles.img}>
-                  <img src={srcImg} alt={altImg} />
-                </div>
-                <h3 className={styles.title}>{title}</h3>
-              </button>
-            );
-          })}
-        </>
-      )}
+        return (
+          <button
+            key={id}
+            className={styles.card}
+            type='button'
+            onClick={() => handleGameClick(id)}
+            disabled={currPageLearned || loading}
+          >
+            <div className={styles.img}>
+              <img src={srcImg} alt={altImg} />
+            </div>
+            <h3 className={styles.title}>{title}</h3>
+          </button>
+        );
+      })}
     </div>
   );
 };
