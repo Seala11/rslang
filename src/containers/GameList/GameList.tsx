@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Loading from 'src/components/Loading';
+import GAMES_LIST from 'src/data/games';
 import { getUserId, getUserToken, userIsLogged } from 'src/helpers/storage';
 import { adaptToLocalSprintWords, createPagesFilter, shuffle } from 'src/helpers/utils';
 import { addWordsArr, fetchFilteredWordsArr } from 'src/store/audioSlice';
@@ -62,18 +63,28 @@ const GameList: React.FC<IGameListProps> = ({ group, page }) => {
     navigate('/games/audio');
   };
 
+  const handleGameClick = async (id: number) => {
+    // ....
+  };
+
   return (
     <div className={styles.gameList}>
       {loading ? (
         <div>ЗАГРУЖАЕТСЯ</div>
       ) : (
         <>
-          <button className={styles.btn} type='button' onClick={handleAudioCallClick}>
-            Аудио
-          </button>
-          <button className={styles.btn} type='button' onClick={handleSprintClick}>
-            Спринт
-          </button>
+          {GAMES_LIST.map((item) => {
+            const { title, altImg, srcImg, id } = item;
+
+            return (
+              <button className={styles.card} type='button' onClick={() => handleGameClick(id)}>
+                <div className={styles.img}>
+                  <img src={srcImg} alt={altImg} />
+                </div>
+                <h3 className={styles.title}>{title}</h3>
+              </button>
+            );
+          })}
         </>
       )}
     </div>
