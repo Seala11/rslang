@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
 import getWordsAPI from 'src/requests/words/getWordsAPI';
-import { adaptToLocalSprintWords, createPagesFilter, shuffle } from 'src/helpers/utils';
+import { adaptToLocalSprintWords, createPageLoop, shuffle } from 'src/helpers/utils';
 import getAllAggrWordsAPI from 'src/requests/aggregatedWords/getAllAggrWordsAPI';
 import type { AppDispatch, RootState } from '.';
 import { IWord, ISprintState, ISprintWord } from './types';
@@ -18,6 +18,9 @@ const sprintSlice = createSlice({
     addWords(state, action: PayloadAction<ISprintWord[]>) {
       state.words = action.payload;
     },
+    updateWords(state, action: PayloadAction<ISprintWord[]>) {
+      state.words.push(...action.payload);
+    },
     updateGroup(state, action: PayloadAction<number>) {
       state.group = action.payload;
     },
@@ -27,7 +30,7 @@ const sprintSlice = createSlice({
   },
 });
 
-export const { addWords, removeWords, updateGroup } = sprintSlice.actions;
+export const { addWords, removeWords, updateGroup, updateWords } = sprintSlice.actions;
 
 export const fetchWords = (group: string, page: string) => async (dispatch: AppDispatch) => {
   const words = await getWordsAPI(group, page);
@@ -64,28 +67,44 @@ export const fetchFilteredWords =
   async (dispatch: AppDispatch) => {
     if (!userId || !token) return;
 
-    const pagesFilter = createPagesFilter(+group, +page);
-    const filter = {
-      $and: [
-        { $or: pagesFilter },
-        { $or: [{ 'userWord.optional.learned': false }, { userWord: null }] },
-      ],
+    dispatch(removeWords());
+
+    const pageNumber = +page;
+    const pageSequence = createPageLoop(pageNumber);
+    let maxPages = 20;
+    let counter = 0;
+
+    const getWords = async (pageNum: number, maxPagesNum: number) => {
+      const filter = {
+        $and: [
+          { group: +group, page: pageNum },
+          { $or: [{ 'userWord.optional.learned': false }, { userWord: null }] },
+        ],
+      };
+      const stringifyFilter = JSON.stringify(filter);
+
+      const response = await getAllAggrWordsAPI(userId, token, stringifyFilter, `${maxPagesNum}`);
+
+      if (response.ok) {
+        const data = await response.json();
+        const words: IWord[] = data[0].paginatedResults;
+
+        const sprintWords = adaptToLocalSprintWords(words);
+
+        dispatch(updateWords(shuffle(sprintWords)));
+
+        counter += 1;
+        maxPages -= sprintWords.length;
+
+        if (counter >= pageSequence.length || maxPages <= 0) return;
+
+        await getWords(pageSequence[counter], maxPages);
+      } else {
+        // TODO: проверка ошибок ?
+      }
     };
-    const stringifyFilter = JSON.stringify(filter);
 
-    const response = await getAllAggrWordsAPI(userId, token, stringifyFilter);
-
-    if (response.ok) {
-      const data = await response.json();
-      const words: IWord[] = data[0].paginatedResults;
-
-      const sprintWords = adaptToLocalSprintWords(words);
-
-      // dispatch(addWords(shuffle(sprintWords)));
-      dispatch(addWords(sprintWords));
-    } else {
-      // TODO: проверка ошибок ?
-    }
+    await getWords(pageSequence[counter], maxPages);
   };
 
 export const selectWords = (state: RootState) => state.sprint.words;

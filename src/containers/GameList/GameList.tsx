@@ -1,12 +1,12 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import Loading from 'src/components/Loading';
 import { getUserId, getUserToken, userIsLogged } from 'src/helpers/storage';
 import { adaptToLocalSprintWords, createPagesFilter, shuffle } from 'src/helpers/utils';
-import getAllAggrWordsAPI from 'src/requests/aggregatedWords/getAllAggrWordsAPI';
 import { addWordsArr } from 'src/store/audioSlice';
 import { useAppDispatch, useAppSelector } from 'src/store/hooks';
-import { addWords, fetchFilteredWords } from 'src/store/sprintSlice';
+import { addWords, fetchFilteredWords, fetchUserWords } from 'src/store/sprintSlice';
 import { IWord } from 'src/store/types';
 import { getUserData } from 'src/store/userSlice';
 import { selectCurrentPageWords } from 'src/store/wordsSlice';
@@ -22,20 +22,23 @@ const GameList: React.FC<IGameListProps> = ({ group, page }) => {
   const currentPageWords = useAppSelector(selectCurrentPageWords);
   const userData = useAppSelector(getUserData);
   const navigate = useNavigate();
-
-  console.log(group, page);
+  const [loading, setLoading] = useState(false);
 
   const handleSprintClick = async () => {
+    setLoading(true);
+
     if (userIsLogged(userData?.message)) {
       await dispatch(
         fetchFilteredWords(getUserId(), getUserToken(), `${group - 1}`, `${page - 1}`)
       );
     } else {
       const sprintWords = adaptToLocalSprintWords(currentPageWords);
-      dispatch(addWords(shuffle(sprintWords)));
+      await dispatch(addWords(shuffle(sprintWords)));
     }
 
-    // navigate('/games/sprint');
+    setLoading(false);
+
+    navigate('/games/sprint');
   };
 
   const handleAudioCallClick = () => {
@@ -60,9 +63,14 @@ const GameList: React.FC<IGameListProps> = ({ group, page }) => {
       <button className={styles.btn} type='button' onClick={handleAudioCallClick}>
         Аудио
       </button>
-      <button className={styles.btn} type='button' onClick={handleSprintClick}>
-        Спринт
-      </button>
+
+      {loading ? (
+        <div>ЗАГРУЖАЕТСЯ</div>
+      ) : (
+        <button className={styles.btn} type='button' onClick={handleSprintClick}>
+          Спринт
+        </button>
+      )}
     </div>
   );
 };

@@ -63,3 +63,16 @@ export const createPagesFilter = (group: number, currPage: number, maxPage = 20)
 
   return res;
 };
+
+export const createPageLoop = (currPage: number, maxPage = 20) => {
+  const arr = Array(maxPage).fill(null);
+
+  const res = arr.map((_, i) => {
+    let page = currPage - i;
+    page = i <= currPage ? page : maxPage + page;
+
+    return page;
+  });
+
+  return res;
+};
