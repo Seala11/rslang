@@ -19,6 +19,12 @@
   justify-content: space-between;
   align-items: center;
   margin-bottom: 1.5rem;
+
+  @include media-mobile {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
 }
 
 .statistic {
@@ -36,6 +42,12 @@
     );
     margin: 0 0.8rem;
   }
+
+  @include media-mobile {
+    width: 100%;
+    justify-content: space-around;
+    margin: 1rem 0;
+  }
 }
 
 .statistic_answer {
@@ -46,6 +58,10 @@
   border-radius: 1rem;
   align-items: center;
   color: var(--black);
+
+  @include media-mobile {
+    width: 33%;
+  }
 }
 
 .cross,

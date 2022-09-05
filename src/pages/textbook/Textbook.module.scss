@@ -10,6 +10,13 @@
   &_active {
     color: var(--accent);
   }
+
+  @include media-tablet-large {
+    font-size: 3rem;
+  }
+  @include media-mobile {
+    font-size: 2.2rem;
+  }
 }
 
 .titleColor {
@@ -22,9 +29,9 @@
   max-width: 128rem;
   margin: 0 auto;
   padding: 1.5rem;
-  // so animated bubble is lower if there are no words:
   min-height: 100rem;
   height: 100%;
+  overflow: hidden;
 
   &::before {
     content: '';
@@ -36,6 +43,24 @@
     height: 70rem;
     background-color: var(--group-color);
     transition: background-color 1s, border-radius 1s;
+
+    @include media-laptop {
+      top: 22%;
+      width: 60rem;
+      height: 60rem;
+    }
+
+    @include media-tablet-large {
+      top: 18%;
+      left: calc(50% - 30rem);
+    }
+
+    @include media-tablet {
+      top: 17%;
+      left: calc(50% - 25rem);
+      width: 50rem;
+      height: 50rem;
+    }
   }
 }
 
@@ -50,6 +75,15 @@
   display: flex;
   width: 52rem;
   justify-content: space-between;
+
+  @include media-tablet-large {
+    width: 40rem;
+  }
+
+  @include media-mobile {
+    width: 100%;
+    justify-content: space-around;
+  }
 }
 
 .group_1 {
