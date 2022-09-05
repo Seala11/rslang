@@ -12,6 +12,7 @@ import styles from 'src/components/Header/Header.module.scss';
 import NAV_LIST from 'src/data/navigation';
 import Image from 'src/components/Image';
 import { removeUserStatistic } from 'src/store/statisticsSlice';
+import { addCurrentPageWords, removeWordDetails } from 'src/store/wordsSlice';
 
 const Header: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -27,6 +28,8 @@ const Header: React.FC = () => {
       dispatch(setUserLoading());
       dispatch(removeUserData());
       dispatch(removeUserStatistic());
+      dispatch(addCurrentPageWords([]));
+      dispatch(removeWordDetails());
       clearUserData();
       dispatch(removeUserLoading());
 
