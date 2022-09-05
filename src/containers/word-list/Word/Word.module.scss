@@ -25,6 +25,12 @@
     // background-color: color.scale($color: #f44e77, $lightness: 50%);
     background-color: var(--group-color-light);
   }
+
+  @include media-mobile {
+    max-width: 48%;
+    height: 11rem;
+    border-radius: 3.8rem;
+  }
 }
 
 .original {
@@ -32,6 +38,10 @@
   display: block;
   margin-bottom: 1rem;
   white-space: nowrap;
+
+  @include media-mobile {
+    font-size: 1.6rem;
+  }
 }
 
 .translate {
@@ -39,6 +49,10 @@
   font-size: 1.6rem;
   overflow-wrap: break-word;
   text-align: left;
+
+  @include media-mobile {
+    font-size: 1.4rem;
+  }
 }
 
 .container {
@@ -55,6 +69,10 @@
   display: flex;
   justify-content: center;
   align-items: center;
+
+  @include media-mobile {
+    width: 12%;
+  }
 }
 
 .wrapper {
@@ -69,6 +87,10 @@
 
   &_learned {
     background-color: var(--correct);
+  }
+
+  @include media-mobile {
+    padding: 1.5rem;
   }
 }
 
@@ -86,12 +108,22 @@
   width: 1.8rem;
   height: 1.8rem;
   background-image: url('../../../../public/assets/icons/learned-word.svg');
+
+  @include media-mobile {
+    width: 1.5rem;
+    height: 1.5rem;
+  }
 }
 
 .difficult {
   width: 2rem;
   height: 2rem;
   background-image: url('../../../../public/assets/icons/difficult-word.svg');
+
+  @include media-mobile {
+    width: 1.5rem;
+    height: 1.5rem;
+  }
 }
 
 .selected {

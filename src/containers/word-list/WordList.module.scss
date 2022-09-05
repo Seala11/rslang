@@ -1,7 +1,10 @@
 @use 'sass:color';
+@use 'src/sass/abstracts/mixins' as *;
 
 .wrapper {
-  margin-bottom: 30px;
+  margin-bottom: 3rem;
+  display: flex;
+  flex-direction: column;
 }
 
 .row {
@@ -9,19 +12,32 @@
   column-gap: 15px;
   margin-bottom: 30px;
   min-height: 83rem;
+
+  @include media-tablet-large {
+    flex-direction: column;
+    gap: 3rem;
+  }
 }
 
 .words {
   display: flex;
   flex-wrap: wrap;
-  // align-content: flex-start;
-  gap: 15px;
+  gap: 1.5rem;
   align-content: space-around;
   justify-content: space-evenly;
+
+  @include media-laptop {
+    gap: 0.6rem;
+  }
 }
 
 .details {
   flex-shrink: 0;
+
+  @include media-tablet-large {
+    display: flex;
+    justify-content: center;
+  }
 }
 
 .word {
