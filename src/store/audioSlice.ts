@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
 import getWordsAPI from 'src/requests/words/getWordsAPI';
@@ -96,8 +95,6 @@ export const fetchUserWordsArr =
       }
       const res = Array.from(set);
       dispatch(addWordsArr(res));
-    } else {
-      // TODO: проверка ошибок ?
     }
   };
 
@@ -146,8 +143,6 @@ export const fetchFilteredWordsArr =
         if (counter >= pageSequence.length || wordsPerPage <= 0) return;
 
         await getWords(pageSequence[counter], wordsPerPage);
-      } else {
-        // TODO: проверка ошибок ?
       }
     };
 

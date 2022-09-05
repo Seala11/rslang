@@ -57,8 +57,6 @@ export const fetchUserWords =
       const sprintWords = adaptToLocalSprintWords(words);
 
       dispatch(addWords(shuffle(sprintWords)));
-    } else {
-      // TODO: проверка ошибок ?
     }
   };
 
@@ -104,8 +102,6 @@ export const fetchFilteredWords =
         if (counter >= pageSequence.length || wordsPerPage <= 0) return;
 
         await getWords(pageSequence[counter], wordsPerPage);
-      } else {
-        // TODO: проверка ошибок ?
       }
     };
 

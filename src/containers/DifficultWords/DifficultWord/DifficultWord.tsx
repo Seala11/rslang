@@ -1,6 +1,5 @@
 /* eslint-disable react/no-danger */
 /* eslint-disable no-underscore-dangle */
-/* eslint-disable no-console */
 // import React, { useEffect, useState, useCallback, useRef } from 'react';
 import React, { useEffect, useState } from 'react';
 import styles from 'src/containers/DifficultWords/DifficultWord/DifficultWord.module.scss';

@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
 import {
@@ -114,7 +113,6 @@ export const updateStatisticsData =
       }
       // no default
     }
-    console.log(statistics);
     dispatch(fetchUpdateUserStatistics(userId, token, statistics));
   };
 
