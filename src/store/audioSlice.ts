@@ -3,6 +3,7 @@ import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
 import getWordsAPI from 'src/requests/words/getWordsAPI';
 import getAllAggrWordsAPI from 'src/requests/aggregatedWords/getAllAggrWordsAPI';
+import { createPageLoop } from 'src/helpers/utils';
 import type { AppDispatch, RootState } from '.';
 import { IWord, IAudioState } from './types';
 
@@ -21,6 +22,9 @@ const audioSlice = createSlice({
   reducers: {
     addWordsArr(state, action: PayloadAction<IWord[]>) {
       state.wordsArr = action.payload;
+    },
+    updateWordsArr(state, action: PayloadAction<IWord[]>) {
+      state.wordsArr.push(...action.payload);
     },
     addLoading(state, action: PayloadAction<boolean>) {
       state.loading = action.payload;
@@ -51,6 +55,7 @@ export const {
   updateQuestion,
   updateGroup,
   clearWords,
+  updateWordsArr,
 } = audioSlice.actions;
 
 export const fetchWordsArr = (group: string, page: string) => async (dispatch: AppDispatch) => {
@@ -94,6 +99,59 @@ export const fetchUserWordsArr =
     } else {
       // TODO: проверка ошибок ?
     }
+  };
+
+export const fetchFilteredWordsArr =
+  (userId: string | null, token: string | null, group: string, page: string) =>
+  async (dispatch: AppDispatch) => {
+    if (!userId || !token) return;
+
+    dispatch(clearWords());
+
+    const pageNumber = +page;
+    const pageSequence = createPageLoop(pageNumber);
+    let wordsPerPage = 20;
+    let counter = 0;
+
+    const getWords = async (pageNum: number, wordsPerPageNum: number) => {
+      const filter = {
+        $and: [
+          { group: +group, page: pageNum },
+          { $or: [{ 'userWord.optional.learned': false }, { userWord: null }] },
+        ],
+      };
+      const stringifyFilter = JSON.stringify(filter);
+
+      const response = await getAllAggrWordsAPI(
+        userId,
+        token,
+        stringifyFilter,
+        `${wordsPerPageNum}`
+      );
+
+      if (response.ok) {
+        const data = await response.json();
+        const words: IWord[] = data[0].paginatedResults;
+
+        const set: Set<IWord> = new Set(words);
+        while (set.size < words.length) {
+          set.add(words[Math.floor(Math.random() * words.length)]);
+        }
+        const res = Array.from(set);
+        dispatch(updateWordsArr(res));
+
+        counter += 1;
+        wordsPerPage -= words.length;
+
+        if (counter >= pageSequence.length || wordsPerPage <= 0) return;
+
+        await getWords(pageSequence[counter], wordsPerPage);
+      } else {
+        // TODO: проверка ошибок ?
+      }
+    };
+
+    await getWords(pageSequence[counter], wordsPerPage);
   };
 
 export const selectwordsArr = (state: RootState) => state.audio.wordsArr;

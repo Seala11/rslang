@@ -71,7 +71,7 @@ export const fetchFilteredWords =
 
     const pageNumber = +page;
     const pageSequence = createPageLoop(pageNumber);
-    let maxPages = 20;
+    let maxPages = pageSequence.length;
     let counter = 0;
 
     const getWords = async (pageNum: number, maxPagesNum: number) => {

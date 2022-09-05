@@ -51,7 +51,7 @@ const isLearnedWord = (word: IWord) => !word.userWord || !word.userWord.optional
 export const getNumberOfLearnedWords = (words: IWord[]) =>
   words.filter((word) => isLearnedWord(word)).length;
 
-export const createPagesFilter = (group: number, currPage: number, maxPage = 20) => {
+export const createPagesFilter = (group: number, currPage: number, maxPage = 30) => {
   const arr = Array(maxPage).fill(null);
 
   const res = arr.map((_, i) => {
@@ -64,12 +64,12 @@ export const createPagesFilter = (group: number, currPage: number, maxPage = 20)
   return res;
 };
 
-export const createPageLoop = (currPage: number, maxPage = 20) => {
-  const arr = Array(maxPage).fill(null);
+export const createPageLoop = (currPage: number, maxPages = 30) => {
+  const arr = Array(maxPages).fill(null);
 
   const res = arr.map((_, i) => {
     let page = currPage - i;
-    page = i <= currPage ? page : maxPage + page;
+    page = i <= currPage ? page : maxPages + page;
 
     return page;
   });

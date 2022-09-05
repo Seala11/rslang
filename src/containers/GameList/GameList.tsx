@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import Loading from 'src/components/Loading';
 import { getUserId, getUserToken, userIsLogged } from 'src/helpers/storage';
 import { adaptToLocalSprintWords, createPagesFilter, shuffle } from 'src/helpers/utils';
-import { addWordsArr } from 'src/store/audioSlice';
+import { addWordsArr, fetchFilteredWordsArr } from 'src/store/audioSlice';
 import { useAppDispatch, useAppSelector } from 'src/store/hooks';
 import { addWords, fetchFilteredWords, fetchUserWords } from 'src/store/sprintSlice';
 import { IWord } from 'src/store/types';
@@ -33,7 +33,7 @@ const GameList: React.FC<IGameListProps> = ({ group, page }) => {
       );
     } else {
       const sprintWords = adaptToLocalSprintWords(currentPageWords);
-      await dispatch(addWords(shuffle(sprintWords)));
+      dispatch(addWords(shuffle(sprintWords)));
     }
 
     setLoading(false);
@@ -41,35 +41,40 @@ const GameList: React.FC<IGameListProps> = ({ group, page }) => {
     navigate('/games/sprint');
   };
 
-  const handleAudioCallClick = () => {
+  const handleAudioCallClick = async () => {
+    setLoading(true);
+
     if (userIsLogged(userData?.message)) {
-      // await dispatch(
-      // fetchUserWords(getUserId(), getUserToken(), `${id}`, `${Math.floor(Math.random() * 30)}`)
-      // );
+      await dispatch(
+        fetchFilteredWordsArr(getUserId(), getUserToken(), `${group - 1}`, `${page - 1}`)
+      );
     } else {
       const set: Set<IWord> = new Set();
-      while (set.size < 20) {
-        set.add(currentPageWords[Math.floor(Math.random() * 20)]);
+      while (set.size < currentPageWords.length) {
+        set.add(currentPageWords[Math.floor(Math.random() * currentPageWords.length)]);
       }
       const res = Array.from(set);
       dispatch(addWordsArr(res));
     }
+
+    setLoading(false);
 
     navigate('/games/audio');
   };
 
   return (
     <div className={styles.gameList}>
-      <button className={styles.btn} type='button' onClick={handleAudioCallClick}>
-        Аудио
-      </button>
-
       {loading ? (
         <div>ЗАГРУЖАЕТСЯ</div>
       ) : (
-        <button className={styles.btn} type='button' onClick={handleSprintClick}>
-          Спринт
-        </button>
+        <>
+          <button className={styles.btn} type='button' onClick={handleAudioCallClick}>
+            Аудио
+          </button>
+          <button className={styles.btn} type='button' onClick={handleSprintClick}>
+            Спринт
+          </button>
+        </>
       )}
     </div>
   );
