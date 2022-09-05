@@ -5,6 +5,7 @@ import Result from 'src/components/Result';
 import { ISprintWord } from 'src/store/types';
 import { adaptToServerSprintWords } from 'src/helpers/utils';
 import { StatisticsOption } from 'src/helpers/constRequestsAPI';
+import { useNavigate } from 'react-router-dom';
 import styles from './SprintGame.module.scss';
 
 const SECONDS = 60;
@@ -28,6 +29,7 @@ const SprintGame: React.FC<ISprintGameProps> = ({ onStartClick }) => {
   const [time, setTime] = useState(SECONDS);
   const [isMuted, setIsMuted] = useState(false);
   const [strike, setStrike] = useState({ value: 0, temp: 0 });
+  const navigate = useNavigate();
 
   const handleAnswerClick = useCallback(
     (choice: number) => {
@@ -117,12 +119,12 @@ const SprintGame: React.FC<ISprintGameProps> = ({ onStartClick }) => {
     }
   };
 
-  // TODO: сделать переход на игры
   const handleGameClose = () => {
     dispatch(removeWords());
     if (document.fullscreenElement) {
       document.exitFullscreen().catch((err) => err);
     }
+    navigate('/games');
   };
 
   const GameProccess = (
