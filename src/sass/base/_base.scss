@@ -53,6 +53,10 @@ b {
   display: flex;
   flex-direction: column;
   height: 100vh;
+
+  &_hidden {
+    overflow: hidden;
+  }
 }
 
 .main {

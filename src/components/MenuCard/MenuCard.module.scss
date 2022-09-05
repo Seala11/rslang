@@ -15,6 +15,12 @@
   transition: all 0.2s;
   cursor: pointer;
 
+  @include media-mobile {
+    width: 25rem;
+    height: 42rem;
+    padding: 2rem;
+  }
+
   &:hover {
     transform: scale(1.1);
   }
@@ -22,6 +28,9 @@
   &__title {
     @include roboto($ff: var(--ff-roboto-regular), $fs: 4rem, $lh: 1.5, $color: var(--black));
     text-align: center;
+    @include media-mobile {
+      font-size: 3rem;
+    }
   }
 
   &__descr {
@@ -31,6 +40,9 @@
       $lh: 1.5,
       $color: var(--secundary-light)
     );
+    @include media-mobile {
+      font-size: 1.6rem;
+    }
     text-align: center;
   }
 }
