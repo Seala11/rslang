@@ -75,6 +75,10 @@ const Textbook = () => {
   }, [dispatch, group, unit, userData, userIsLoggedLoading]);
 
   const handleGroupClick = (groupNumber: number) => {
+    if (textBookIsLoading) {
+      console.log('this should prevent click');
+      return;
+    }
     setSearchParams({ group: `${groupNumber}`, unit: `${unit}` });
   };
 

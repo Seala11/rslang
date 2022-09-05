@@ -6,7 +6,7 @@ import { getUserId, getUserToken } from 'src/helpers/storage';
 import { useAppDispatch, useAppSelector } from 'src/store/hooks';
 import { fetchGetUserStatistics } from 'src/store/statisticsSlice';
 import { fetchCreateUserWord } from 'src/store/userWordsSlice';
-import { selectWordDetails } from 'src/store/wordsSlice';
+import { removeLoading, selectWordDetails, setLoading } from 'src/store/wordsSlice';
 import { IWordButtonsProps } from './IWordButtonsProps';
 import styles from './WordButtons.module.scss';
 
@@ -18,6 +18,7 @@ const WordButtons: React.FC<IWordButtonsProps> = ({ word }) => {
   const [learnedWord, setLearnedWord] = useState(false);
 
   const addDiffWord = () => {
+    dispatch(setLoading());
     dispatch(
       fetchCreateUserWord(
         getUserId(),
@@ -28,12 +29,13 @@ const WordButtons: React.FC<IWordButtonsProps> = ({ word }) => {
         undefined,
         `${word?.page}`
       )
-    );
+    ).then(() => dispatch(removeLoading()));
     setDiffWord(() => true);
     setLearnedWord(() => false);
   };
 
   const addLearnedWord = () => {
+    dispatch(setLoading());
     dispatch(
       fetchCreateUserWord(
         getUserId(),
@@ -44,7 +46,7 @@ const WordButtons: React.FC<IWordButtonsProps> = ({ word }) => {
         undefined,
         `${word?.page}`
       )
-    );
+    ).then(() => dispatch(removeLoading()));
     dispatch(fetchGetUserStatistics(getUserId(), getUserToken(), StatisticsOption.TEXTBOOK));
     setDiffWord(() => false);
     setLearnedWord(() => true);
