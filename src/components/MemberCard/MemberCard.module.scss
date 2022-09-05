@@ -7,6 +7,7 @@
   align-items: center;
   background-color: var(--light);
   width: 37.8rem;
+  height: 54.2rem;
   border-radius: 5rem;
   padding: 2rem 4rem;
   border: solid var(--stroke) 0.04rem;
@@ -16,8 +17,9 @@
 
   @include media-mobile {
     width: 25rem;
-    // height: 55rem;
+    height: 47rem;
     padding: 2rem;
+    gap: 2rem;
   }
 
   &:hover {

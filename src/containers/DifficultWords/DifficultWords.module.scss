@@ -1,9 +1,16 @@
 @use 'src/sass/abstracts/mixins' as *;
 
 .wrapper {
-  // margin-top: 2rem;
   width: 80%;
   margin: 0 auto;
+
+  @include media-tablet-large {
+    width: 90%;
+  }
+
+  @include media-mobile {
+    width: 100%;
+  }
 }
 
 .empty {
