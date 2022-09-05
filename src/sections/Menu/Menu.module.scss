@@ -8,13 +8,21 @@
   gap: 11.5rem;
   margin-bottom: 20rem;
 
+  @include media-tablet {
+    margin-bottom: 10rem;
+  }
+
+  @include media-mobile {
+    gap: 5rem;
+    padding: 0 2rem;
+  }
+
   &__wrapper {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-around;
     width: 100%;
     gap: 5rem;
-    row-gap: 9rem;
     max-width: 144rem;
   }
 
@@ -27,5 +35,8 @@
       $color: var(--primary)
     );
     text-align: center;
+    @include media-tablet {
+      font-size: 3.5rem;
+    }
   }
 }

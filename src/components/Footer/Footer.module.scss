@@ -3,11 +3,26 @@
 .footer {
   background-color: var(--neutral-dark);
   @include roboto($ff: var(--ff-roboto-regular), $fs: 2rem, $lh: 1.5);
+  background-image: url('../../../public/assets/icons/footerWave.svg');
+  background-position: top;
+  background-repeat: repeat-x;
 
   &__wrapper {
     display: flex;
     justify-content: space-between;
-    padding: 5rem 8rem;
+    padding: 14rem 8rem 5rem 8rem;
+    background-image: url('../../../public/assets/icons/footerWave.svg');
+    background-position: top;
+    background-repeat: repeat-x;
+
+    @include media-tablet {
+      flex-direction: column;
+      align-items: center;
+      gap: 3rem;
+    }
+    @include media-mobile {
+      padding: 14rem 0rem 5rem 0rem;
+    }
   }
 }
 
@@ -15,6 +30,7 @@
   display: flex;
   gap: 6.5rem;
   color: var(--secundary-dark);
+  align-items: center;
 }
 
 .rsLink {
@@ -28,6 +44,11 @@
 .gitList {
   display: flex;
   gap: 2.5rem;
+  @include media-mobile {
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+  }
 }
 
 .gitLink {
@@ -37,4 +58,8 @@
   &:hover {
     color: var(--secundary-dark);
   }
+}
+
+.rslogo {
+  width: 10rem;
 }
