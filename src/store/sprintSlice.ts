@@ -71,10 +71,10 @@ export const fetchFilteredWords =
 
     const pageNumber = +page;
     const pageSequence = createPageLoop(pageNumber);
-    let maxPages = pageSequence.length;
+    let wordsPerPage = 20;
     let counter = 0;
 
-    const getWords = async (pageNum: number, maxPagesNum: number) => {
+    const getWords = async (pageNum: number, wordsPerPageNum: number) => {
       const filter = {
         $and: [
           { group: +group, page: pageNum },
@@ -83,7 +83,12 @@ export const fetchFilteredWords =
       };
       const stringifyFilter = JSON.stringify(filter);
 
-      const response = await getAllAggrWordsAPI(userId, token, stringifyFilter, `${maxPagesNum}`);
+      const response = await getAllAggrWordsAPI(
+        userId,
+        token,
+        stringifyFilter,
+        `${wordsPerPageNum}`
+      );
 
       if (response.ok) {
         const data = await response.json();
@@ -94,17 +99,17 @@ export const fetchFilteredWords =
         dispatch(updateWords(shuffle(sprintWords)));
 
         counter += 1;
-        maxPages -= sprintWords.length;
+        wordsPerPage -= sprintWords.length;
 
-        if (counter >= pageSequence.length || maxPages <= 0) return;
+        if (counter >= pageSequence.length || wordsPerPage <= 0) return;
 
-        await getWords(pageSequence[counter], maxPages);
+        await getWords(pageSequence[counter], wordsPerPage);
       } else {
         // TODO: проверка ошибок ?
       }
     };
 
-    await getWords(pageSequence[counter], maxPages);
+    await getWords(pageSequence[counter], wordsPerPage);
   };
 
 export const selectWords = (state: RootState) => state.sprint.words;

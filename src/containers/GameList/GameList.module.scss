@@ -24,6 +24,22 @@
     transform: scale(1.1);
   }
 
+  &:disabled {
+    cursor: not-allowed;
+
+    &:hover {
+      transform: none;
+    }
+
+    .title {
+      color: var(--neutral-dark-2);
+    }
+
+    img {
+      filter: grayscale(70%);
+    }
+  }
+
   @include media-mobile {
     flex-direction: column;
     width: 25rem;
