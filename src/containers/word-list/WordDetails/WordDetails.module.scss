@@ -1,12 +1,24 @@
 @use 'src/sass/abstracts/mixins' as *;
 
 .details {
-  width: 370px;
-  border-radius: 15px;
-  color: #404040;
-  background-color: #fff;
-  border-top-left-radius: 100px;
+  width: 37rem;
+  border-radius: 1.5rem;
+  color: var(--black);
+  background-color: var(--light);
+  border-top-left-radius: 10rem;
   font-size: 2rem;
+
+  @include media-tablet-large {
+    width: 60%;
+  }
+
+  @include media-tablet {
+    width: 82%;
+  }
+
+  @include media-mobile {
+    width: 95%;
+  }
 }
 
 .img {
@@ -20,13 +32,21 @@
 }
 
 .content {
-  padding: 30px;
+  padding: 3rem;
+
+  @include media-mobile {
+    padding: 1rem;
+  }
 }
 
 .word {
   display: block;
   margin-bottom: 10px;
   font-size: 3.5rem;
+
+  @include media-mobile {
+    font-size: 2.5rem;
+  }
 }
 
 .wordTranslate {
@@ -80,10 +100,18 @@
 }
 
 .text {
-  margin-bottom: 10px;
+  margin-bottom: 1rem;
   font-size: 1.8rem;
+
+  @include media-mobile {
+    font-size: 1.6rem;
+  }
 }
 
 .textTranslate {
   font-size: 1.8rem;
+
+  @include media-mobile {
+    font-size: 1.6rem;
+  }
 }

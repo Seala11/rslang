@@ -4,6 +4,10 @@
   display: flex;
   width: 100%;
   justify-content: space-between;
+
+  @include media-mobile {
+    flex-direction: column;
+  }
 }
 
 .wordButton {
@@ -31,5 +35,9 @@
     &:hover {
       color: var(--light);
     }
+  }
+
+  @include media-mobile {
+    width: 100%;
   }
 }

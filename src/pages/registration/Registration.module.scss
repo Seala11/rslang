@@ -1,12 +1,14 @@
 @use 'src/sass/abstracts/mixins' as *;
 
 .main {
-  // flex: 1 1 auto;
   min-height: calc(100vh - 200px);
   display: flex;
   justify-content: center;
   align-items: center;
   position: relative;
+  @include media-mobile {
+    padding: 0 2rem;
+  }
 }
 
 .formCard {
@@ -18,6 +20,9 @@
   border: solid var(--stroke) 0.04rem;
   box-shadow: 0 2.5rem 5rem rgba(22, 25, 79, 0.05);
   overflow: hidden;
+  @include media-mobile {
+    height: fit-content;
+  }
 }
 
 .slider {
