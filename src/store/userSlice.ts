@@ -2,12 +2,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
 import { toast } from 'react-toastify';
-import {
-  IUser,
-  ISignInResponse,
-  IUserSignIn,
-  TErrors,
-} from 'src/requests/interfaceAPI';
+import { IUser, ISignInResponse, IUserSignIn, TErrors } from 'src/requests/interfaceAPI';
 import { clearUserData, getUserStoredData, recordUserData } from 'src/helpers/storage';
 import { ResponseStatus, ErrorMessageRU, ErrorMessage } from 'src/helpers/constRequestsAPI';
 import createUserAPI from 'src/requests/users/createUserAPI';

@@ -36,8 +36,8 @@ const Form: React.FC<ILoginFormProps> = ({
     if (!loginError && fetchInProgress.status === FetchStatus.DONE) {
       dispatch(addCurrentPageWords([]));
       dispatch(removeWordDetails());
-      navigate('/')
-    };
+      navigate('/');
+    }
   }, [fetchInProgress, loginError, navigate, dispatch]);
 
   const inputHandler = (event: React.ChangeEvent<HTMLInputElement>) => {

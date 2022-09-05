@@ -86,7 +86,6 @@ const Textbook = () => {
   };
 
   const handlePageNavigate = (navigation: Navigate) => {
-
     switch (navigation) {
       case Navigate.PREV:
         setSearchParams({ group: `${group}`, unit: `${unit - 1}` });
