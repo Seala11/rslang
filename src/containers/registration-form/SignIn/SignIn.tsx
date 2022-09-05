@@ -27,7 +27,7 @@ const SignIn: React.FC<ISignInProps> = ({ setShowSignIn, inputValues, error, pas
         id={FormTypes.SIGNIN}
       />
       <p className={styles.subtitle}>
-        Уже есть аккаунт?
+        <span className={styles.haveAcc}>Уже есть аккаунт?</span>
         <button type='button' className={styles.link} onClick={handler}>
           Войти в учётную запись
         </button>
