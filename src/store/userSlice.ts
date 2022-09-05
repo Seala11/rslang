@@ -2,16 +2,9 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
 import { toast } from 'react-toastify';
-import {
-  IUser,
-  ISignInResponse,
-  IUserSignIn,
-  TErrors,
-  IUpdateUserToken,
-} from 'src/requests/interfaceAPI';
+import { IUser, ISignInResponse, IUserSignIn, TErrors } from 'src/requests/interfaceAPI';
 import { clearUserData, getUserStoredData, recordUserData } from 'src/helpers/storage';
 import { ResponseStatus, ErrorMessageRU, ErrorMessage } from 'src/helpers/constRequestsAPI';
-import getUserTokenAPI from 'src/requests/users/getUserTokenAPI';
 import createUserAPI from 'src/requests/users/createUserAPI';
 import signInAPI from 'src/requests/signIn/signInAPI';
 import getUserAPI from 'src/requests/users/getUserAPI';
@@ -118,29 +111,6 @@ export const fetchSignInUser = (userData: IUserSignIn) => async (dispatch: AppDi
     dispatch(addError(true));
     toast.error(ErrorMessageRU.UNKNOWN);
     throw err;
-  }
-};
-
-// TODO: check if we need it
-export const fetchUpdateToken = (id: string | null, refreshToken: string | null) => async () => {
-  if (!id || !refreshToken) return;
-  try {
-    const response: Response | undefined = await getUserTokenAPI(id, refreshToken);
-    if (response.ok) {
-      const data: IUpdateUserToken = await response.json();
-      console.log(data);
-    } else {
-      switch (response.status) {
-        case ResponseStatus.MISSING_TOKEN:
-          console.error(ErrorMessage.MISSING_TOKEN);
-          break;
-        default: {
-          console.error(response.statusText);
-        }
-      }
-    }
-  } catch (err) {
-    console.error(err);
   }
 };
 

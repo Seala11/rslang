@@ -114,7 +114,6 @@ export const updateStatisticsData =
       }
       // no default
     }
-    console.log(statistics);
     dispatch(fetchUpdateUserStatistics(userId, token, statistics));
   };
 

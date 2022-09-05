@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import React, { useEffect, useState } from 'react';
 import { fetchGetTodayStatistics, getStatistics } from 'src/store/statisticsSlice';
 import { useAppDispatch, useAppSelector } from 'src/store/hooks';
@@ -16,15 +15,11 @@ const TodayStatistics = () => {
   useEffect(() => {
     const currentDay = new Date();
     const date: keyof IDayStatistic = new Intl.DateTimeFormat('en-GB').format(currentDay);
-    console.log(date);
-    console.log(userStatistics);
     if (!userStatistics || !userStatistics.optional[date]) {
-      console.log('should update redux');
       dispatch(fetchGetTodayStatistics(getUserId(), getUserToken()));
     } else {
       setTodayStatistic(userStatistics.optional[date]);
     }
-    console.log(todayStatistic);
   }, [userStatistics, dispatch, todayStatistic]);
 
   if (!todayStatistic) {

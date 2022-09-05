@@ -5,6 +5,7 @@ import { fetchCreateUser, fetchSignInUser, getErrors } from 'src/store/userSlice
 import styles from 'src/containers/registration-form/Form/Form.module.scss';
 import FormInput from 'src/containers/registration-form/FormInput';
 import { FetchStatus, FormTypes, InputTypes } from 'src/helpers/constRegistration';
+import { addCurrentPageWords, removeWordDetails } from 'src/store/wordsSlice';
 import ILoginFormProps from './IFormProps';
 
 const Form: React.FC<ILoginFormProps> = ({
@@ -32,8 +33,12 @@ const Form: React.FC<ILoginFormProps> = ({
   const validEmail = (email: string) => /[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]/.test(email);
 
   useEffect(() => {
-    if (!loginError && fetchInProgress.status === FetchStatus.DONE) navigate('/');
-  }, [fetchInProgress, loginError, navigate]);
+    if (!loginError && fetchInProgress.status === FetchStatus.DONE) {
+      dispatch(addCurrentPageWords([]));
+      dispatch(removeWordDetails());
+      navigate('/');
+    }
+  }, [fetchInProgress, loginError, navigate, dispatch]);
 
   const inputHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
     switch (event.target.id) {
