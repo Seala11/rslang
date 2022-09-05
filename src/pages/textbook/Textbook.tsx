@@ -75,19 +75,18 @@ const Textbook = () => {
   }, [dispatch, group, unit, userData, userIsLoggedLoading]);
 
   const handleGroupClick = (groupNumber: number) => {
-    if (textBookIsLoading) {
-      // eslint-disable-next-line no-console
-      console.log('this should prevent click');
-      return;
-    }
+    if (textBookIsLoading) return;
     setSearchParams({ group: `${groupNumber}`, unit: `${unit}` });
   };
 
   const handlePaginationClick = (pageNumber: number) => {
+    if (textBookIsLoading) return;
+
     setSearchParams({ group: `${group}`, unit: `${pageNumber}` });
   };
 
   const handlePageNavigate = (navigation: Navigate) => {
+
     switch (navigation) {
       case Navigate.PREV:
         setSearchParams({ group: `${group}`, unit: `${unit - 1}` });
