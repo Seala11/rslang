@@ -1,33 +1,41 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { getUserToken, userIsLogged } from 'src/helpers/storage';
-import { adaptToLocalSprintWords, shuffle } from 'src/helpers/utils';
+import { getUserId, getUserToken, userIsLogged } from 'src/helpers/storage';
+import { adaptToLocalSprintWords, createPagesFilter, shuffle } from 'src/helpers/utils';
+import getAllAggrWordsAPI from 'src/requests/aggregatedWords/getAllAggrWordsAPI';
 import { addWordsArr } from 'src/store/audioSlice';
 import { useAppDispatch, useAppSelector } from 'src/store/hooks';
-import { addWords } from 'src/store/sprintSlice';
+import { addWords, fetchFilteredWords } from 'src/store/sprintSlice';
 import { IWord } from 'src/store/types';
 import { getUserData } from 'src/store/userSlice';
 import { selectCurrentPageWords } from 'src/store/wordsSlice';
 import styles from './GameList.module.scss';
 
-const GameList = () => {
+interface IGameListProps {
+  group: number;
+  page: number;
+}
+
+const GameList: React.FC<IGameListProps> = ({ group, page }) => {
   const dispatch = useAppDispatch();
   const currentPageWords = useAppSelector(selectCurrentPageWords);
   const userData = useAppSelector(getUserData);
   const navigate = useNavigate();
 
-  const handleSprintClick = () => {
+  console.log(group, page);
+
+  const handleSprintClick = async () => {
     if (userIsLogged(userData?.message)) {
-      // await dispatch(
-      // fetchUserWords(getUserId(), getUserToken(), `${id}`, `${Math.floor(Math.random() * 30)}`)
-      // );
+      await dispatch(
+        fetchFilteredWords(getUserId(), getUserToken(), `${group - 1}`, `${page - 1}`)
+      );
     } else {
       const sprintWords = adaptToLocalSprintWords(currentPageWords);
       dispatch(addWords(shuffle(sprintWords)));
     }
 
-    navigate('/games/sprint');
+    // navigate('/games/sprint');
   };
 
   const handleAudioCallClick = () => {

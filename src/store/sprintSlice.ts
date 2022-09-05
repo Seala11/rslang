@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
 import getWordsAPI from 'src/requests/words/getWordsAPI';
-import { adaptToLocalSprintWords, shuffle } from 'src/helpers/utils';
+import { adaptToLocalSprintWords, createPagesFilter, shuffle } from 'src/helpers/utils';
 import getAllAggrWordsAPI from 'src/requests/aggregatedWords/getAllAggrWordsAPI';
 import type { AppDispatch, RootState } from '.';
 import { IWord, ISprintState, ISprintWord } from './types';
@@ -54,6 +54,35 @@ export const fetchUserWords =
       const sprintWords = adaptToLocalSprintWords(words);
 
       dispatch(addWords(shuffle(sprintWords)));
+    } else {
+      // TODO: проверка ошибок ?
+    }
+  };
+
+export const fetchFilteredWords =
+  (userId: string | null, token: string | null, group: string, page: string) =>
+  async (dispatch: AppDispatch) => {
+    if (!userId || !token) return;
+
+    const pagesFilter = createPagesFilter(+group, +page);
+    const filter = {
+      $and: [
+        { $or: pagesFilter },
+        { $or: [{ 'userWord.optional.learned': false }, { userWord: null }] },
+      ],
+    };
+    const stringifyFilter = JSON.stringify(filter);
+
+    const response = await getAllAggrWordsAPI(userId, token, stringifyFilter);
+
+    if (response.ok) {
+      const data = await response.json();
+      const words: IWord[] = data[0].paginatedResults;
+
+      const sprintWords = adaptToLocalSprintWords(words);
+
+      // dispatch(addWords(shuffle(sprintWords)));
+      dispatch(addWords(sprintWords));
     } else {
       // TODO: проверка ошибок ?
     }

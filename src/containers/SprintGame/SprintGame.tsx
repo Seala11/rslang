@@ -117,6 +117,7 @@ const SprintGame: React.FC<ISprintGameProps> = ({ onStartClick }) => {
     }
   };
 
+  // TODO: сделать переход на игры
   const handleGameClose = () => {
     dispatch(removeWords());
     if (document.fullscreenElement) {

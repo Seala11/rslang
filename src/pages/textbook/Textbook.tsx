@@ -170,7 +170,7 @@ const Textbook = () => {
               onPaginationClick={handlePaginationClick}
             />
             <h2 className={styles.title}>Игры</h2>
-            <GameList />
+            <GameList group={group} page={unit} />
           </>
         ) : (
           <DifficultWords
