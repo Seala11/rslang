@@ -76,6 +76,7 @@ const Textbook = () => {
 
   const handleGroupClick = (groupNumber: number) => {
     if (textBookIsLoading) {
+      // eslint-disable-next-line no-console
       console.log('this should prevent click');
       return;
     }
