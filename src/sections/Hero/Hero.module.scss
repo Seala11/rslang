@@ -2,18 +2,64 @@
 
 .hero {
   display: flex;
-  padding: 2.5rem 13rem 6.7rem 15rem;
+  padding: 2.5rem 13rem 40rem 15rem;
   justify-content: center;
   gap: 17rem;
   background-color: var(--secundary-dark);
-  margin-bottom: 12rem;
+  background-image: url('../../../public/assets/icons/Vector.svg');
+  background-position: bottom;
+  background-repeat: repeat-x;
+
+  @include media-desctop {
+    padding-bottom: 30rem;
+  }
+
+  @include media-laptop {
+    padding: 2.5rem 13rem 25rem 13rem;
+  }
+
+  @include media-tablet {
+    padding-bottom: 15rem;
+    margin: 0;
+  }
+
+  @include media-mobile {
+    padding-bottom: 8rem;
+  }
+
+  img {
+    max-width: unset;
+
+    @include media-tablet {
+      width: 40rem;
+    }
+
+    @include media-mobile {
+      width: 30rem;
+    }
+
+    @include media-mobile-small {
+      width: 25rem;
+    }
+  }
+
+  @include media-laptop {
+    flex-wrap: wrap;
+    gap: 10rem;
+  }
 
   &__info {
     display: flex;
     flex-direction: column;
-    margin-top: 9.5rem;
+    justify-content: center;
     gap: 3rem;
     max-width: 39.5rem;
+
+    @include media-laptop {
+      align-items: center;
+      text-align: center;
+      max-width: 64rem;
+    }
   }
 
   &__title {
@@ -24,6 +70,15 @@
       $lh: 1.4,
       $color: var(--light)
     );
+    @include media-laptop {
+      font-size: 8rem;
+    }
+    @include media-tablet {
+      font-size: 7rem;
+    }
+    @include media-mobile {
+      font-size: 5rem;
+    }
   }
 
   &__text {
@@ -35,5 +90,14 @@
       $color: var(--light)
     );
     letter-spacing: 0.04rem;
+    @include media-laptop {
+      font-size: 3rem;
+    }
+    @include media-tablet {
+      font-size: 2.5rem;
+    }
+    @include media-mobile {
+      font-size: 2rem;
+    }
   }
 }
