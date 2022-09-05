@@ -20,4 +20,8 @@
   &:hover {
     color: rgb(59, 58, 58);
   }
+
+  @include media-mobile {
+    margin-top: 1rem;
+  }
 }
