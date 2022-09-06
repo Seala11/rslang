@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
 import createUserWordAPI from 'src/requests/userWords/createUserWordAPI';
@@ -161,9 +160,11 @@ export const fetchUpdateUserWord =
         }
       } else {
         const data: string = await response.text();
+        // eslint-disable-next-line no-console
         console.error(data, response.status);
       }
     } catch (err) {
+      // eslint-disable-next-line no-console
       console.error(err);
     }
   };

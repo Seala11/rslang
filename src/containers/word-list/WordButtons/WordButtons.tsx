@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 /* eslint-disable no-underscore-dangle */
 import React, { useEffect, useState } from 'react';
 import { StatisticsOption, UserWordOptions } from 'src/helpers/constRequestsAPI';

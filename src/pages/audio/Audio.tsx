@@ -3,9 +3,9 @@ import React, { useState } from 'react';
 import { useAppDispatch, useAppSelector } from 'src/store/hooks';
 import {
   fetchWordsArr,
-  fetchisLoading,
   fetchUserWordsArr,
   updateGroup,
+  selectwordsArr,
 } from 'src/store/audioSlice';
 import Loading from 'src/components/Loading';
 import Levels from 'src/containers/Levels';
@@ -16,33 +16,32 @@ import AudioGame from '../../containers/AudioGame/AudioGame';
 const Audio = () => {
   const dispatch = useAppDispatch();
   const userData = useAppSelector(getUserData);
-  const loading = useAppSelector(fetchisLoading);
-  const [page, setPage] = useState('main');
+  const wordsArr = useAppSelector(selectwordsArr);
+  const [loading, setLoading] = useState(false);
 
   const setWords = async (group: number) => {
+    setLoading(true);
+
     dispatch(updateGroup(group));
 
-    if (!loading) {
-      setPage('loading');
-      const randomPage = Math.floor(Math.random() * 30);
+    const randomPage = Math.floor(Math.random() * 30);
 
-      if (userIsLogged(userData?.message)) {
-        await dispatch(fetchUserWordsArr(getUserId(), getUserToken(), `${group}`, `${randomPage}`));
-      } else {
-        await dispatch(fetchWordsArr(`${group}`, `${randomPage}`));
-      }
+    if (userIsLogged(userData?.message)) {
+      await dispatch(fetchUserWordsArr(getUserId(), getUserToken(), `${group}`, `${randomPage}`));
+    } else {
+      await dispatch(fetchWordsArr(`${group}`, `${randomPage}`));
     }
 
-    setPage('game');
+    setLoading(false);
   };
 
-  return page === 'main' ? (
-    <Levels onStartClick={setWords} title='Аудиовызов' />
-  ) : page === 'loading' ? (
-    <Loading />
+  const Game = wordsArr.length ? (
+    <AudioGame onStartClick={setWords} />
   ) : (
-    <AudioGame setPage={setPage} onStartClick={setWords} />
+    <Levels onStartClick={setWords} title='Аудиовызов' />
   );
+
+  return loading ? <Loading /> : Game;
 };
 
 export default Audio;

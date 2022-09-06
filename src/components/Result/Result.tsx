@@ -9,7 +9,7 @@ import {
 } from 'src/helpers/constRequestsAPI';
 import { getUserId, getUserToken } from 'src/helpers/storage';
 import { getNumberOfLearnedWords, getNumberOfNewWords } from 'src/helpers/utils';
-import { addDis, updateAnswers, updateQuestion } from 'src/store/audioSlice';
+import { addDis, clearWords, updateAnswers, updateQuestion } from 'src/store/audioSlice';
 import { useAppDispatch } from 'src/store/hooks';
 import { removeWords } from 'src/store/sprintSlice';
 import { fetchGetUserStatistics } from 'src/store/statisticsSlice';
@@ -99,6 +99,7 @@ const Result: React.FC<IResultProps> = ({
       document.exitFullscreen().catch((err) => err);
     }
     dispatch(removeWords());
+    dispatch(clearWords());
     dispatch(updateQuestion(0));
     dispatch(updateAnswers([]));
     dispatch(addDis(false));

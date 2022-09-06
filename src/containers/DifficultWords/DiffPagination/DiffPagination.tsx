@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import React from 'react';
 import styles from 'src/containers/DifficultWords/DiffPagination/DiffPagination.module.scss';
 import { Navigate } from 'src/helpers/constants';

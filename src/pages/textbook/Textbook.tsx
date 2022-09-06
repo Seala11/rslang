@@ -20,6 +20,7 @@ import { getUserData, getUserIsLoading } from 'src/store/userSlice';
 import { getUserId, getUserToken, userIsInStorage, userIsLogged } from 'src/helpers/storage';
 import { fetchGetUserWords } from 'src/store/userWordsSlice';
 import Loading from 'src/components/Loading';
+import GameList from 'src/containers/GameList';
 import styles from './Textbook.module.scss';
 
 enum TextbookSections {
@@ -64,7 +65,6 @@ const Textbook = () => {
   useEffect(() => {
     if (userIsLoggedLoading || (userIsInStorage() && !userData)) return;
 
-    // TODO: ask Marsel for the better solution)
     if (group === 7) setSectionDisplay(TextbookSections.DIFF_WORDS);
 
     if (!userIsLogged(userData?.message))
@@ -107,12 +107,10 @@ const Textbook = () => {
   ) => {
     switch (event.target.name) {
       case TextbookSections.TEXTBOOK:
-        // TODO: ask Marsel for the better solution)
         setSectionDisplay(() => TextbookSections.TEXTBOOK);
         setSearchParams({ group: `${1}`, unit: `${1}` });
         break;
       case TextbookSections.DIFF_WORDS:
-        // TODO: ask Marsel for the better solution)
         dispatch(addCurrentPageWords([]));
         setSectionDisplay(() => TextbookSections.DIFF_WORDS);
         setSearchParams({ group: `${7}`, unit: `${1}` });
@@ -172,6 +170,7 @@ const Textbook = () => {
               onPaginationClick={handlePaginationClick}
             />
             <h2 className={styles.title}>Игры</h2>
+            <GameList group={group} page={unit} />
           </>
         ) : (
           <DifficultWords
