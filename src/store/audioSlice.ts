@@ -68,6 +68,7 @@ export const fetchWordsArr = (group: string, page: string) => async (dispatch: A
     const res = Array.from(set);
     dispatch(addWordsArr(res));
   } catch (err) {
+    // eslint-disable-next-line no-console
     console.error(err);
   } finally {
     dispatch(addLoading(false));

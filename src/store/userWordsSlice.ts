@@ -160,9 +160,11 @@ export const fetchUpdateUserWord =
         }
       } else {
         const data: string = await response.text();
+        // eslint-disable-next-line no-console
         console.error(data, response.status);
       }
     } catch (err) {
+      // eslint-disable-next-line no-console
       console.error(err);
     }
   };
