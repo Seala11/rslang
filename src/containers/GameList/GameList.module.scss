@@ -1,0 +1,62 @@
+@use 'src/sass/abstracts/mixins' as *;
+
+.gameList {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  gap: 1.5rem;
+  padding: 0 0.6rem;
+}
+
+.card {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  max-width: 50rem;
+  max-height: 23rem;
+  padding: 2rem;
+  background: #ffffff;
+  border: 0.5px solid #cad6f1;
+  border-radius: 50px;
+  transition: transform 0.2s;
+
+  &:hover {
+    transform: scale(1.1);
+  }
+
+  &:disabled {
+    cursor: not-allowed;
+
+    &:hover {
+      transform: none;
+    }
+
+    .title {
+      color: var(--neutral-dark-2);
+    }
+
+    img {
+      filter: grayscale(70%);
+    }
+  }
+
+  @include media-mobile {
+    flex-direction: column;
+    width: 25rem;
+    max-height: none;
+    height: 30rem;
+    padding: 2rem;
+
+    .img {
+      margin-bottom: 3rem;
+    }
+  }
+}
+
+.title {
+  @include roboto($ff: var(--ff-roboto-regular), $fs: 4rem, $lh: 1.5, $color: var(--black));
+  text-align: center;
+  @include media-mobile {
+    font-size: 3rem;
+  }
+}

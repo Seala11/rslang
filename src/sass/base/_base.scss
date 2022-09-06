@@ -1,0 +1,66 @@
+@use 'src/sass/abstracts/mixins' as *;
+
+:root {
+  --primary: #554dde;
+  --primary-light: #9792f5;
+
+  --accent: #f44e77;
+  --accent-light: #f4668a;
+
+  --neutral: #f2f6ff;
+  --stroke: #cad6f1;
+  --neutral-dark: #dce2f0;
+  --neutral-dark-2: #a3a3a3;
+
+  --secundary-light: #6a6d9e;
+  --secundary-light-2: #8a8cb2;
+  --secundary-dark: #16194f;
+
+  --light: #ffffff;
+  --black: #404040;
+
+  --correct: #acdbac;
+  --incorrect: #f08080;
+
+  --blue-light: #ccedff;
+
+  // fonts
+  --ff-roboto-regular: 'Roboto Regular', sans-serif;
+  --ff-roboto-bold: 'Roboto Bold', sans-serif;
+
+  // media examples
+  --content-width: 1278px;
+  --tablet-large-width: 1024px;
+  --tablet-width: 766px;
+  --mobile-big-width: 465px;
+  --mobile-small-width: 374px;
+}
+
+html {
+  scroll-behavior: smooth;
+  font-size: 10px;
+}
+
+body {
+  @include roboto;
+  font-size: 1.6rem;
+  background-color: var(--neutral);
+}
+
+b {
+  font-family: var(--ff-roboto-bold);
+}
+
+.page {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+
+  &_hidden {
+    overflow: hidden;
+  }
+}
+
+.main {
+  flex: 1 1 auto;
+}

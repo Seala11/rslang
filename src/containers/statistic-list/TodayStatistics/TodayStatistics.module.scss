@@ -1,0 +1,108 @@
+@use 'src/sass/abstracts/mixins' as *;
+
+.wrapper {
+  margin: 0 auto;
+  max-width: 100rem;
+  width: 100%;
+
+  @include media-laptop {
+    width: 90%;
+  }
+
+  @include media-tablet-large {
+    width: 90%;
+  }
+
+  @include media-mobile {
+    width: 95%;
+  }
+}
+
+.general_wrapper {
+  display: flex;
+  justify-content: space-around;
+  align-items: flex-end;
+  width: 100%;
+  background-color: var(--light);
+  border-radius: 5rem;
+  padding: 2rem 4rem;
+  border: solid var(--stroke) 0.04rem;
+  box-shadow: 0 2.5rem 5rem rgba(22, 25, 79, 0.05);
+  transition: all 0.2s;
+  margin-bottom: 2.5rem;
+
+  @include media-tablet-large {
+    padding: 2rem 2rem;
+  }
+}
+
+.game_wrapper {
+  width: 100%;
+  display: flex;
+  gap: 2rem;
+
+  @include media-tablet {
+    flex-direction: column;
+  }
+}
+
+.statistics {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding-bottom: 10rem;
+}
+
+.today {
+  @include roboto($fs: 3rem, $ff: var(--ff-roboto-bold), $fw: 400, $color: var(--accent));
+  padding-bottom: 2rem;
+
+  @include media-tablet {
+    font-size: 2.5rem;
+    text-align: center;
+  }
+}
+
+.number {
+  @include roboto($fs: 6rem, $ff: var(--ff-roboto-bold), $fw: 400, $color: var(--black));
+
+  @include media-tablet-large {
+    font-size: 5rem;
+  }
+
+  @include media-tablet {
+    font-size: 3rem;
+  }
+
+  @include media-mobile {
+    font-size: 2.2rem;
+  }
+}
+
+.item {
+  width: 30%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  &_subtitle {
+    @include roboto(
+      $fs: 1.6rem,
+      $ff: var(--ff-roboto-regular),
+      $fw: 400,
+      $color: var(--secundary-light)
+    );
+    padding-bottom: 0.5rem;
+    text-align: center;
+
+    @include media-mobile {
+      font-size: 1.4rem;
+    }
+  }
+}
+
+.border {
+  border-left: 0.2rem solid var(--stroke);
+  border-right: 0.2rem solid var(--stroke);
+  padding: 0 1rem;
+}

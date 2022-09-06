@@ -1,0 +1,94 @@
+@use 'src/sass/abstracts/mixins' as *;
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+}
+
+.title {
+  @include roboto($ff: var(--ff-roboto-bold), $fs: 1.8rem, $lh: 1.5, $color: #404040, $fw: 600);
+  margin-bottom: 1.5rem;
+}
+
+.subtitle {
+  @include roboto($ff: var(--ff-roboto-bold), $fs: 1.8rem, $lh: 1.5, $color: #404040, $fw: 600);
+}
+
+.game {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+
+  @include media-mobile {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+}
+
+.statistic {
+  display: flex;
+  width: 80%;
+  justify-content: flex-end;
+
+  &_title {
+    @include roboto(
+      $ff: var(--ff-roboto-regular),
+      $fs: 1.8rem,
+      $lh: 1.5,
+      $color: #404040,
+      $fw: 400
+    );
+    margin: 0 0.8rem;
+  }
+
+  @include media-mobile {
+    width: 100%;
+    justify-content: space-around;
+    margin: 1rem 0;
+  }
+}
+
+.statistic_answer {
+  width: 8rem;
+  display: flex;
+  justify-content: space-between;
+  padding: 0.5rem 1rem;
+  border-radius: 1rem;
+  align-items: center;
+  color: var(--black);
+
+  @include media-mobile {
+    width: 33%;
+  }
+}
+
+.cross,
+.point {
+  background-position: left;
+  background-repeat: no-repeat;
+  background-size: contain;
+  filter: invert(15%) sepia(14%) saturate(100%) hue-rotate(201deg) brightness(0%) contrast(110%);
+}
+
+.cross {
+  width: 1.4rem;
+  height: 1.4rem;
+  background-image: url('../../../../public/assets/icons/close.png');
+}
+
+.point {
+  width: 1.8rem;
+  height: 1.8rem;
+  background-image: url('../../../../public/assets/icons/learned-word.svg');
+}
+
+.right {
+  background-color: var(--correct);
+  margin-right: 1rem;
+}
+
+.wrong {
+  background-color: var(--neutral-dark);
+}

@@ -1,0 +1,191 @@
+@use 'src/sass/abstracts/mixins' as *;
+
+.wrapper {
+  flex: 1 1 auto;
+  position: relative;
+  background: linear-gradient(
+    rgba(255, 97, 187, 0.21),
+    rgba(156, 38, 218, 0.25),
+    rgba(85, 77, 222, 0.65)
+  );
+  padding: 3rem 6.5rem;
+  @include media-mobile {
+    padding: 3rem;
+  }
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 9.3rem;
+  @include media-mobile {
+    margin-bottom: 4.3rem;
+  }
+}
+
+.control {
+  max-width: 2.5rem;
+  background-color: transparent;
+  transition: scale 0.2s;
+  @include media-mobile {
+    max-width: 2rem;
+  }
+
+  &:hover {
+    scale: 1.1;
+  }
+
+  svg {
+    width: 2.5rem;
+  }
+}
+
+.title {
+  @include roboto(
+    $ff: var(--ff-roboto-regular),
+    $fs: 4rem,
+    $fw: 400,
+    $lh: 1.5,
+    $color: var(--primary)
+  );
+}
+
+.controls {
+  position: absolute;
+  right: 4rem;
+  top: 4rem;
+  display: flex;
+  flex-direction: column;
+  row-gap: 3rem;
+  @include media-mobile {
+    right: 2rem;
+    top: 2rem;
+  }
+}
+
+.sound {
+  width: 18rem;
+  height: 18rem;
+  border-radius: 10rem;
+  background-color: var(--stroke);
+  background-image: url('../../../public/assets/icons/sound.png');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 50%;
+  @include media-tablet {
+    width: 15rem;
+    height: 15rem;
+  }
+  @include media-mobile {
+    width: 12rem;
+    height: 12rem;
+  }
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.cards {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 2.5rem;
+  width: 100%;
+}
+
+.btn {
+  width: 100%;
+  max-width: 25rem;
+  padding: 1.5rem 0;
+  border-radius: 5rem;
+  color: #404040;
+  background-color: #fff;
+  box-shadow: 0 4px 0 0 #544dde00;
+  transition: box-shadow 0.5s, background-color 0.2s;
+  @include roboto(
+    $ff: var(--ff-roboto-regular),
+    $fs: 2rem,
+    $fw: 700,
+    $lh: 1.5,
+    $color: var(--secundary-dark)
+  );
+
+  @include media-tablet {
+    max-width: 15rem;
+    font-size: 1.5rem;
+  }
+
+  &:hover {
+    background-color: #9792f5;
+    box-shadow: 0 4px 0 0 #554dde;
+  }
+}
+
+.answers {
+  display: flex;
+  width: 100%;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 2.5rem;
+}
+
+.start {
+  font-family: var(--ff-roboto-regular);
+  font-size: 2rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: var(--secundary-light);
+  width: 19.3rem;
+  height: 5.6rem;
+  border-radius: 1.5rem;
+  background-color: var(--accent);
+  color: var(--light);
+  transition: all 0.2s;
+  position: relative;
+  @include media-mobile {
+    width: 15rem;
+  }
+  &:hover {
+    color: var(--stroke);
+  }
+  &:active {
+    top: 0.2rem;
+  }
+}
+
+.correct {
+  color: rgb(35, 162, 35);
+}
+
+.sound_small {
+  width: 4rem;
+  height: 4rem;
+  border-radius: 10rem;
+  background-color: var(--stroke);
+  background-image: url('../../../public/assets/icons/sound.png');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 50%;
+}
+
+.answerField {
+  display: flex;
+  align-items: center;
+  column-gap: 3rem;
+}
+
+.question_title {
+  @include roboto(
+    $ff: var(--ff-roboto-regular),
+    $fs: 3rem,
+    $fw: 700,
+    $lh: 1.5,
+    $color: var(--secundary-dark)
+  );
+  @include media-tablet {
+    font-size: 2.7rem;
+  }
+}

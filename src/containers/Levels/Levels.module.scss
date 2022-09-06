@@ -1,0 +1,136 @@
+@use 'src/sass/abstracts/mixins' as *;
+@use 'sass:color';
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 13rem 2rem 24rem 2rem;
+  gap: 11rem;
+  @include media-tablet {
+    padding-top: 10rem;
+  }
+  @include media-mobile {
+    gap: 5rem;
+  }
+}
+
+.cards {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 2.5rem;
+  width: 100%;
+  max-width: 80rem;
+}
+
+.title {
+  @include roboto(
+    $ff: var(--ff-roboto-regular),
+    $fs: 4rem,
+    $fw: 400,
+    $lh: 1.5,
+    $color: var(--primary)
+  );
+
+  text-align: center;
+  @include media-mobile {
+    font-size: 3.5rem;
+  }
+}
+
+.subtitle {
+  @include roboto(
+    $ff: var(--ff-roboto-regular),
+    $fs: 2.4rem,
+    $fw: 400,
+    $lh: 1.5,
+    $color: var(--secundary-dark)
+  );
+  text-align: center;
+  @include media-mobile {
+    font-size: 2.2rem;
+  }
+}
+
+.groups {
+  display: flex;
+  justify-content: space-between;
+  column-gap: 15px;
+  margin-bottom: 50px;
+}
+
+.btn {
+  width: 100%;
+  max-width: 20rem;
+  padding: 1.5rem 0;
+  border-radius: 5rem;
+  color: #404040;
+  background-color: #fff;
+  box-shadow: 0 4px 0 0 #544dde00;
+  transition: box-shadow 0.5s, background-color 0.2s;
+
+  @include media-mobile {
+    max-width: 12rem;
+  }
+
+  &.active {
+    box-shadow: 0 4px 0 0 #554dde;
+
+    .titleCard,
+    .level {
+      color: #554dde;
+    }
+  }
+
+  &:hover {
+    background-color: #9792f5;
+    box-shadow: 0 4px 0 0 #554dde;
+    .titleCard,
+    .level {
+      color: #554dde;
+    }
+  }
+}
+
+.level {
+  display: block;
+  margin-bottom: 10px;
+  font-size: 2rem;
+  line-height: 1;
+  transition: color 0.5s;
+  @include media-mobile {
+    font-size: 1.7rem;
+  }
+}
+
+.titleCard {
+  font-size: 3rem;
+  line-height: 1;
+  color: #404040;
+  transition: color 0.5s;
+  @include media-mobile {
+    font-size: 2.6rem;
+  }
+}
+
+.start {
+  font-family: var(--ff-roboto-regular);
+  font-size: 2rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: var(--secundary-light);
+  width: 19.3rem;
+  height: 5.6rem;
+  border-radius: 1.5rem;
+  background-color: var(--accent);
+  color: var(--light);
+  transition: all 0.2s;
+  position: relative;
+  &:hover {
+    color: var(--stroke);
+  }
+  &:active {
+    top: 0.2rem;
+  }
+}

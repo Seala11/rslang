@@ -1,0 +1,80 @@
+@use 'sass:color';
+@use 'src/sass/abstracts/mixins' as *;
+
+.groups {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  margin-bottom: 5rem;
+
+  @include media-laptop {
+    grid-template-columns: repeat(3, 1fr);
+    grid-row-gap: 2rem;
+    width: 65%;
+    margin: 0 auto;
+  }
+
+  @include media-tablet {
+    width: 90%;
+    margin-bottom: 2rem;
+  }
+
+  @include media-mobile {
+    grid-template-columns: repeat(2, 1fr);
+    width: 100%;
+  }
+}
+
+.btn {
+  width: 100%;
+  max-width: 20rem;
+  padding: 15px 0;
+  border-radius: 50px;
+  color: #404040;
+  background-color: #fff;
+  box-shadow: 0 4px 0 0 #544dde00;
+  transition: box-shadow 0.5s, background-color 0.2s;
+  justify-self: center;
+
+  &.active {
+    box-shadow: 0 4px 0 0 var(--group-color);
+
+    .title,
+    .level {
+      color: var(--group-color);
+    }
+  }
+
+  &:hover {
+    // background-color: color.scale($color: #1da6eb, $lightness: 50%);
+    background-color: var(--group-color-light);
+  }
+
+  @include media-tablet-large {
+    max-width: 15rem;
+  }
+
+  @include media-tablet {
+    min-width: 13rem;
+    width: 80%;
+  }
+}
+
+.level {
+  @include roboto($ff: var(--ff-roboto-regular), $fs: 2rem, $lh: 1);
+  display: block;
+  margin-bottom: 1rem;
+  transition: color 0.5s;
+
+  @include media-tablet-large {
+    font-size: 1.8rem;
+  }
+}
+
+.title {
+  @include roboto($ff: var(--ff-roboto-regular), $fs: 3rem, $lh: 1, $color: var(--black));
+  transition: color 0.5s;
+
+  @include media-tablet-large {
+    font-size: 2.2rem;
+  }
+}

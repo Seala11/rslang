@@ -1,0 +1,117 @@
+@use 'src/sass/abstracts/mixins' as *;
+
+.details {
+  width: 37rem;
+  border-radius: 1.5rem;
+  color: var(--black);
+  background-color: var(--light);
+  border-top-left-radius: 10rem;
+  font-size: 2rem;
+
+  @include media-tablet-large {
+    width: 60%;
+  }
+
+  @include media-tablet {
+    width: 82%;
+  }
+
+  @include media-mobile {
+    width: 95%;
+  }
+}
+
+.img {
+  height: 200px;
+  border-top-right-radius: 15px;
+  border-top-left-radius: 100px;
+  border-bottom-right-radius: 100px;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.content {
+  padding: 3rem;
+
+  @include media-mobile {
+    padding: 1rem;
+  }
+}
+
+.word {
+  display: block;
+  margin-bottom: 10px;
+  font-size: 3.5rem;
+
+  @include media-mobile {
+    font-size: 2.5rem;
+  }
+}
+
+.wordTranslate {
+  display: block;
+  margin-bottom: 10px;
+}
+
+.audioWrapper {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.transcription {
+  margin-right: 15px;
+}
+
+.audio {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+
+  svg {
+    width: 24px;
+    fill: var(--group-color);
+  }
+}
+
+.btn {
+  background-color: transparent;
+
+  &:disabled {
+    svg {
+      fill: #bababa;
+    }
+  }
+}
+
+.description {
+  margin-bottom: 25px;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.caption {
+  @include roboto($ff: var(--ff-roboto-bold), $fs: 1.8rem, $lh: 1.5, $color: #404040, $fw: 600);
+  margin-bottom: 15px;
+}
+
+.text {
+  margin-bottom: 1rem;
+  font-size: 1.8rem;
+
+  @include media-mobile {
+    font-size: 1.6rem;
+  }
+}
+
+.textTranslate {
+  font-size: 1.8rem;
+
+  @include media-mobile {
+    font-size: 1.6rem;
+  }
+}

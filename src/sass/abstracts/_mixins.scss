@@ -1,0 +1,52 @@
+@use 'src/sass/base/typography' as *;
+
+@mixin roboto(
+  $ff: var(--ff-roboto-regular),
+  $fs: 1.6rem,
+  $fw: 400,
+  $lh: 1.2,
+  $color: var(--secundary-light)
+) {
+  font-family: $ff;
+  font-size: $fs;
+  font-weight: $fw;
+  line-height: $lh;
+  color: $color;
+}
+
+// media
+@mixin media-desctop {
+  @media (max-width: 1980px) {
+    @content;
+  }
+}
+
+@mixin media-laptop {
+  @media (max-width: 1280px) {
+    @content;
+  }
+}
+
+@mixin media-tablet-large {
+  @media (max-width: 1024px) {
+    @content;
+  }
+}
+
+@mixin media-tablet {
+  @media (max-width: 768px) {
+    @content;
+  }
+}
+
+@mixin media-mobile {
+  @media (max-width: 465px) {
+    @content;
+  }
+}
+
+@mixin media-mobile-small {
+  @media (max-width: 374px) {
+    @content;
+  }
+}

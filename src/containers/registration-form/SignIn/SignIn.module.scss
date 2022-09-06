@@ -1,0 +1,32 @@
+@use 'src/sass/abstracts/mixins' as *;
+
+.title {
+  @include roboto($fs: 3rem, $ff: var(--ff-roboto-bold), $fw: 700);
+  color: var(--primary);
+  padding: 1rem 0 2rem;
+}
+
+.subtitle {
+  @include roboto($fs: 1.6rem, $ff: var(--ff-roboto-regular), $fw: 400);
+  margin-top: 1.5rem;
+  align-self: flex-start;
+  display: flex;
+  gap: 1rem;
+  @include media-mobile {
+    flex-direction: column;
+  }
+}
+
+.haveAcc {
+  display: block;
+}
+
+.link {
+  @include roboto($fs: 1.6rem, $ff: var(--ff-roboto-bold), $fw: 400);
+  text-decoration: underline;
+  background-color: transparent;
+
+  &:hover {
+    color: rgb(59, 58, 58);
+  }
+}

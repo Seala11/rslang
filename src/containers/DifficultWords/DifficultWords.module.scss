@@ -1,0 +1,18 @@
+@use 'src/sass/abstracts/mixins' as *;
+
+.wrapper {
+  width: 80%;
+  margin: 0 auto;
+
+  @include media-tablet-large {
+    width: 90%;
+  }
+
+  @include media-mobile {
+    width: 100%;
+  }
+}
+
+.empty {
+  @include roboto($ff: var(--ff-roboto-regular), $fs: 2rem, $lh: 1.5);
+}

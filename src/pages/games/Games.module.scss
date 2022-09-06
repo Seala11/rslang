@@ -1,0 +1,43 @@
+@use 'src/sass/abstracts/mixins' as *;
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 13rem 2rem 24rem 2rem;
+  gap: 11rem;
+  @include media-mobile {
+    gap: 5rem;
+    padding: 13rem 0 24rem 0;
+  }
+  @include media-tablet {
+    padding-top: 10rem;
+  }
+}
+
+.cards {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12rem;
+  width: 100%;
+  max-width: 144rem;
+  @include media-laptop {
+    gap: 5rem;
+  }
+
+  @include media-mobile {
+    padding: 0 2rem;
+  }
+}
+
+.title {
+  @include roboto(
+    $ff: var(--ff-roboto-regular),
+    $fs: 4rem,
+    $fw: 700,
+    $lh: 1.1,
+    $color: var(--accent)
+  );
+  text-align: center;
+}
