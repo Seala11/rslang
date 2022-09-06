@@ -16,3 +16,11 @@ $ npm run build
 Backend repository: https://github.com/Seala11/react-rslang-be
 
 Backend application: https://rslang-team54-learnwords.herokuapp.com/doc/
+
+# Cross-check Review
+
+Link: https://github.com/Seala11/rslang/wiki/Cross-check-review
+
+# Deploy
+
+Link: https://rslang-seala11.netlify.app/
