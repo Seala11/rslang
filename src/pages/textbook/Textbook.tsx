@@ -75,10 +75,13 @@ const Textbook = () => {
   }, [dispatch, group, unit, userData, userIsLoggedLoading]);
 
   const handleGroupClick = (groupNumber: number) => {
+    if (textBookIsLoading) return;
     setSearchParams({ group: `${groupNumber}`, unit: `${unit}` });
   };
 
   const handlePaginationClick = (pageNumber: number) => {
+    if (textBookIsLoading) return;
+
     setSearchParams({ group: `${group}`, unit: `${pageNumber}` });
   };
 
