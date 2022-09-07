@@ -6,6 +6,9 @@ import getAllAggrWordsAPI from 'src/requests/aggregatedWords/getAllAggrWordsAPI'
 import type { AppDispatch, RootState } from '.';
 import { IWord, ISprintState, ISprintWord } from './types';
 
+const MAX_PAGES = 30;
+const ALL_WORDS_BY_GROUP = 600;
+
 const initialState: ISprintState = {
   words: [],
   group: 0,
@@ -32,22 +35,59 @@ const sprintSlice = createSlice({
 
 export const { addWords, removeWords, updateGroup, updateWords } = sprintSlice.actions;
 
-export const fetchWords = (group: string, page: string) => async (dispatch: AppDispatch) => {
-  const words = await getWordsAPI(group, page);
+// export const fetchWords = (group: string, page: string) => async (dispatch: AppDispatch) => {
+//   const words = await getWordsAPI(group, page);
+//   const sprintWords = adaptToLocalSprintWords(words);
+
+//   dispatch(addWords(shuffle(sprintWords)));
+// };
+
+export const fetchGroupWords = (group: string) => async (dispatch: AppDispatch) => {
+  const dataPromises = Array(MAX_PAGES)
+    .fill(null)
+    .map((_, i) => getWordsAPI(group, `${i}`));
+
+  const data = await Promise.allSettled(dataPromises);
+  const words = data
+    .map((item) => (item.status === 'fulfilled' ? item.value : null))
+    .filter((value) => value)
+    .flat();
+
   const sprintWords = adaptToLocalSprintWords(words);
 
   dispatch(addWords(shuffle(sprintWords)));
 };
 
-export const fetchUserWords =
-  (userId: string | null, token: string | null, group: string, page: string) =>
-  async (dispatch: AppDispatch) => {
+// export const fetchUserWords =
+//   (userId: string | null, token: string | null, group: string, page: string) =>
+//   async (dispatch: AppDispatch) => {
+//     if (!userId || !token) return;
+
+//     const response = await getAllAggrWordsAPI(
+//       userId,
+//       token,
+//       `{"$and":[{"group": ${group}, "page": ${page}}]}`
+//     );
+
+//     if (response.ok) {
+//       const data = await response.json();
+//       const words: IWord[] = data[0].paginatedResults;
+
+//       const sprintWords = adaptToLocalSprintWords(words);
+
+//       dispatch(addWords(shuffle(sprintWords)));
+//     }
+//   };
+
+export const fetchGroupUserWords =
+  (userId: string | null, token: string | null, group: string) => async (dispatch: AppDispatch) => {
     if (!userId || !token) return;
 
     const response = await getAllAggrWordsAPI(
       userId,
       token,
-      `{"$and":[{"group": ${group}, "page": ${page}}]}`
+      `{"group": ${group}}`,
+      `${ALL_WORDS_BY_GROUP}`
     );
 
     if (response.ok) {
