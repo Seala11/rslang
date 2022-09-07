@@ -1,12 +1,17 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
 import getWordsAPI from 'src/requests/words/getWordsAPI';
-import { adaptToLocalSprintWords, createPageLoop, shuffle } from 'src/helpers/utils';
+import {
+  adaptToLocalSprintWords,
+  createPageLoop,
+  createPagesFilter,
+  getRandomNumbers,
+  shuffle,
+} from 'src/helpers/utils';
 import getAllAggrWordsAPI from 'src/requests/aggregatedWords/getAllAggrWordsAPI';
 import type { AppDispatch, RootState } from '.';
 import { IWord, ISprintState, ISprintWord } from './types';
 
-const MAX_PAGES = 30;
 const ALL_WORDS_BY_GROUP = 600;
 
 const initialState: ISprintState = {
@@ -35,17 +40,8 @@ const sprintSlice = createSlice({
 
 export const { addWords, removeWords, updateGroup, updateWords } = sprintSlice.actions;
 
-// export const fetchWords = (group: string, page: string) => async (dispatch: AppDispatch) => {
-//   const words = await getWordsAPI(group, page);
-//   const sprintWords = adaptToLocalSprintWords(words);
-
-//   dispatch(addWords(shuffle(sprintWords)));
-// };
-
 export const fetchGroupWords = (group: string) => async (dispatch: AppDispatch) => {
-  const dataPromises = Array(MAX_PAGES)
-    .fill(null)
-    .map((_, i) => getWordsAPI(group, `${i}`));
+  const dataPromises = getRandomNumbers(15, 0, 29).map((value) => getWordsAPI(group, `${value}`));
 
   const data = await Promise.allSettled(dataPromises);
   const words = data
@@ -58,35 +54,20 @@ export const fetchGroupWords = (group: string) => async (dispatch: AppDispatch) 
   dispatch(addWords(shuffle(sprintWords)));
 };
 
-// export const fetchUserWords =
-//   (userId: string | null, token: string | null, group: string, page: string) =>
-//   async (dispatch: AppDispatch) => {
-//     if (!userId || !token) return;
-
-//     const response = await getAllAggrWordsAPI(
-//       userId,
-//       token,
-//       `{"$and":[{"group": ${group}, "page": ${page}}]}`
-//     );
-
-//     if (response.ok) {
-//       const data = await response.json();
-//       const words: IWord[] = data[0].paginatedResults;
-
-//       const sprintWords = adaptToLocalSprintWords(words);
-
-//       dispatch(addWords(shuffle(sprintWords)));
-//     }
-//   };
-
 export const fetchGroupUserWords =
   (userId: string | null, token: string | null, group: string) => async (dispatch: AppDispatch) => {
     if (!userId || !token) return;
 
+    const filterPages = createPagesFilter(+group, 15, 0, 29);
+
+    const filter = { $or: filterPages };
+
+    const stringifyFilter = JSON.stringify(filter);
+
     const response = await getAllAggrWordsAPI(
       userId,
       token,
-      `{"group": ${group}}`,
+      stringifyFilter,
       `${ALL_WORDS_BY_GROUP}`
     );
 

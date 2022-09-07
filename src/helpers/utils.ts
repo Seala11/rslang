@@ -51,7 +51,7 @@ const isLearnedWord = (word: IWord) => !word.userWord || !word.userWord.optional
 export const getNumberOfLearnedWords = (words: IWord[]) =>
   words.filter((word) => isLearnedWord(word)).length;
 
-export const createPagesFilter = (group: number, currPage: number, maxPage = 30) => {
+export const createPagesFilterLoop = (group: number, currPage: number, maxPage = 30) => {
   const arr = Array(maxPage).fill(null);
 
   const res = arr.map((_, i) => {
@@ -73,6 +73,26 @@ export const createPageLoop = (currPage: number, maxPages = 30) => {
 
     return page;
   });
+
+  return res;
+};
+
+export const getRandomNumbers = (quantity: number, min: number, max: number) => {
+  const result = new Set();
+  const range = max - min;
+
+  while (result.size < quantity) {
+    const random = Math.floor(Math.random() * range);
+    const curr = min + random;
+    if (!result.has(curr)) result.add(curr);
+  }
+
+  return Array.from(result);
+};
+
+export const createPagesFilter = (group: number, quantity: number, min: number, max: number) => {
+  const arr = getRandomNumbers(quantity, min, max);
+  const res = arr.map((val) => ({ group, page: val }));
 
   return res;
 };
