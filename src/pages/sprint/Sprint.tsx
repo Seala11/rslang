@@ -3,7 +3,12 @@ import Loading from 'src/components/Loading';
 import SprintGame from 'src/containers/SprintGame';
 import { getUserId, getUserToken, userIsLogged } from 'src/helpers/storage';
 import { useAppDispatch, useAppSelector } from 'src/store/hooks';
-import { fetchUserWords, fetchWords, selectWords, updateGroup } from 'src/store/sprintSlice';
+import {
+  fetchGroupUserWords,
+  fetchGroupWords,
+  selectWords,
+  updateGroup,
+} from 'src/store/sprintSlice';
 import { getUserData } from 'src/store/userSlice';
 import Levels from '../../containers/Levels';
 
@@ -19,11 +24,9 @@ const Sprint = () => {
     dispatch(updateGroup(id));
 
     if (userIsLogged(userData?.message)) {
-      await dispatch(
-        fetchUserWords(getUserId(), getUserToken(), `${id}`, `${Math.floor(Math.random() * 30)}`)
-      );
+      await dispatch(fetchGroupUserWords(getUserId(), getUserToken(), `${id}`));
     } else {
-      await dispatch(fetchWords(`${id}`, `${Math.floor(Math.random() * 30)}`));
+      await dispatch(fetchGroupWords(`${id}`));
     }
 
     setLoading(false);
