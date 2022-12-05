@@ -33,8 +33,6 @@ Made as a final group task for [RS School](https://rs.school/) Stage 2
 
 Backend repository: https://github.com/Seala11/react-rslang-be
 
-Backend application: https://rslang-team54-learnwords.herokuapp.com/doc/
-
 ## Setup and Running
 
 1. Run the app in the development mode
