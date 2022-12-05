@@ -1,5 +1,6 @@
 export enum UrlPath {
-  BASE = 'https://rslang-team54-learnwords.herokuapp.com',
+  BASE = 'https://react-rslang-be.onrender.com',
+  // BASE = 'https://rslang-team54-learnwords.herokuapp.com',
   // BASE = 'http://localhost:8000',
   WORDS = 'words',
   USERS = 'users',
